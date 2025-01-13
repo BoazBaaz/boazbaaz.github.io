@@ -6,13 +6,7 @@ categories:
   - Visual Scripting
 tags:
   - VisualScripting
-  - CPP
-  - cpp
-  - CPlusPlus
   - BredaUniversity
-  - BUAS
-  - University
-  - cplusplus
-  - vs
+  - Cpp
 ---
 Work In Progress
