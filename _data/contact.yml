@@ -23,6 +23,10 @@
   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
   url:  'https://www.linkedin.com/in/boas-bas-van-der-veen/' # Fill with your Linkedin homepage
 
+- type: itch
+  icon: 'fab fa-itch-io'   # icons powered by <https://fontawesome.com/>
+  url:  'https://boazbaaz.itch.io/' # Fill with your Linkedin homepage
+
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'
 #   url:  ''                  # Fill with your stackoverflow homepage
