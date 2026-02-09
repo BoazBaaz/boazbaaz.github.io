@@ -1,0 +1,113 @@
+---
+layout: page
+---
+
+<article class="px-1">
+  <header>
+    <h1 data-toc-skip>{{ page.title }}</h1>
+    
+    <div class="project-meta d-flex flex-column flex-sm-row align-items-sm-center">
+      {% if page.date %}
+        <div class="me-sm-4">
+          <i class="far fa-calendar fa-fw"></i>
+          <time datetime="{{ page.date | date_to_xmlschema }}">
+            {{ page.date | date: '%B %Y' }}
+          </time>
+        </div>
+      {% endif %}
+      
+      {% if page.last_modified_at %}
+        <div>
+          <i class="far fa-edit fa-fw"></i>
+          <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">
+            Updated {{ page.last_modified_at | date: '%B %Y' }}
+          </time>
+        </div>
+      {% endif %}
+    </div>
+    
+    {% if page.tags %}
+      <div class="project-tags mt-3">
+        {% for tag in page.tags %}
+          {% assign tag_data = site.data.tags[tag] %}
+          {% if tag_data %}
+            <span class="project-tag" style="background-color: {{ tag_data.color }};">
+              {{ tag_data.label }}
+            </span>
+          {% else %}
+            <span class="project-tag">{{ tag }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    {% if page.description %}
+      <p class="project-subtitle text-muted mt-3">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="content">
+    {{ content }}
+  </div>
+
+  {% if page.links %}
+    <div class="project-links mt-4 pt-4 border-top">
+      <h3>Links</h3>
+      <ul>
+        {% for link in page.links %}
+          <li>
+            <a href="{{ link.url }}" target="_blank" rel="noopener">
+              <i class="{{ link.icon | default: 'fas fa-link' }} fa-fw"></i>
+              {{ link.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</article>
+
+<style>
+.project-meta {
+  color: var(--text-muted-color);
+  font-size: 0.875rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--tag-bg);
+}
+
+.project-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.project-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.project-links li {
+  margin-bottom: 0.5rem;
+}
+
+.project-links a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.project-links a:hover {
+  text-decoration: underline;
+}
+</style>

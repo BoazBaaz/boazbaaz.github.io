@@ -1,0 +1,74 @@
+# Tag color definitions
+# Used for visual tag display in project cards and posts
+
+cpp:
+  color: "#00599C"
+  label: "C++"
+
+csharp:
+  color: "#239120"
+  label: "C#"
+
+unrealengine:
+  color: "#313131"
+  label: "Unreal Engine"
+
+unity:
+  color: "#000000"
+  label: "Unity"
+
+python:
+  color: "#3776AB"
+  label: "Python"
+
+cmake:
+  color: "#064F8C"
+  label: "CMake"
+
+opengl:
+  color: "#5586A4"
+  label: "OpenGL"
+
+vulkan:
+  color: "#AC162C"
+  label: "Vulkan"
+
+team:
+  color: "#FF6B6B"
+  label: "Team"
+
+solo:
+  color: "#4ECDC4"
+  label: "Solo"
+
+shader:
+  color: "#95E1D3"
+  label: "Shader"
+
+ai:
+  color: "#F38181"
+  label: "AI"
+
+gameplay:
+  color: "#AA96DA"
+  label: "Gameplay"
+
+tools:
+  color: "#FCBAD3"
+  label: "Tools"
+
+engine:
+  color: "#FFFFD2"
+  label: "Engine"
+
+graphics:
+  color: "#A8D8EA"
+  label: "Graphics"
+
+architecture:
+  color: "#FFAAA7"
+  label: "Architecture"
+
+research:
+  color: "#FFD3B6"
+  label: "Research"

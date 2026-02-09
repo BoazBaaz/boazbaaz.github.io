@@ -1,0 +1,219 @@
+---
+layout: default
+refactor: true
+---
+
+{% include lang.html %}
+
+<div id="home-wrapper">
+  <!-- Featured Projects Section -->
+  <section class="featured-projects mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">Featured Projects</h2>
+      <a href="{{ '/projects/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
+    </div>
+    
+    <div class="projects-grid">
+      {% assign featured_projects = site.projects | where: "featured", true | sort: 'date' | reverse | limit: 3 %}
+      {% if featured_projects.size == 0 %}
+        {% assign featured_projects = site.projects | sort: 'date' | reverse | limit: 3 %}
+      {% endif %}
+      
+      {% for project in featured_projects %}
+        <div class="project-card">
+          {% if project.thumbnail %}
+            <div class="project-thumbnail">
+              <a href="{{ project.url | relative_url }}">
+                <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+              </a>
+            </div>
+          {% endif %}
+          
+          <div class="project-content">
+            <h3 class="project-title">
+              <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+            </h3>
+            
+            <p class="project-description">{{ project.description }}</p>
+            
+            {% if project.tags %}
+              <div class="project-tags">
+                {% for tag in project.tags %}
+                  {% assign tag_data = site.data.tags[tag] %}
+                  {% if tag_data %}
+                    <span class="project-tag" style="background-color: {{ tag_data.color }};">
+                      {{ tag_data.label }}
+                    </span>
+                  {% else %}
+                    <span class="project-tag">{{ tag }}</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Recent Posts Section -->
+  <section class="recent-posts">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">Recent Posts</h2>
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
+    </div>
+    
+    <div id="post-list">
+      {% assign posts = site.posts | limit: 5 %}
+      {% for post in posts %}
+        <article class="card-wrapper card mb-3">
+          <a href="{{ post.url | relative_url }}" class="post-preview row g-0">
+            <div class="col-12">
+              <div class="card-body">
+                <h3 class="card-title">{{ post.title }}</h3>
+                
+                <div class="card-text content mt-2 mb-3">
+                  <p>
+                    {% include no-linenos.html content=post.content %}
+                    {{ content | markdownify | strip_html | truncate: 150 | escape }}
+                  </p>
+                </div>
+                
+                <div class="post-meta">
+                  <i class="far fa-calendar fa-fw me-1"></i>
+                  {% include datetime.html date=post.date lang=lang %}
+                  
+                  {% if post.categories.size > 0 %}
+                    <i class="far fa-folder-open fa-fw ms-3 me-1"></i>
+                    <span class="categories">
+                      {% for category in post.categories %}
+                        {{ category }}
+                        {%- unless forloop.last -%},{%- endunless -%}
+                      {% endfor %}
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+<style>
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.project-thumbnail {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: var(--card-header-bg);
+}
+
+.project-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.project-card:hover .project-thumbnail img {
+  transform: scale(1.05);
+}
+
+.project-content {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.project-title a {
+  color: var(--heading-color);
+  text-decoration: none;
+}
+
+.project-title a:hover {
+  color: var(--link-color);
+}
+
+.project-description {
+  color: var(--text-muted-color);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.project-tag {
+  padding: 0.25rem 0.625rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--tag-bg);
+}
+
+/* Recent Posts */
+.post-preview {
+  text-decoration: none;
+  color: inherit;
+}
+
+.post-preview:hover .card-title {
+  color: var(--link-color);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  font-size: 0.875rem;
+  color: var(--text-muted-color);
+}
+</style>

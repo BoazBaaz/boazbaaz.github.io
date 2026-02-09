@@ -1,0 +1,132 @@
+---
+layout: page
+---
+
+<div class="projects-grid">
+  {% assign sorted_projects = site.projects | sort: 'date' | reverse %}
+  {% for project in sorted_projects %}
+    <div class="project-card">
+      {% if project.thumbnail %}
+        <div class="project-thumbnail">
+          <a href="{{ project.url | relative_url }}">
+            <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+          </a>
+        </div>
+      {% endif %}
+      
+      <div class="project-content">
+        <h2 class="project-title">
+          <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+        </h2>
+        
+        <p class="project-description">{{ project.description }}</p>
+        
+        {% if project.tags %}
+          <div class="project-tags">
+            {% for tag in project.tags %}
+              {% assign tag_data = site.data.tags[tag] %}
+              {% if tag_data %}
+                <span class="project-tag" style="background-color: {{ tag_data.color }};">
+                  {{ tag_data.label }}
+                </span>
+              {% else %}
+                <span class="project-tag">{{ tag }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        
+        {% if project.date %}
+          <div class="project-date">
+            {{ project.date | date: "%B %Y" }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.project-thumbnail {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: var(--card-header-bg);
+}
+
+.project-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.project-card:hover .project-thumbnail img {
+  transform: scale(1.05);
+}
+
+.project-content {
+  padding: 1.5rem;
+}
+
+.project-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.project-title a {
+  color: var(--heading-color);
+  text-decoration: none;
+}
+
+.project-title a:hover {
+  color: var(--link-color);
+}
+
+.project-description {
+  color: var(--text-muted-color);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.project-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--tag-bg);
+}
+
+.project-date {
+  font-size: 0.875rem;
+  color: var(--text-muted-color);
+}
+</style>
