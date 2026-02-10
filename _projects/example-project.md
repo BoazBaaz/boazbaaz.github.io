@@ -3,8 +3,22 @@ title: "Example Project"
 date: 2025-01-15
 description: "A brief description of this example project showcasing the project card format."
 thumbnail: /assets/img/profile_picture.jpg
-tags: [cpp, unrealengine, team, gameplay]
+categories:
+  - Project
+  - Game
+tags:
+  - cpp
+  - unreal-engine
+  - team
+  - gameplay
 featured: true
+
+# Project Metadata
+team-size: 6
+duration: "3 months"
+role: "Lead Programmer"
+status: "Completed"
+
 links:
   - name: GitHub Repository
     url: https://github.com/BoazBaaz

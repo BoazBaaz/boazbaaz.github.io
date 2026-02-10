@@ -1,74 +1,134 @@
-# Tag color definitions
-# Used for visual tag display in project cards and posts
+# Tag color definitions - Organized by category
 
+# ===== Programming Languages =====
 cpp:
-  color: "#00599C"
   label: "C++"
+  color: "#00599C"
 
 csharp:
-  color: "#239120"
   label: "C#"
-
-unrealengine:
-  color: "#313131"
-  label: "Unreal Engine"
-
-unity:
-  color: "#000000"
-  label: "Unity"
+  color: "#239120"
 
 python:
-  color: "#3776AB"
   label: "Python"
+  color: "#3776AB"
 
-cmake:
-  color: "#064F8C"
-  label: "CMake"
+# ===== Game Engines =====
+unreal-engine:
+  label: "Unreal Engine"
+  color: "#313131"
 
+unity:
+  label: "Unity"
+  color: "#000000"
+
+godot:
+  label: "Godot"
+  color: "#478CBF"
+
+# ===== Graphics APIs =====
 opengl:
-  color: "#5586A4"
   label: "OpenGL"
+  color: "#5586A4"
 
 vulkan:
-  color: "#AC162C"
   label: "Vulkan"
+  color: "#AC162C"
 
-team:
-  color: "#FF6B6B"
-  label: "Team"
+directx:
+  label: "DirectX"
+  color: "#0E9D58"
 
-solo:
-  color: "#4ECDC4"
-  label: "Solo"
+# ===== Build Systems =====
+cmake:
+  label: "CMake"
+  color: "#064F8C"
 
-shader:
-  color: "#95E1D3"
-  label: "Shader"
+# ===== Software & Tools =====
+blender:
+  label: "Blender"
+  color: "#E87D0D"
 
-ai:
-  color: "#F38181"
-  label: "AI"
-
+# ===== Technical Topics =====
 gameplay:
-  color: "#AA96DA"
   label: "Gameplay"
-
-tools:
-  color: "#FCBAD3"
-  label: "Tools"
-
-engine:
-  color: "#FFFFD2"
-  label: "Engine"
+  color: "#AA96DA"
 
 graphics:
-  color: "#A8D8EA"
   label: "Graphics"
+  color: "#A8D8EA"
+
+shader:
+  label: "Shader"
+  color: "#95E1D3"
+
+ai:
+  label: "AI"
+  color: "#F38181"
+
+networking:
+  label: "Networking"
+  color: "#6A4C93"
+
+physics:
+  label: "Physics"
+  color: "#E53935"
+
+animation:
+  label: "Animation"
+  color: "#1976D2"
+
+audio:
+  label: "Audio"
+  color: "#D32F2F"
+
+optimization:
+  label: "Optimization"
+  color: "#00897B"
 
 architecture:
-  color: "#FFAAA7"
   label: "Architecture"
+  color: "#FFAAA7"
 
-research:
-  color: "#FFD3B6"
-  label: "Research"
+engine:
+  label: "Engine"
+  color: "#FFFFD2"
+
+procedural-generation:
+  label: "Procedural Generation"
+  color: "#43A047"
+
+visual-scripting:
+  label: "Visual Scripting"
+  color: "#9B59B6"
+
+# ===== Project Types =====
+plugin:
+  label: "Plugin"
+  color: "#009688"
+
+tool:
+  label: "Tool"
+  color: "#FCBAD3"
+
+editor:
+  label: "Editor"
+  color: "#5D4037"
+
+# ===== Team Composition =====
+team:
+  label: "Team"
+  color: "#FF6B6B"
+
+solo:
+  label: "Solo"
+  color: "#4ECDC4"
+
+# ===== Organization =====
+breda-university:
+  label: "Breda University"
+  color: "#E74C3C"
+
+blog:
+  label: "Blog"
+  color: "#34cbd9"

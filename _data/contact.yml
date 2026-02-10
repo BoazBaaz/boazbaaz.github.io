@@ -1,31 +1,22 @@
 # The contact options.
-# Uncomment and complete the url below to enable more contact options
 
 - type: github
   icon: "fab fa-github"
 
-# - type: twitter
-#   icon: "fa-brands fa-x-twitter"
-
-# - type: email
-#   icon: "fas fa-envelope"
-#   noblank: true # open link in current tab
-
-# - type: rss
-#   icon: "fas fa-rss"
-#   noblank: true
-
-# - type: mastodon
-#   icon: 'fab fa-mastodon'   # icons powered by <https://fontawesome.com/>
-#   url:  ''                  # Fill with your Mastodon account page, rel="me" will be applied for verification
-
 - type: linkedIn
-  icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
-  url:  'https://www.linkedin.com/in/boas-bas-van-der-veen/' # Fill with your Linkedin homepage
+  icon: 'fab fa-linkedin'
+  url:  'https://www.linkedin.com/in/boas-bas-van-der-veen/'
 
 - type: itch
-  icon: 'fab fa-itch-io'   # icons powered by <https://fontawesome.com/>
-  url:  'https://boazbaaz.itch.io/' # Fill with your Linkedin homepage
+  icon: 'fab fa-itch-io'
+  url:  'https://boazbaaz.itch.io/'
+
+- type: email
+  icon: "fas fa-envelope"
+  noblank: false # open link in current tab
+
+# - type: twitter
+#   icon: "fa-brands fa-x-twitter"
 
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'

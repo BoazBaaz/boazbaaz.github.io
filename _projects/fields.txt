@@ -1,0 +1,206 @@
+===== REQUIRED FIELDS =====
+
+title: "Your Project Title"
+  - The title of your project
+  - Shows in project header and card
+
+date: 2025-01-15
+  - Project completion or start date
+  - Used for sorting projects
+  - Format: YYYY-MM-DD
+
+
+===== STANDARD JEKYLL FIELDS =====
+
+published: true
+  - Set to false to hide project from site (draft mode)
+  - Default: true
+
+permalink: /projects/custom-url/
+  - Override the default URL structure
+  - Default: /projects/title/
+
+layout: project
+  - Override the default layout
+  - Default: project (set in _config.yml)
+
+
+===== PROJECT DISPLAY FIELDS =====
+
+description: "A brief description of this project"
+  - Shows on project cards
+  - 1-2 sentences recommended
+
+thumbnail: /assets/img/project-name/thumbnail.jpg
+  - Project card image
+  - Recommended size: 600x400px
+  - Shows in grid view and homepage
+
+categories:
+  - Project
+  - Game
+  - Category hierarchy
+  - First level: Project
+  - Second level: Game, Tools
+
+tags:
+  - cpp
+  - unreal-engine
+  - team
+  - List of tags for filtering
+  - Reference: _data/tags.yml for available tags
+
+featured: true
+  - Show on homepage in featured projects section
+  - Default: false
+  - Only 3 featured projects show on homepage
+
+
+===== PROJECT METADATA FIELDS =====
+
+team-size: 6
+  - Number of people on the project
+  - Shows as badge with icon (👥 6)
+  - Use 1 for solo projects
+
+duration: "3 months"
+  - How long the project took
+  - Examples: "2 weeks", "6 months", "1 year"
+
+role: "Lead Programmer"
+  - Your role on the project
+  - Examples: "Programmer", "Technical Lead", "Solo Developer"
+
+status: "Completed"
+  - Current project status
+  - Options: "Completed", "In Progress", "Archived", "On Hold"
+
+
+===== PROJECT LINKS =====
+
+links:
+  - name: GitHub Repository
+    url: https://github.com/username/repo
+    icon: fab fa-github
+  - name: Itch.io
+    url: https://itch.io/game
+    icon: fab fa-itch-io
+  - name: Demo Video
+    url: https://youtube.com/watch?v=...
+    icon: fab fa-youtube
+
+Available icons (Font Awesome):
+  - fab fa-github
+  - fab fa-gitlab
+  - fab fa-itch-io
+  - fab fa-youtube
+  - fab fa-steam
+  - fas fa-link
+  - fas fa-download
+  - fas fa-file-pdf
+
+
+===== CUSTOM FIELDS (Add Your Own) =====
+
+engine-version: "5.4"
+  - Specific engine version used
+
+platforms:
+  - Windows
+  - Linux
+  - Target platforms
+
+repo: https://github.com/username/repo
+  - Quick repository link
+
+demo-url: https://itch.io/game
+  - Quick demo link
+
+technologies:
+  - C++
+  - Blueprints
+  - Niagara
+  - List of technologies used
+
+challenges:
+  - "Optimizing particle systems"
+  - "Implementing network replication"
+  - Key technical challenges
+
+achievements:
+  - "Best Technical Award"
+  - "Featured on Unreal Marketplace"
+  - Awards or recognition
+
+team-members:
+  - name: "John Doe"
+    role: "Artist"
+  - name: "Jane Smith"
+    role: "Designer"
+  - Detailed team roster
+
+course: "Game Programming Year 3"
+  - Associated academic course
+
+academic-year: "2024-2025"
+  - Academic year
+
+last_modified_at: 2025-02-01
+  - Last update date
+
+
+===== USAGE EXAMPLES =====
+
+Minimal Project:
+---
+title: "Simple Tool"
+date: 2025-01-15
+description: "A small utility tool"
+thumbnail: /assets/img/tool.jpg
+categories: [Project, Tools]
+tags: [cpp, tool]
+team-size: 1
+---
+
+Full Featured Project:
+---
+title: "Racing Engine"
+date: 2025-01-15
+description: "Realistic vehicle physics engine with Blender pipeline integration"
+thumbnail: /assets/img/racing-engine/thumbnail.png
+categories: [Project, Game]
+tags: [cpp, python, blender, physics, plugin]
+featured: true
+
+# Metadata
+team-size: 6
+duration: "4 months"
+role: "Lead Programmer - Physics & Pipeline"
+status: "Completed"
+
+# Links
+links:
+  - name: GitHub Repository
+    url: https://github.com/username/racing-engine
+    icon: fab fa-github
+  - name: Demo Video
+    url: https://youtube.com/watch?v=...
+    icon: fab fa-youtube
+  - name: Itch.io
+    url: https://itch.io/racing-engine
+    icon: fab fa-itch-io
+
+# Custom
+engine-version: "5.3"
+platforms: [Windows, Linux]
+course: "Game Programming Year 3 Block A"
+technologies:
+  - C++
+  - Python
+  - Blender API
+challenges:
+  - "Realistic suspension physics"
+  - "Blender to Unreal pipeline"
+achievements:
+  - "Best Technical Implementation"
+---

@@ -1,20 +1,14 @@
-# The Site Configuration
+# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 
-# Import the theme
 theme: jekyll-theme-chirpy
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
-# If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
-# otherwise, the layout language will use the default value of 'en'.
 lang: en
 
-# Change to your timezone
 timezone: Europe/Amsterdam
 
-# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
-# ↓ --------------------------
 
-title: Boas-Bas van der Veen
+title: Portfolio - Boas-Bas van der Veen
 
 tagline: I am currently a third year game programming student at Breda University of Applied Sciences.
 
@@ -22,62 +16,26 @@ description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
 
 # Fill in the protocol & hostname for your site.
-# E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://boazbaaz.github.io"
 
 github:
   username: BoazBaaz # change to your GitHub username
 
-twitter:
-  username: BoazBaaz # change to your Twitter username
-
-
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Boas-Bas van der Veen
-  email: temp@gmail.com # change to your email address
+  email: boas.bas@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/BoazBaaz # change to your Twitter homepage
-    - https://github.com/BoazBaaz # change to your GitHub homepage
+    - https://www.linkedin.com/in/boas-bas-van-der-veen/
+    - https://github.com/BoazBaaz
     - https://boazbaaz.itch.io/
     # Uncomment below to add more social links
+    # - https://twitter.com/username
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
-
-# Site Verification Settings
-webmaster_verifications:
-  google: # fill in your Google verification code
-  bing: # fill in your Bing verification code
-  alexa: # fill in your Alexa verification code
-  yandex: # fill in your Yandex verification code
-  baidu: # fill in your Baidu verification code
-  facebook: # fill in your Facebook verification code
-
-# ↑ --------------------------
-# The end of `jekyll-seo-tag` settings
-
-# Web Analytics Settings
-analytics:
-  google:
-    id: # fill in your Google Analytics ID
-  goatcounter:
-    id: # fill in your GoatCounter ID
-  umami:
-    id: # fill in your Umami ID
-    domain: # fill in your Umami domain
-  matomo:
-    id: # fill in your Matomo ID
-    domain: # fill in your Matomo domain
-  cloudflare:
-    id: # fill in your Cloudflare Web Analytics token
-  fathom:
-    id: # fill in your Fathom Site ID
-
-# Page views settings
-pageviews:
-  provider: # now only supports 'goatcounter'
+    # - https://www.youtube.com/channel/username
+    # - https://www.reddit.com/user/username
 
 # Prefer color scheme setting.
 #
@@ -90,7 +48,7 @@ pageviews:
 #     light — Use the light color scheme
 #     dark — Use the dark color scheme
 #
-theme_mode: dark # [light | dark]
+theme_mode: # [light | dark]
 
 # The CDN endpoint for media resources.
 # Notice that once it is assigned, the CDN url
@@ -174,8 +132,7 @@ collections:
     sort_by: order
   projects:
     output: true
-    sort_by: date
-    permalink: /projects/:title/
+    sort_by: order
 
 defaults:
   - scope:
@@ -198,13 +155,6 @@ defaults:
     values:
       layout: page
       permalink: /:title/
-  - scope:
-      path: ""
-      type: projects
-    values:
-      layout: project
-      comments: false
-      toc: true
 
 sass:
   style: compressed
@@ -228,6 +178,7 @@ exclude:
   - purgecss.js
   - rollup.config.js
   - "package*.json"
+  - "assets/img/favicons/site.webmanifest"
 
 jekyll-archives:
   enabled: [categories, tags]

@@ -3,11 +3,11 @@ title: A Beginner's Guide to Storing Dynamic Data Types in C++
 date: 2025-01-13 15:42:00 +/-0100
 categories:
   - Blog
-  - Data Storage
+  - Learning
 tags:
-  - VisualScripting
-  - BredaUniversity
-  - Cpp
+  - cpp
+  - visual-scripting
+  - breda-university
 media_subpath: /assets/img/
 image: buas_logo.png
 ---
@@ -113,13 +113,13 @@ int main()
 
 ## Comparison
 
-| | `std::variant` | `std::any` | Templated Classes | 
-| - | - | - | - |
-| **Type Safety** | Compile-time safety | Runtime type-checking | Compile-time safety |
-| **Performance** | Compile-time memory allocation (to the largest type). | Slower (might dynamically allocate memory). | Compile-time memory allocation. |
-| **Ease of Use** | Moderately difficult to work with. | Very easy to work with. | Very simple to work with. |
+|                    | `std::variant`                                           | `std::any`                                      | Templated Classes                                                    |
+| ------------------ | -------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------------- |
+| **Type Safety**    | Compile-time safety                                      | Runtime type-checking                           | Compile-time safety                                                  |
+| **Performance**    | Compile-time memory allocation (to the largest type).    | Slower (might dynamically allocate memory).     | Compile-time memory allocation.                                      |
+| **Ease of Use**    | Moderately difficult to work with.                       | Very easy to work with.                         | Very simple to work with.                                            |
 | **Error Handling** | Throws a compile-time error if there is a type mismatch. | Throws run-time error if `std::any_cast` fails. | Compile-time error because the data type is defined at compile time. |
-| **Flexibility** | Less flexible, types are defined at compile time. | Can handle any type of data. | Limited to the defined type. |
+| **Flexibility**    | Less flexible, types are defined at compile time.        | Can handle any type of data.                    | Limited to the defined type.                                         |
 
 ## Result
 

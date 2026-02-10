@@ -14,13 +14,20 @@ refactor: true
     </div>
     
     <div class="projects-grid">
+      {% assign projects = site.projects | default: empty %}
+
+      {% if featured_projects.size == 0 %}
+        {% assign featured_projects = projects %}
+      {% endif %}
+
       {% assign featured_projects = site.projects | where: "featured", true | sort: 'date' | reverse | limit: 3 %}
       {% if featured_projects.size == 0 %}
         {% assign featured_projects = site.projects | sort: 'date' | reverse | limit: 3 %}
       {% endif %}
       
       {% for project in featured_projects %}
-        <div class="project-card">
+        <div class="card-wrapper featured">
+          <div class="project-card">
           {% if project.thumbnail %}
             <div class="project-thumbnail">
               <a href="{{ project.url | relative_url }}">
@@ -36,20 +43,25 @@ refactor: true
             
             <p class="project-description">{{ project.description }}</p>
             
+            {% if project.team-size %}
+              <div class="project-meta">
+                <span class="team-badge">
+                  <i class="fas fa-users"></i> {{ project.team-size }}
+                </span>
+              </div>
+            {% endif %}
+            
             {% if project.tags %}
               <div class="project-tags">
                 {% for tag in project.tags %}
-                  {% assign tag_data = site.data.tags[tag] %}
-                  {% if tag_data %}
-                    <span class="project-tag" style="background-color: {{ tag_data.color }};">
-                      {{ tag_data.label }}
-                    </span>
-                  {% else %}
-                    <span class="project-tag">{{ tag }}</span>
-                  {% endif %}
+                  <a href="{{ '/tags/' | append: tag | slugify | append: '/' | relative_url }}" class="project-tag {{ tag | slugify }}">
+                    {% assign tag_data = site.data.tags[tag] %}
+                    {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                  </a>
                 {% endfor %}
               </div>
             {% endif %}
+          </div>
           </div>
         </div>
       {% endfor %}
@@ -109,91 +121,10 @@ refactor: true
   margin: 0;
 }
 
-/* Projects Grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
-}
-
-.project-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border-color);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.project-thumbnail {
-  width: 100%;
-  height: 180px;
-  overflow: hidden;
-  background: var(--card-header-bg);
-}
-
-.project-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.project-card:hover .project-thumbnail img {
-  transform: scale(1.05);
-}
-
-.project-content {
-  padding: 1.25rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.project-title a {
-  color: var(--heading-color);
-  text-decoration: none;
-}
-
-.project-title a:hover {
-  color: var(--link-color);
-}
-
-.project-description {
-  color: var(--text-muted-color);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-  font-size: 0.9rem;
-  flex-grow: 1;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
-}
-
-.project-tag {
-  padding: 0.25rem 0.625rem;
-  border-radius: 1rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: white;
-  background-color: var(--tag-bg);
 }
 
 /* Recent Posts */

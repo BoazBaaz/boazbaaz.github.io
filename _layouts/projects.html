@@ -2,131 +2,62 @@
 layout: page
 ---
 
-<div class="projects-grid">
-  {% assign sorted_projects = site.projects | sort: 'date' | reverse %}
+<div class="filter-container" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 0px; margin-top: -42px; margin-bottom: -12px">
+  <button id="toggle-filters" style="background-color: #444; color: white; border: none; padding: 4px 8px; border-radius: 50px; cursor: pointer;">Filters ▼</button>
+{% assign projects = site.projects | default: empty %}
+
+{% if projects.size > 0 %}
+  {% assign sorted_projects = projects | sort: 'date' | reverse %}
   {% for project in sorted_projects %}
-    <div class="project-card">
-      {% if project.thumbnail %}
-        <div class="project-thumbnail">
-          <a href="{{ project.url | relative_url }}">
-            <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
-          </a>
+    <div class="card-wrapper{% if project.featured %} featured{% endif %}">
+      <div class="project-card" data-tags="{{ project.tags | join: ',' }}">
+        {% if project.thumbnail %}
+          <div class="project-thumbnail">
+            <a href="{{ project.url | relative_url }}">
+              <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+            </a>
+          </div>
+        {% endif %}
+
+        <div class="project-content">
+          <h2 class="project-title">
+            <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+          </h2>
+
+          <p class="project-description">{{ project.description }}</p>
+
+          {% if project.team-size %}
+            <div class="project-meta">
+              <span class="team-badge">
+                <i class="fas fa-users"></i> {{ project.team-size }}
+              </span>
+            </div>
+          {% endif %}
+
+          {% if project.tags %}
+            <div class="project-tags">
+              {% for tag in project.tags %}
+                <a href="{{ '/tags/' | append: tag | slugify | append: '/' | relative_url }}"
+                   class="project-tag {{ tag | slugify }}">
+                  {% assign tag_data = site.data.tags[tag] %}
+                  {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if project.date %}
+            <div class="project-date">
+              {{ project.date | date: "%B %Y" }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-      
-      <div class="project-content">
-        <h2 class="project-title">
-          <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-        </h2>
-        
-        <p class="project-description">{{ project.description }}</p>
-        
-        {% if project.tags %}
-          <div class="project-tags">
-            {% for tag in project.tags %}
-              {% assign tag_data = site.data.tags[tag] %}
-              {% if tag_data %}
-                <span class="project-tag" style="background-color: {{ tag_data.color }};">
-                  {{ tag_data.label }}
-                </span>
-              {% else %}
-                <span class="project-tag">{{ tag }}</span>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-        
-        {% if project.date %}
-          <div class="project-date">
-            {{ project.date | date: "%B %Y" }}
-          </div>
-        {% endif %}
       </div>
     </div>
   {% endfor %}
-</div>
+{% else %}
+  <p>No projects found.</p>
+{% endif %}
 
-<style>
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
 
-.project-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border-color);
-  border-radius: 0.5rem;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.project-thumbnail {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  background: var(--card-header-bg);
-}
-
-.project-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.project-card:hover .project-thumbnail img {
-  transform: scale(1.05);
-}
-
-.project-content {
-  padding: 1.5rem;
-}
-
-.project-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-}
-
-.project-title a {
-  color: var(--heading-color);
-  text-decoration: none;
-}
-
-.project-title a:hover {
-  color: var(--link-color);
-}
-
-.project-description {
-  color: var(--text-muted-color);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.project-tag {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: white;
-  background-color: var(--tag-bg);
-}
-
-.project-date {
-  font-size: 0.875rem;
-  color: var(--text-muted-color);
-}
-</style>
+<script src="{{ '/assets/js/filter_projects.js' | relative_url }}"></script>

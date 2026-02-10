@@ -1,0 +1,34 @@
+---
+layout: page
+---
+<div id="tags" class="d-flex flex-wrap mx-xl-2">
+  {% comment %} First, show tags in custom order {% endcomment %}
+  {% for t in site.data.tag_order %}
+    {% if site.tags[t] %}
+      <div>
+        <a class="tag" href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">
+          {{ t -}}
+          <span class="text-muted">{{ site.tags[t].size }}</span>
+        </a>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  {% comment %} Then, show any remaining tags not in custom order (alphabetically) {% endcomment %}
+  
+  {% assign tags = '' | split: '' %}
+  {% for t in site.tags %}
+    {% unless site.data.tag_order contains t[0] %}
+      {% assign tags = tags | push: t[0] %}
+    {% endunless %}
+  {% endfor %}
+  {% assign sorted_tags = tags | sort_natural %}
+  {% for t in sorted_tags %}
+    <div>
+      <a class="tag" href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">
+        {{ t -}}
+        <span class="text-muted">{{ site.tags[t].size }}</span>
+      </a>
+    </div>
+  {% endfor %}
+</div>
