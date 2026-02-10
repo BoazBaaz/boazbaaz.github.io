@@ -1,5 +1,5 @@
 ---
 layout: projects
-icon: fas fa-solid fa-circle-user
+icon: fas fa-folder-open
 order: 1
 ---

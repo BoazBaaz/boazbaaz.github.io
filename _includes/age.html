@@ -1,0 +1,10 @@
+{% comment %}
+Calculate age from birthday in _data/personal.yml
+Usage: {% include age.html %} outputs just the number
+{% endcomment %}
+
+{% assign birth_date = site.data.personal.birthday | date: "%s" | plus: 0 %}
+{% assign current_date = site.time | date: "%s" | plus: 0 %}
+{% assign seconds_in_year = 31557600 %}
+{% assign age = current_date | minus: birth_date | divided_by: seconds_in_year %}
+{{- age -}}
