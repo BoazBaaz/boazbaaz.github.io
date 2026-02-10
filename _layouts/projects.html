@@ -65,10 +65,10 @@ layout: page
           {% if project.tags %}
             <div class="project-tags">
               {% for tag in project.tags %}
-                <a href="{{ '/tags/' | append: tag | slugify | append: '/' | relative_url }}" class="project-tag {{ tag | slugify }}">
+                <span class="project-tag {{ tag | slugify }}">
                   {% assign tag_data = site.data.tags[tag] %}
                   {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                </a>
+                </span>
               {% endfor %}
             </div>
           {% endif %}

@@ -48,10 +48,10 @@ refactor: true
             {% if project.tags %}
               <div class="project-tags">
                 {% for tag in project.tags %}
-                  <a href="{{ '/tags/' | append: tag | slugify | append: '/' | relative_url }}" class="project-tag {{ tag | slugify }}">
+                  <span class="project-tag {{ tag | slugify }}">
                     {% assign tag_data = site.data.tags[tag] %}
                     {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                  </a>
+                  </span>
                 {% endfor %}
               </div>
             {% endif %}
@@ -66,7 +66,7 @@ refactor: true
   <section class="recent-posts mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2 class="section-title">Recent Posts</h2>
-      <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
+      <a href="{{ '/posts/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
     </div>
     
     <div id="post-list">
@@ -107,25 +107,25 @@ refactor: true
   </section>
 
   <!-- About Me Card Section -->
-  {% assign about_page = site.tabs | where: "title", "About Me" | first %}
+  {% assign about_page = site.tabs | where_exp: "tab", "tab.url contains '/about/'" | first %}
   {% if about_page %}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="section-title">About Me</h2>
-    </div>
-    <section class="about-card-section mb-5">
-      <a href="{{ '/about/' | relative_url }}" class="about-card-link">
-        <div class="about-card">
-          <div class="about-card-image">
-            <img src="{{ about_page.thumbnail | default: site.data.personal.images.avatar | relative_url }}" alt="{{ site.data.personal.name }}">
-          </div>
-          <div class="about-card-content">
-            <h3 class="about-card-title">{{ site.data.personal.name }}</h3>
-            <p class="about-card-description">{{ about_page.card_description | default: site.data.personal.bio.short }}</p>
-            <span class="about-card-cta">View Full Profile →</span>
-          </div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title">About Me</h2>
+  </div>
+  <section class="about-card-section mb-5">
+    <a href="{{ '/about/' | relative_url }}" class="about-card-link">
+      <div class="about-card">
+        <div class="about-card-image">
+          <img src="{{ about_page.thumbnail | default: site.data.personal.images.avatar | relative_url }}" alt="{{ site.data.personal.name }}">
         </div>
-      </a>
-    </section>
+        <div class="about-card-content">
+          <h3 class="about-card-title">{{ site.data.personal.name }}</h3>
+          <p class="about-card-description">{{ site.data.personal.bio.short }}</p>
+          <span class="about-card-cta">View Full Profile →</span>
+        </div>
+      </div>
+    </a>
+  </section>
   {% endif %}
 </div>
 
