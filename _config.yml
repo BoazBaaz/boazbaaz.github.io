@@ -1,161 +1,90 @@
-# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
+# Site Configuration
 
 theme: jekyll-theme-chirpy
 
-# The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 lang: en
-
 timezone: Europe/Amsterdam
 
+# SEO & Site Info
+title: Boas-Bas van der Veen
+tagline: Third-year Game Programming student at Breda University of Applied Sciences
+description: >-
+  Portfolio showcasing game development projects and technical blog posts.
 
-title: Portfolio - Boas-Bas van der Veen
-
-tagline: I am currently a third year game programming student at Breda University of Applied Sciences.
-
-description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
-
-# Fill in the protocol & hostname for your site.
 url: "https://boazbaaz.github.io"
 
 github:
-  username: BoazBaaz # change to your GitHub username
+  username: BoazBaaz
 
 social:
-  # Change to your full name.
-  # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Boas-Bas van der Veen
-  email: boas.bas@gmail.com # change to your email address
+  email: boas.bas@gmail.com
   links:
-    # The first element serves as the copyright owner's link
     - https://www.linkedin.com/in/boas-bas-van-der-veen/
     - https://github.com/BoazBaaz
     - https://boazbaaz.itch.io/
-    # Uncomment below to add more social links
-    # - https://twitter.com/username
-    # - https://www.facebook.com/username
-    # - https://www.youtube.com/channel/username
-    # - https://www.reddit.com/user/username
 
-# Prefer color scheme setting.
-#
-# Note: Keep empty will follow the system prefer color by default,
-# and there will be a toggle to switch the theme between dark and light
-# on the bottom left of the sidebar.
-#
-# Available options:
-#
-#     light — Use the light color scheme
-#     dark — Use the dark color scheme
-#
-theme_mode: # [light | dark]
+# Appearance
+theme_mode: dark # Leave empty for user toggle, or set to 'dark' or 'light'
 
-# The CDN endpoint for media resources.
-# Notice that once it is assigned, the CDN url
-# will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
-#
-# e.g. 'https://cdn.com'
-cdn:
-
-# the avatar on sidebar, support local or CORS resources
 avatar: assets/img/profile_picture_sqr.jpg
 
-# The URL of the site-wide social preview image used in SEO `og:image` meta tag.
-# It can be overridden by a customized `page.image` in front matter.
-social_preview_image: # string, local or CORS resources
-
-# boolean type, the global switch for TOC in posts.
-toc: true
+# Features
+toc: true  # Table of contents in posts
 
 comments:
-  # Global switch for the post-comment system. Keeping it empty means disabled.
-  provider: # [disqus | utterances | giscus]
-  # The provider options are as follows:
-  disqus:
-    shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
-  # utterances settings › https://utteranc.es/
-  utterances:
-    repo: # <gh-username>/<repo>
-    issue_term: # < url | pathname | title | ...>
-  # Giscus options › https://giscus.app
-  giscus:
-    repo: # <gh-username>/<repo>
-    repo_id:
-    category:
-    category_id:
-    mapping: # optional, default to 'pathname'
-    strict: # optional, default to '0'
-    input_position: # optional, default to 'bottom'
-    lang: # optional, default to the value of `site.lang`
-    reactions_enabled: # optional, default to the value of `1`
-
-# Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
-assets:
-  self_host:
-    enabled: # boolean, keep empty means false
-    # specify the Jekyll environment, empty means both
-    # only works if `assets.self_host.enabled` is 'true'
-    env: # [development | production]
+  provider:  # Leave empty to disable comments
+  # To enable, uncomment one:
+  # provider: giscus
+  # giscus:
+  #   repo: username/repo
+  #   repo_id: your_repo_id
+  #   category: Announcements
+  #   category_id: your_category_id
 
 pwa:
-  enabled: true # The option for PWA feature (installable)
+  enabled: true
   cache:
-    enabled: true # The option for PWA offline cache
-    # Paths defined here will be excluded from the PWA cache.
-    # Usually its value is the `baseurl` of another website that
-    # shares the same domain name as the current website.
-    deny_paths:
-      # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
+    enabled: true
 
 paginate: 10
-
-# The base URL of your site
 baseurl: ""
 
-# ------------ The following options are not recommended to be modified ------------------
-
-kramdown:
-  footnote_backlink: "&#8617;&#xfe0e;"
-  syntax_highlighter: rouge
-  syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options
-    css_class: highlight
-    # default_lang: console
-    span:
-      line_numbers: false
-    block:
-      line_numbers: true
-      start_line: 1
-
+# Collections
 collections:
   tabs:
     output: true
     sort_by: order
   projects:
     output: true
-    sort_by: order
+    sort_by: date
+    permalink: /projects/:title/
 
+# Defaults
 defaults:
   - scope:
-      path: "" # An empty string here means all files in the project
+      path: ""
       type: posts
     values:
       layout: post
-      comments: true # Enable comments in posts.
-      toc: true # Display TOC column in posts.
-      # DO NOT modify the following parameter unless you are confident enough
-      # to update the code of all other post links in this project.
+      comments: false
+      toc: true
       permalink: /posts/:title/
   - scope:
-      path: _drafts
+      path: ""
+      type: projects
     values:
+      layout: project
       comments: false
+      toc: true
   - scope:
       path: ""
-      type: tabs # see `site.collections`
+      type: tabs
     values:
       layout: page
       permalink: /:title/
 
+# Build Settings
 sass:
   style: compressed
 
@@ -175,10 +104,7 @@ exclude:
   - tools
   - README.md
   - LICENSE
-  - purgecss.js
-  - rollup.config.js
   - "package*.json"
-  - "assets/img/favicons/site.webmanifest"
 
 jekyll-archives:
   enabled: [categories, tags]
@@ -188,3 +114,14 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1

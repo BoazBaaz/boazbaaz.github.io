@@ -80,8 +80,7 @@ refactor: true
                 
                 <div class="card-text content mt-2 mb-3">
                   <p>
-                    {% include no-linenos.html content=post.content %}
-                    {{ content | markdownify | strip_html | truncate: 150 | escape }}
+                    {{ post.content | markdownify | strip_html | truncate: 150 | escape }}
                   </p>
                 </div>
                 
@@ -110,6 +109,9 @@ refactor: true
   <!-- About Me Card Section -->
   {% assign about_page = site.tabs | where: "title", "About Me" | first %}
   {% if about_page %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">About Me</h2>
+    </div>
     <section class="about-card-section mb-5">
       <a href="{{ '/about/' | relative_url }}" class="about-card-link">
         <div class="about-card">

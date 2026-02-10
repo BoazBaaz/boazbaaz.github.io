@@ -53,6 +53,26 @@
     }
   }
   
+  .filter-section {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border-color);
+    
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      color: var(--heading-color);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+  
   label {
     display: flex;
     align-items: center;

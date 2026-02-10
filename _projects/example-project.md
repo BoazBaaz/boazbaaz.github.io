@@ -4,7 +4,6 @@ date: 2025-01-15
 description: "A brief description of this example project showcasing the project card format."
 thumbnail: /assets/img/profile_picture.jpg
 categories:
-  - Project
   - Game
 tags:
   - cpp

@@ -2,15 +2,43 @@
 layout: page
 ---
 
-<div class="filter-container" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 0px; margin-top: -42px; margin-bottom: -12px">
-  <button id="toggle-filters" style="background-color: #444; color: white; border: none; padding: 4px 8px; border-radius: 50px; cursor: pointer;">Filters ▼</button>
-{% assign projects = site.projects | default: empty %}
+<div class="project-filter-dropdown">
+  <button id="filter-toggle">Filters ▼</button>
+  <div id="filter-menu" class="filter-menu" style="display: none;">
+    <button id="filter-all" class="filter-all-btn">All</button>
+    
+    <div class="filter-section">
+      <h4>Categories</h4>
+      {% assign project_categories = site.projects | map: "categories" | join: "," | split: "," | uniq | sort %}
+      {% for category in project_categories %}
+        {% if category != "" %}
+          <label>
+            <input type="checkbox" class="filter-checkbox filter-category" value="{{ category | slugify }}">
+            {{ category }}
+          </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    <div class="filter-section">
+      <h4>Tags</h4>
+      {% for tag_entry in site.data.tags %}
+        <label>
+          <input type="checkbox" class="filter-checkbox filter-tag" value="{{ tag_entry[0] }}">
+          {{ tag_entry[1].label | default: tag_entry[0] }}
+        </label>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-{% if projects.size > 0 %}
-  {% assign sorted_projects = projects | sort: 'date' | reverse %}
+<div class="projects-grid">
+  {% assign sorted_projects = site.projects | sort: 'date' | reverse %}
   {% for project in sorted_projects %}
-    <div class="card-wrapper{% if project.featured %} featured{% endif %}">
-      <div class="project-card" data-tags="{{ project.tags | join: ',' }}">
+    <div class="card-wrapper{% if project.featured %} featured{% endif %}" 
+         data-categories="{{ project.categories | join: ',' | slugify }}"
+         data-tags="{{ project.tags | join: ',' }}">
+      <div class="project-card">
         {% if project.thumbnail %}
           <div class="project-thumbnail">
             <a href="{{ project.url | relative_url }}">
@@ -18,14 +46,14 @@ layout: page
             </a>
           </div>
         {% endif %}
-
+        
         <div class="project-content">
           <h2 class="project-title">
             <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
           </h2>
-
+          
           <p class="project-description">{{ project.description }}</p>
-
+          
           {% if project.team-size %}
             <div class="project-meta">
               <span class="team-badge">
@@ -33,19 +61,18 @@ layout: page
               </span>
             </div>
           {% endif %}
-
+          
           {% if project.tags %}
             <div class="project-tags">
               {% for tag in project.tags %}
-                <a href="{{ '/tags/' | append: tag | slugify | append: '/' | relative_url }}"
-                   class="project-tag {{ tag | slugify }}">
+                <a href="{{ '/tags/' | append: tag | slugify | append: '/' | relative_url }}" class="project-tag {{ tag | slugify }}">
                   {% assign tag_data = site.data.tags[tag] %}
                   {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
                 </a>
               {% endfor %}
             </div>
           {% endif %}
-
+          
           {% if project.date %}
             <div class="project-date">
               {{ project.date | date: "%B %Y" }}
@@ -55,9 +82,6 @@ layout: page
       </div>
     </div>
   {% endfor %}
-{% else %}
-  <p>No projects found.</p>
-{% endif %}
-
+</div>
 
 <script src="{{ '/assets/js/filter_projects.js' | relative_url }}"></script>

@@ -1,106 +1,14 @@
-<!-- Timeline Widget for Sidebar -->
+<!-- Right Sidebar - Tags Only -->
 <div class="panel-wrapper">
-  <h3 class="panel-heading">Timeline</h3>
+  <h3 class="panel-heading">Tags</h3>
   <div class="post-content ps-0 pe-2">
-    <div class="timeline-list">
-      {% assign all_items = "" | split: "" %}
-      
-      <!-- Collect posts and projects -->
-      {% for post in site.posts limit: 3 %}
-        {% assign all_items = all_items | push: post %}
+    <div class="trending-tags d-flex flex-wrap">
+      {% assign sorted_tags = site.tags | sort %}
+      {% for tag in sorted_tags limit: 10 %}
+        <a class="post-tag" href="{{ tag[0] | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">
+          {{ tag[0] }}
+        </a>
       {% endfor %}
-      
-      {% for project in site.projects limit: 3 %}
-        {% assign all_items = all_items | push: project %}
-      {% endfor %}
-      
-      <!-- Sort by date -->
-      {% assign sorted_items = all_items | sort: "date" | reverse %}
-      
-      <ul>
-        {% for item in sorted_items limit: 6 %}
-          <li>
-            <div class="timeline-item-compact">
-              <div class="timeline-date-small">
-                {{ item.date | date: "%d %b" }}
-              </div>
-              <div class="timeline-type-small">
-                {% if item.collection == "projects" %}
-                  <span class="badge-mini badge-project">Project</span>
-                {% else %}
-                  <span class="badge-mini badge-post">Post</span>
-                {% endif %}
-              </div>
-            </div>
-            <a href="{{ item.url | relative_url }}">{{ item.title | truncate: 50 }}</a>
-          </li>
-        {% endfor %}
-      </ul>
-      
-      <div class="text-center mt-3">
-        <a href="{{ '/timeline/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
-      </div>
     </div>
   </div>
 </div>
-
-<style>
-.timeline-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.timeline-list li {
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--card-border-color);
-}
-
-.timeline-list li:last-child {
-  border-bottom: none;
-}
-
-.timeline-item-compact {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.35rem;
-}
-
-.timeline-date-small {
-  font-size: 0.75rem;
-  color: var(--text-muted-color);
-  font-weight: 600;
-}
-
-.timeline-type-small {
-  .badge-mini {
-    padding: 0.15rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: white;
-  }
-  
-  .badge-project {
-    background-color: #6C63FF;
-  }
-  
-  .badge-post {
-    background-color: #34cbd9;
-  }
-}
-
-.timeline-list a {
-  color: var(--text-color);
-  text-decoration: none;
-  display: block;
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-.timeline-list a:hover {
-  color: var(--link-color);
-}
-</style>

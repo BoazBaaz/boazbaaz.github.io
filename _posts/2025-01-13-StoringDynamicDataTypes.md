@@ -2,7 +2,6 @@
 title: A Beginner's Guide to Storing Dynamic Data Types in C++
 date: 2025-01-13 15:42:00 +/-0100
 categories:
-  - Blog
   - Learning
 tags:
   - cpp

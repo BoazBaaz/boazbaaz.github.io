@@ -1,9 +1,8 @@
 ---
-icon: fas fa-info-circle
+title: About Me
+layout: page
+icon: fa-fw fas fa-solid fa-circle-user
 order: 3
-title: "About Me"
-thumbnail: /assets/img/profile_picture_sqr.jpg
-card_description: "Game Programming Student at BUAS"
 ---
 
 <!-- Full about page content goes here -->
