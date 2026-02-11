@@ -17,14 +17,6 @@ team-size: 6
 duration: "3 months"
 role: "Lead Programmer"
 status: "Completed"
-
-links:
-  - name: GitHub Repository
-    url: https://github.com/BoazBaaz
-    icon: fab fa-github
-  - name: Itch.io
-    url: https://boazbaaz.itch.io/
-    icon: fab fa-itch-io
 ---
 
 ## Overview

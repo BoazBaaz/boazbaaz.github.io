@@ -1,21 +1,33 @@
-# Site Configuration
+# ==========================================
+# JEKYLL SITE CONFIGURATION
+# ==========================================
 
-theme: jekyll-theme-chirpy
-
+# LANGUAGE & TIMEZONE
 lang: en
 timezone: Europe/Amsterdam
 
-# SEO & Site Info
-title: Boas-Bas van der Veen
-tagline: Third-year Game Programming student at Breda University of Applied Sciences
-description: >-
-  Portfolio showcasing game development projects and technical blog posts.
+# ==========================================
+# SITE INFORMATION (SEO & Display)
+# ==========================================
 
+# Site title - shows in browser tab, sidebar, footer
+title: Portfolio - Boas-Bas van der Veen
+
+# Tagline - shows under title in sidebar
+tagline: Third-year Game Programming student at Breda University of Applied Sciences
+
+# Description - used by search engines and RSS feeds
+description: >-
+  Portfolio showcasing game development projects and technical blog posts by Boas-Bas van der Veen.
+
+# Your site URL - MUST match your GitHub Pages URL
 url: "https://boazbaaz.github.io"
 
+# GitHub username - enables GitHub links/features
 github:
   username: BoazBaaz
 
+# Social links - used in footer, SEO metadata
 social:
   name: Boas-Bas van der Veen
   email: boas.bas@gmail.com
@@ -24,44 +36,65 @@ social:
     - https://github.com/BoazBaaz
     - https://boazbaaz.itch.io/
 
-# Appearance
-theme_mode: dark # Leave empty for user toggle, or set to 'dark' or 'light'
+# ==========================================
+# APPEARANCE
+# ==========================================
 
+# Theme mode: 'dark', 'light', or empty (user can toggle)
+theme_mode: dark
+
+# Avatar image - shows in sidebar
 avatar: assets/img/profile_picture_sqr.jpg
 
-# Features
-toc: true  # Table of contents in posts
+# ==========================================
+# FEATURES
+# ==========================================
 
+# Table of contents - shows on right sidebar of posts
+toc: true
+
+# Comments - disabled (to enable: set provider to 'giscus' and configure)
 comments:
-  provider:  # Leave empty to disable comments
-  # To enable, uncomment one:
-  # provider: giscus
-  # giscus:
-  #   repo: username/repo
-  #   repo_id: your_repo_id
-  #   category: Announcements
-  #   category_id: your_category_id
+  provider:
 
+# PWA (Progressive Web App) - makes site installable
 pwa:
   enabled: true
   cache:
     enabled: true
 
+# Pagination - number of posts per page on blog listing
 paginate: 10
+
+# Base URL - leave empty unless site is in a subdirectory
 baseurl: ""
 
-# Collections
+# ==========================================
+# COLLECTIONS
+# ==========================================
+# Collections are custom content types beyond posts/pages
+
 collections:
+  # tabs collection - your navigation pages (projects.md, about.md, etc.)
   tabs:
     output: true
     sort_by: order
+  
+  # projects collection - your portfolio projects in _projects/
   projects:
     output: true
     sort_by: date
     permalink: /projects/:title/
+  
+  # NOTE: _posts is built-in to Jekyll, don't declare it here
 
-# Defaults
+# ==========================================
+# DEFAULT SETTINGS
+# ==========================================
+# Automatic front matter for content types
+
 defaults:
+  # Settings for all blog posts
   - scope:
       path: ""
       type: posts
@@ -70,13 +103,17 @@ defaults:
       comments: false
       toc: true
       permalink: /posts/:title/
+  
+  # Settings for all projects
   - scope:
       path: ""
       type: projects
     values:
-      layout: project
+      layout: page  # Projects use page layout (no project.html exists)
       comments: false
       toc: true
+  
+  # Settings for all tabs (navigation pages)
   - scope:
       path: ""
       type: tabs
@@ -84,10 +121,15 @@ defaults:
       layout: page
       permalink: /:title/
 
-# Build Settings
+# ==========================================
+# BUILD SETTINGS
+# ==========================================
+
+# SASS compilation - compressed = minified CSS for production
 sass:
   style: compressed
 
+# HTML compression - removes whitespace for smaller files
 compress_html:
   clippings: all
   comments: all
@@ -97,6 +139,7 @@ compress_html:
   ignore:
     envs: [development]
 
+# Files to exclude from build
 exclude:
   - "*.gem"
   - "*.gemspec"
@@ -106,14 +149,23 @@ exclude:
   - LICENSE
   - "package*.json"
 
+# ==========================================
+# JEKYLL ARCHIVES PLUGIN
+# ==========================================
+# Auto-generates category and tag pages
+
 jekyll-archives:
   enabled: [categories, tags]
   layouts:
-    category: category
-    tag: tag
+    tag: tag            # Uses theme's tag.html layout
+    category: category  # Uses theme's category.html layout
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+# ==========================================
+# MARKDOWN SETTINGS
+# ==========================================
 
 kramdown:
   footnote_backlink: "&#8617;&#xfe0e;"

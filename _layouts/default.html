@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO -->
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="author" content="{{ site.social.name }}">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/favicons/apple-touch-icon.png' | relative_url }}">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      </div>
+      
+      <ul class="nav-links">
+        {% assign sorted_tabs = site.tabs | sort: 'order' %}
+        {% for tab in sorted_tabs %}
+          {% if tab.order %}
+            <li>
+              <a href="{{ tab.url | relative_url }}" 
+                 {% if page.url == tab.url %}class="active"{% endif %}>
+                {% if tab.icon %}<i class="{{ tab.icon }}"></i> {% endif %}
+                {{ tab.title | default: tab.name }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        <li>
+          <a href="/resume.pdf" target="_blank">
+            <i class="fas fa-file-pdf"></i> Resume
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-wrapper">
+      {{ content }}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-info">
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.social.name }}. All rights reserved.</p>
+      </div>
+      
+      <div class="footer-links">
+        {% for link in site.social.links %}
+          {% if link contains 'github' %}
+            <a href="{{ link }}" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          {% elsif link contains 'linkedin' %}
+            <a href="{{ link }}" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          {% elsif link contains 'itch' %}
+            <a href="{{ link }}" target="_blank" rel="noopener">
+              <i class="fab fa-itch-io"></i>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

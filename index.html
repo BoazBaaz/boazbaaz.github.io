@@ -1,16 +1,13 @@
 ---
 layout: default
-refactor: true
 ---
-
-{% include lang.html %}
 
 <div id="home-wrapper">
   <!-- Featured Projects Section -->
-  <section class="featured-projects mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+  <section class="featured-projects">
+    <div class="section-header">
       <h2 class="section-title">Featured Projects</h2>
-      <a href="{{ '/projects/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
+      <a href="{{ '/projects/' | relative_url }}" class="view-all-btn">View All →</a>
     </div>
     
     <div class="projects-grid">
@@ -22,40 +19,40 @@ refactor: true
       {% for project in featured_projects %}
         <div class="card-wrapper featured">
           <div class="project-card">
-          {% if project.thumbnail %}
-            <div class="project-thumbnail">
-              <a href="{{ project.url | relative_url }}">
-                <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
-              </a>
-            </div>
-          {% endif %}
-          
-          <div class="project-content">
-            <h3 class="project-title">
-              <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-            </h3>
-            
-            <p class="project-description">{{ project.description }}</p>
-            
-            {% if project.team-size %}
-              <div class="project-meta">
-                <span class="team-badge">
-                  <i class="fas fa-users"></i> {{ project.team-size }}
-                </span>
+            {% if project.thumbnail %}
+              <div class="project-thumbnail">
+                <a href="{{ project.url | relative_url }}">
+                  <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+                </a>
               </div>
             {% endif %}
             
-            {% if project.tags %}
-              <div class="project-tags">
-                {% for tag in project.tags %}
-                  <span class="project-tag {{ tag | slugify }}">
-                    {% assign tag_data = site.data.tags[tag] %}
-                    {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+            <div class="project-content">
+              <h3 class="project-title">
+                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+              </h3>
+              
+              <p class="project-description">{{ project.description }}</p>
+              
+              {% if project.team-size %}
+                <div class="project-meta">
+                  <span class="team-badge">
+                    <i class="fas fa-users"></i> {{ project.team-size }}
                   </span>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
+                </div>
+              {% endif %}
+              
+              {% if project.tags %}
+                <div class="project-tags">
+                  {% for tag in project.tags %}
+                    <span class="project-tag {{ tag | slugify }}">
+                      {% assign tag_data = site.data.tags[tag] %}
+                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
           </div>
         </div>
       {% endfor %}
@@ -63,42 +60,37 @@ refactor: true
   </section>
 
   <!-- Recent Posts Section -->
-  <section class="recent-posts mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+  <section class="recent-posts">
+    <div class="section-header">
       <h2 class="section-title">Recent Posts</h2>
-      <a href="{{ '/posts/' | relative_url }}" class="btn btn-outline-primary btn-sm">View All</a>
+      <a href="{{ '/posts/' | relative_url }}" class="view-all-btn">View All →</a>
     </div>
     
-    <div id="post-list">
+    <div class="posts-list">
       {% assign posts = site.posts | limit: 5 %}
       {% for post in posts %}
-        <article class="card-wrapper card mb-3">
-          <a href="{{ post.url | relative_url }}" class="post-preview row g-0">
-            <div class="col-12">
-              <div class="card-body">
-                <h3 class="card-title">{{ post.title }}</h3>
-                
-                <div class="card-text content mt-2 mb-3">
-                  <p>
-                    {{ post.content | markdownify | strip_html | truncate: 150 | escape }}
-                  </p>
-                </div>
-                
-                <div class="post-meta">
-                  <i class="far fa-calendar fa-fw me-1"></i>
-                  {% include datetime.html date=post.date lang=lang %}
-                  
-                  {% if post.categories.size > 0 %}
-                    <i class="far fa-folder-open fa-fw ms-3 me-1"></i>
-                    <span class="categories">
-                      {% for category in post.categories %}
-                        {{ category }}
-                        {%- unless forloop.last -%},{%- endunless -%}
-                      {% endfor %}
-                    </span>
-                  {% endif %}
-                </div>
-              </div>
+        <article class="post-card">
+          <a href="{{ post.url | relative_url }}" class="post-card-link">
+            <h3 class="post-card-title">{{ post.title }}</h3>
+            
+            <p class="post-card-excerpt">
+              {{ post.content | markdownify | strip_html | truncate: 150 }}
+            </p>
+            
+            <div class="post-card-meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">
+                <i class="far fa-calendar"></i>
+                {{ post.date | date: "%B %d, %Y" }}
+              </time>
+              
+              {% if post.categories.size > 0 %}
+                <span class="post-card-categories">
+                  <i class="far fa-folder"></i>
+                  {% for category in post.categories %}
+                    {{ category }}{% unless forloop.last %}, {% endunless %}
+                  {% endfor %}
+                </span>
+              {% endif %}
             </div>
           </a>
         </article>
@@ -109,33 +101,54 @@ refactor: true
   <!-- About Me Card Section -->
   {% assign about_page = site.tabs | where_exp: "tab", "tab.url contains '/about/'" | first %}
   {% if about_page %}
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="section-title">About Me</h2>
-  </div>
-  <section class="about-card-section mb-5">
-    <a href="{{ '/about/' | relative_url }}" class="about-card-link">
-      <div class="about-card">
-        <div class="about-card-image">
-          <img src="{{ about_page.thumbnail | default: site.data.personal.images.avatar | relative_url }}" alt="{{ site.data.personal.name }}">
-        </div>
-        <div class="about-card-content">
-          <h3 class="about-card-title">{{ site.data.personal.name }}</h3>
-          <p class="about-card-description">{{ site.data.personal.bio.short }}</p>
-          <span class="about-card-cta">View Full Profile →</span>
-        </div>
+    <section class="about-section">
+      <div class="section-header">
+        <h2 class="section-title">{{ about_page.title | default: "About Me" }}</h2>
       </div>
-    </a>
-  </section>
+      
+      <a href="{{ '/about/' | relative_url }}" class="about-card-link">
+        <div class="about-card">
+          <div class="about-card-image">
+            <img src="{{ about_page.thumbnail | default: site.data.personal.images.avatar | relative_url }}" 
+                 alt="{{ site.data.personal.name }}">
+          </div>
+          <div class="about-card-content">
+            <h3>{{ site.data.personal.name }}</h3>
+            <p>{{ about_page.card_description | default: site.data.personal.bio.short }}</p>
+            <span class="about-card-cta">View Full Profile →</span>
+          </div>
+        </div>
+      </a>
+    </section>
   {% endif %}
 </div>
 
 <style>
+/* Section Spacing */
+section {
+  margin-bottom: 4rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .section-title {
   font-size: 1.75rem;
   font-weight: 600;
   margin: 0;
 }
 
+.view-all-btn {
+  color: var(--link-color);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Projects Grid */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -143,36 +156,67 @@ refactor: true
 }
 
 /* Recent Posts */
-.post-preview {
-  text-decoration: none;
-  color: inherit;
-  border: none !important;
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.post-preview:hover .card-title {
+.post-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.post-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.post-card-title {
+  font-size: 1.35rem;
+  color: var(--heading-color);
+  margin-bottom: 0.75rem;
+}
+
+.post-card-link:hover .post-card-title {
   color: var(--link-color);
 }
 
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.post-card-excerpt {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
-.post-meta {
+.post-card-meta {
   font-size: 0.875rem;
-  color: var(--text-muted-color);
+  color: var(--text-color);
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.post-card-meta i {
+  margin-right: 0.25rem;
 }
 
 /* About Card */
 .about-card-link {
   text-decoration: none;
-  border: none !important;
 }
 
 .about-card {
   background: var(--card-bg);
-  border: 1px solid var(--card-border-color);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 2rem;
   display: flex;
@@ -186,10 +230,6 @@ refactor: true
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.about-card-image {
-  flex-shrink: 0;
-}
-
 .about-card-image img {
   width: 120px;
   height: 120px;
@@ -198,19 +238,14 @@ refactor: true
   border: 3px solid var(--link-color);
 }
 
-.about-card-content {
-  flex: 1;
-}
-
-.about-card-title {
+.about-card-content h3 {
   margin: 0 0 0.5rem 0;
   font-size: 1.5rem;
   color: var(--heading-color);
-  font-weight: 600;
 }
 
-.about-card-description {
-  color: var(--text-muted-color);
+.about-card-content p {
+  color: var(--text-color);
   margin: 0 0 0.75rem 0;
   line-height: 1.6;
 }
@@ -218,8 +253,6 @@ refactor: true
 .about-card-cta {
   color: var(--link-color);
   font-weight: 500;
-  display: inline-flex;
-  align-items: center;
 }
 
 @media (max-width: 768px) {

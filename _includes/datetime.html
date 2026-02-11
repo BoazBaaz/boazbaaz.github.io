@@ -1,0 +1,8 @@
+{% comment %}
+Simple datetime display
+Usage: {% include datetime.html date=post.date %}
+{% endcomment %}
+
+<time datetime="{{ include.date | date_to_xmlschema }}">
+  {{ include.date | date: "%b %d, %Y" }}
+</time>

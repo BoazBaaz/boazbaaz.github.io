@@ -1,87 +1,89 @@
 ---
-layout: page
+layout: default
 ---
 
-<div class="project-filter-dropdown">
-  <button id="filter-toggle">Filters ▼</button>
-  <div id="filter-menu" class="filter-menu" style="display: none;">
-    <button id="filter-all" class="filter-all-btn">All</button>
-    
-    <div class="filter-section">
-      <h4>Categories</h4>
-      {% assign project_categories = site.projects | map: "categories" | join: "," | split: "," | uniq | sort %}
-      {% for category in project_categories %}
-        {% if category != "" %}
+<div class="projects-page">
+  <div class="project-filter-dropdown">
+    <button id="filter-toggle">Filters ▼</button>
+    <div id="filter-menu" class="filter-menu" style="display: none;">
+      <button id="filter-all" class="filter-all-btn">All</button>
+      
+      <div class="filter-section">
+        <h4>Categories</h4>
+        {% assign project_categories = site.projects | map: "categories" | join: "," | split: "," | uniq | sort %}
+        {% for category in project_categories %}
+          {% if category != "" %}
+            <label>
+              <input type="checkbox" class="filter-checkbox filter-category" value="{{ category | slugify }}">
+              {{ category }}
+            </label>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <div class="filter-section">
+        <h4>Tags</h4>
+        {% for tag_entry in site.data.tags %}
           <label>
-            <input type="checkbox" class="filter-checkbox filter-category" value="{{ category | slugify }}">
-            {{ category }}
+            <input type="checkbox" class="filter-checkbox filter-tag" value="{{ tag_entry[0] }}">
+            {{ tag_entry[1].label | default: tag_entry[0] }}
           </label>
-        {% endif %}
-      {% endfor %}
-    </div>
-    
-    <div class="filter-section">
-      <h4>Tags</h4>
-      {% for tag_entry in site.data.tags %}
-        <label>
-          <input type="checkbox" class="filter-checkbox filter-tag" value="{{ tag_entry[0] }}">
-          {{ tag_entry[1].label | default: tag_entry[0] }}
-        </label>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-
-<div class="projects-grid">
-  {% assign sorted_projects = site.projects | sort: 'date' | reverse %}
-  {% for project in sorted_projects %}
-    <div class="card-wrapper{% if project.featured %} featured{% endif %}" 
-         data-categories="{{ project.categories | join: ',' | slugify }}"
-         data-tags="{{ project.tags | join: ',' }}">
-      <div class="project-card">
-        {% if project.thumbnail %}
-          <div class="project-thumbnail">
-            <a href="{{ project.url | relative_url }}">
-              <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
-            </a>
-          </div>
-        {% endif %}
-        
-        <div class="project-content">
-          <h2 class="project-title">
-            <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-          </h2>
-          
-          <p class="project-description">{{ project.description }}</p>
-          
-          {% if project.team-size %}
-            <div class="project-meta">
-              <span class="team-badge">
-                <i class="fas fa-users"></i> {{ project.team-size }}
-              </span>
-            </div>
-          {% endif %}
-          
-          {% if project.tags %}
-            <div class="project-tags">
-              {% for tag in project.tags %}
-                <span class="project-tag {{ tag | slugify }}">
-                  {% assign tag_data = site.data.tags[tag] %}
-                  {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                </span>
-              {% endfor %}
-            </div>
-          {% endif %}
-          
-          {% if project.date %}
-            <div class="project-date">
-              {{ project.date | date: "%B %Y" }}
-            </div>
-          {% endif %}
-        </div>
+        {% endfor %}
       </div>
     </div>
-  {% endfor %}
+  </div>
+
+  <div class="projects-grid">
+    {% assign sorted_projects = site.projects | sort: 'date' | reverse %}
+    {% for project in sorted_projects %}
+      <div class="card-wrapper{% if project.featured %} featured{% endif %}" 
+           data-categories="{{ project.categories | join: ',' | slugify }}"
+           data-tags="{{ project.tags | join: ',' }}">
+        <div class="project-card">
+          {% if project.thumbnail %}
+            <div class="project-thumbnail">
+              <a href="{{ project.url | relative_url }}">
+                <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+              </a>
+            </div>
+          {% endif %}
+          
+          <div class="project-content">
+            <h2 class="project-title">
+              <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+            </h2>
+            
+            <p class="project-description">{{ project.description }}</p>
+            
+            {% if project.team-size %}
+              <div class="project-meta">
+                <span class="team-badge">
+                  <i class="fas fa-users"></i> {{ project.team-size }}
+                </span>
+              </div>
+            {% endif %}
+            
+            {% if project.tags %}
+              <div class="project-tags">
+                {% for tag in project.tags %}
+                  <span class="project-tag {{ tag | slugify }}">
+                    {% assign tag_data = site.data.tags[tag] %}
+                    {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                  </span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            
+            {% if project.date %}
+              <div class="project-date">
+                {{ project.date | date: "%B %Y" }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
 <script src="{{ '/assets/js/filter_projects.js' | relative_url }}"></script>
