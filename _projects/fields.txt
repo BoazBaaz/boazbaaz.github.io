@@ -28,7 +28,7 @@ layout: project
 ===== PROJECT DISPLAY FIELDS =====
 
 description: "A brief description of this project"
-  - Shows on project cards
+  - Shows on project cards and project page header
   - 1-2 sentences recommended
 
 thumbnail: /assets/img/project-name/thumbnail.jpg
@@ -58,10 +58,28 @@ featured: true
 
 ===== PROJECT METADATA FIELDS =====
 
+start_date: 2024-10-01
+  - Project start date
+  - Format: YYYY-MM-DD
+
+end_date: 2025-01-15
+  - Project completion date
+  - Format: YYYY-MM-DD
+  - Can be omitted if still in progress
+
 team-size: 6
   - Number of people on the project
   - Shows as badge with icon (👥 6)
   - Use 1 for solo projects
+
+team:
+  programmer: [bob, lorry]
+  artist: [laysha, mike]
+  designer: [alex]
+  - Team members organized by role
+  - Role names reference _data/roles.yml
+  - Can use: programmer, artist, designer, producer, etc.
+  - Can use leads: programmer-lead, artist-lead, designer-lead
 
 duration: "3 months"
   - How long the project took

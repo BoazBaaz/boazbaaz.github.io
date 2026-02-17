@@ -109,12 +109,12 @@ layout: default
       <a href="{{ '/about/' | relative_url }}" class="about-card-link">
         <div class="about-card">
           <div class="about-card-image">
-            <img src="{{ about_page.thumbnail | default: site.data.personal.images.avatar | relative_url }}" 
-                 alt="{{ site.data.personal.name }}">
+            <img src="{{ about_page.thumbnail | default: site.data.profile.images.avatar | relative_url }}" 
+                 alt="{{ site.data.profile.name }}">
           </div>
           <div class="about-card-content">
-            <h3>{{ site.data.personal.name }}</h3>
-            <p>{{ about_page.card_description | default: site.data.personal.bio.short }}</p>
+            <h3>{{ site.data.profile.name }}</h3>
+            <p>{{ about_page.card_description | default: site.data.profile.bio.short }}</p>
             <span class="about-card-cta">View Full Profile →</span>
           </div>
         </div>

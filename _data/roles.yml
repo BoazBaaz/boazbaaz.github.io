@@ -1,0 +1,91 @@
+# Production Roles
+# Defines common team roles with display names and icons
+
+# Leadership Roles
+producer:
+  name: "Producer"
+  icon: "fas fa-bullhorn"
+  color: "#E91E63"
+
+programmer-lead:
+  name: "Lead Programmer"
+  icon: "fas fa-code"
+  color: "#9C27B0"
+
+artist-lead:
+  name: "Lead Artist"
+  icon: "fas fa-palette"
+  color: "#FF9800"
+
+designer-lead:
+  name: "Lead Designer"
+  icon: "fas fa-pencil-ruler"
+  color: "#00BCD4"
+
+# Development Roles
+programmer:
+  name: "Programmer"
+  icon: "fas fa-laptop-code"
+  color: "#673AB7"
+
+artist:
+  name: "Artist"
+  icon: "fas fa-brush"
+  color: "#FF5722"
+
+designer:
+  name: "Designer"
+  icon: "fas fa-gamepad"
+  color: "#03A9F4"
+
+# Specialized Roles
+technical-artist:
+  name: "Technical Artist"
+  icon: "fas fa-cogs"
+  color: "#FFC107"
+
+sound-designer:
+  name: "Sound Designer"
+  icon: "fas fa-volume-up"
+  color: "#4CAF50"
+
+qa:
+  name: "QA Tester"
+  icon: "fas fa-bug"
+  color: "#8BC34A"
+
+ui-ux:
+  name: "UI/UX Designer"
+  icon: "fas fa-window-restore"
+  color: "#00ACC1"
+
+# Specialized Programming
+gameplay-programmer:
+  name: "Gameplay Programmer"
+  icon: "fas fa-dice-d20"
+  color: "#7E57C2"
+
+engine-programmer:
+  name: "Engine Programmer"
+  icon: "fas fa-cog"
+  color: "#5E35B1"
+
+tools-programmer:
+  name: "Tools Programmer"
+  icon: "fas fa-wrench"
+  color: "#512DA8"
+
+graphics-programmer:
+  name: "Graphics Programmer"
+  icon: "fas fa-cube"
+  color: "#3F51B5"
+
+ai-programmer:
+  name: "AI Programmer"
+  icon: "fas fa-brain"
+  color: "#2196F3"
+
+network-programmer:
+  name: "Network Programmer"
+  icon: "fas fa-network-wired"
+  color: "#0288D1"

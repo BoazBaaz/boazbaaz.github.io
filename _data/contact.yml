@@ -1,17 +1,9 @@
-# Contact options for sidebar
-# URLs are defined in _data/personal.yml for consistency
+# Contact Information
+# Email and social media links
 
-- type: github
-  icon: "fab fa-github"
+email: "boas.bas@gmail.com"
 
-- type: linkedin
-  icon: "fab fa-linkedin"
-  url: "https://www.linkedin.com/in/boas-bas-van-der-veen/"
-
-- type: itch
-  icon: "fab fa-itch-io"
-  url: "https://boazbaaz.itch.io/"
-
-- type: email
-  icon: "fas fa-envelope"
-  noblank: false
+links:
+  github: "https://github.com/BoazBaaz"
+  linkedin: "https://www.linkedin.com/in/boas-bas-van-der-veen/"
+  itch: "https://boazbaaz.itch.io/"

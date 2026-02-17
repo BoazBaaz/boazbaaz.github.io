@@ -28,6 +28,7 @@ github:
   username: BoazBaaz
 
 # Social links - used in footer, SEO metadata
+# Contact details are in _data/contact.yml and _data/profile.yml
 social:
   name: Boas-Bas van der Veen
   email: boas.bas@gmail.com
@@ -53,9 +54,12 @@ avatar: assets/img/profile_picture_sqr.jpg
 # Table of contents - shows on right sidebar of posts
 toc: true
 
-# Comments - disabled (to enable: set provider to 'giscus' and configure)
-comments:
-  provider:
+plugins:
+  - jekyll-archives
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-redirect-from
 
 # PWA (Progressive Web App) - makes site installable
 pwa:
@@ -63,57 +67,40 @@ pwa:
   cache:
     enabled: true
 
-# Pagination - number of posts per page on blog listing
-paginate: 10
-
 # Base URL - leave empty unless site is in a subdirectory
 baseurl: ""
 
 # ==========================================
 # COLLECTIONS
 # ==========================================
-# Collections are custom content types beyond posts/pages
-
 collections:
-  # tabs collection - your navigation pages (projects.md, about.md, etc.)
   tabs:
     output: true
     sort_by: order
-  
-  # projects collection - your portfolio projects in _projects/
   projects:
     output: true
     sort_by: date
     permalink: /projects/:title/
-  
-  # NOTE: _posts is built-in to Jekyll, don't declare it here
+  # NOTE: _posts is built-in to Jekyll
 
 # ==========================================
 # DEFAULT SETTINGS
 # ==========================================
-# Automatic front matter for content types
-
 defaults:
-  # Settings for all blog posts
   - scope:
       path: ""
       type: posts
     values:
       layout: post
-      comments: false
       toc: true
       permalink: /posts/:title/
-  
-  # Settings for all projects
   - scope:
       path: ""
       type: projects
     values:
-      layout: page  # Projects use page layout (no project.html exists)
-      comments: false
-      toc: true
-  
-  # Settings for all tabs (navigation pages)
+      layout: project
+      toc: false
+      permalink: /projects/:title/
   - scope:
       path: ""
       type: tabs

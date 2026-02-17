@@ -1,0 +1,16 @@
+# Profile Information
+name: "Boas-Bas van der Veen"
+birthday: "2002-12-26"  # YYYY-MM-DD
+location: "Amersfoort, Netherlands"
+university: "Breda University of Applied Sciences"
+university_short: "BUAS"
+year: 3
+specialization: "Engine & Tools Programming"
+
+bio:
+  short: "Third-year Engine & Tools Programming student at BUAS specializing in C++ and Unreal Engine development"
+  long: "Graduating from Breda University of Applied Sciences with a degree in Creative Media and Game Technologies, specializing in engine and tools programming. Experienced in custom engine development, Unreal Engine plugins, and graphics programming."
+
+images:
+  avatar: "/assets/img/profile_picture_sqr.jpg"
+  profile: "/assets/img/profile_picture.jpg"
