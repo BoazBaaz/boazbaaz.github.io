@@ -1,10 +1,9 @@
 ---
 title: "Pirate Game"
-date: 2021-11-06
 start_date: 2021-11-02
 end_date: 2021-11-06
 description: "Complete solo game featuring NavMesh AI, object pooling, and procedural world generation"
-# thumbnail: /assets/img/projects/pirate-game.png
+thumbnail: /assets/img/projects/placeholder.jpg
 categories:
   - Game
 tags:
@@ -14,7 +13,6 @@ tags:
   - gameplay
 featured: false
 
-# Team
 team:
   programmer:
     - boas-bas
@@ -22,7 +20,6 @@ team:
 team-size: 1
 duration: "1 week"
 role: "Solo Developer"
-status: "Completed"
 
 links:
   - name: GitHub Repository

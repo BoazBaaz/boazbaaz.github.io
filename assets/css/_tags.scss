@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 // Base tag styling
 .project-tag {
@@ -17,34 +17,20 @@
   background-color: #6c757d !important;
   text-decoration: none !important;
   transition: opacity 0.2s, transform 0.1s;
-  
-  &:hover {
-    opacity: 0.8;
-    transform: translateY(-1px);
-  }
-  
-  // Programming Languages
+
+  &:hover { opacity: 0.8; transform: translateY(-1px); }
+
   &.cpp { background-color: $color-cpp !important; }
   &.csharp { background-color: $color-csharp !important; }
   &.python { background-color: $color-python !important; }
-  
-  // Engines
   &.unreal-engine { background-color: $color-unrealengine !important; }
   &.unity { background-color: $color-unity !important; }
   &.godot { background-color: $color-godot !important; }
-  
-  // Graphics APIs
   &.opengl { background-color: $color-opengl !important; }
   &.vulkan { background-color: $color-vulkan !important; }
   &.directx { background-color: $color-directx !important; }
-  
-  // Build Systems
   &.cmake { background-color: $color-cmake !important; }
-  
-  // Software
   &.blender { background-color: $color-blender !important; }
-  
-  // Technical Topics
   &.gameplay { background-color: $color-gameplay !important; }
   &.graphics { background-color: $color-graphics !important; }
   &.shader { background-color: $color-shader !important; }
@@ -55,23 +41,14 @@
   &.audio { background-color: $color-audio !important; }
   &.optimization { background-color: $color-optimization !important; }
   &.architecture { background-color: $color-architecture !important; }
-  &.engine { 
-    background-color: $color-engine !important;
-    color: #333 !important;
-  }
+  &.engine { background-color: $color-engine !important; color: #333 !important; }
   &.procedural-generation { background-color: $color-proceduralgeneration !important; }
   &.visual-scripting { background-color: $color-visualscripting !important; }
-  
-  // Project Types
   &.plugin { background-color: $color-plugin !important; }
   &.tool { background-color: $color-tool !important; }
   &.editor { background-color: $color-editor !important; }
-  
-  // Team Composition
   &.team { background-color: $color-team !important; }
   &.solo { background-color: $color-solo !important; }
-  
-  // Organization
   &.breda-university { background-color: $color-bredauniversity !important; }
   &.blog { background-color: $color-blog !important; }
 }

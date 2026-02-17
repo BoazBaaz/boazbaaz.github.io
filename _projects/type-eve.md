@@ -1,10 +1,9 @@
 ---
 title: "Type.EVE"
-date: 2021-01-29
 start_date: 2021-01-04
 end_date: 2021-01-29
 description: "AI project implementing complex behavior tree system for strategic unit control and decision-making"
-# thumbnail: /assets/img/projects/type-eve.png
+thumbnail: /assets/img/projects/placeholder.jpg
 categories:
   - Game
 tags:
@@ -14,7 +13,6 @@ tags:
   - team
 featured: false
 
-# Team
 team:
   programmer:
     - boas-bas
@@ -23,7 +21,6 @@ team:
 team-size: 2
 duration: "4 weeks"
 role: "AI Programmer"
-status: "Completed"
 
 links:
   - name: GitLab Repository

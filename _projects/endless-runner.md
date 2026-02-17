@@ -1,10 +1,9 @@
 ---
 title: "Endless Runner"
-date: 2021-02-18
 start_date: 2021-02-08
 end_date: 2021-02-18
 description: "Team project featuring a vertical endless runner with dynamic platform spawning using bitshift collision detection"
-# thumbnail: /assets/img/projects/endless-runner.png 
+thumbnail: /assets/img/projects/placeholder.jpg
 categories:
   - Game
 tags:
@@ -13,7 +12,6 @@ tags:
   - team
 featured: false
 
-# Team
 team:
   programmer:
     - boas-bas
@@ -25,7 +23,6 @@ team:
 team-size: 4
 duration: "2 weeks"
 role: "Programmer"
-status: "Completed"
 
 links:
   - name: GitHub Repository

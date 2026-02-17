@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 ---
 
 <div class="projects-page">
@@ -34,7 +34,7 @@ layout: page
   </div>
 
   <div class="projects-grid">
-    {% assign sorted_projects = site.projects | sort: 'date' | reverse %}
+    {% assign sorted_projects = site.projects | sort: 'end_date' | reverse %}
     {% for project in sorted_projects %}
       <div class="card-wrapper{% if project.featured %} featured{% endif %}"
            data-categories="{{ project.categories | join: ',' | slugify }}"
@@ -74,9 +74,13 @@ layout: page
               </div>
             {% endif %}
 
-            {% if project.date %}
+            {% if project.start_date and project.end_date %}
               <div class="project-date">
-                {{ project.date | date: "%B %Y" }}
+                {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
+              </div>
+            {% elsif project.end_date %}
+              <div class="project-date">
+                {{ project.end_date | date: "%b %Y" }}
               </div>
             {% endif %}
           </div>

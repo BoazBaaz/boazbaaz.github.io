@@ -3,7 +3,6 @@ layout: default
 ---
 
 <div id="home-wrapper">
-  <!-- Featured Projects Section -->
   <section class="home-section">
     <div class="section-header">
       <h2 class="section-title">Featured Projects</h2>
@@ -11,9 +10,9 @@ layout: default
     </div>
 
     <div class="projects-grid">
-      {% assign featured_projects = site.projects | where: "featured", true | sort: 'date' | reverse | limit: 3 %}
+      {% assign featured_projects = site.projects | where: "featured", true | sort: 'end_date' | reverse | limit: 3 %}
       {% if featured_projects.size == 0 %}
-        {% assign featured_projects = site.projects | sort: 'date' | reverse | limit: 3 %}
+        {% assign featured_projects = site.projects | sort: 'end_date' | reverse | limit: 3 %}
       {% endif %}
 
       {% for project in featured_projects %}
@@ -52,6 +51,12 @@ layout: default
                   {% endfor %}
                 </div>
               {% endif %}
+
+              {% if project.start_date and project.end_date %}
+                <div class="project-date">
+                  {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -59,7 +64,6 @@ layout: default
     </div>
   </section>
 
-  <!-- Recent Posts Section -->
   <section class="home-section">
     <div class="section-header">
       <h2 class="section-title">Recent Posts</h2>
@@ -71,6 +75,11 @@ layout: default
       {% for post in recent_posts %}
         <article class="post-preview">
           <a href="{{ post.url | relative_url }}" class="post-preview-link">
+            {% if post.thumbnail %}
+              <div class="post-preview-thumbnail">
+                <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}">
+              </div>
+            {% endif %}
             <h3 class="post-preview-title">{{ post.title }}</h3>
             <p class="post-preview-excerpt">
               {{ post.content | markdownify | strip_html | truncate: 150 }}

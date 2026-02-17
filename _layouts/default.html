@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {% seo %}
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/favicons/apple-touch-icon.png' | relative_url }}">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="site-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-profile">
+          <a href="{{ '/' | relative_url }}">
+            <img src="{{ site.avatar | relative_url }}" alt="{{ site.data.profile.name }}" class="sidebar-avatar">
+          </a>
+          <h1 class="sidebar-name">{{ site.data.profile.name }}</h1>
+          <p class="sidebar-bio">{{ site.data.profile.bio.short }}</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>
+                <i class="fas fa-home"></i> Home
+              </a>
+            </li>
+            {% assign sorted_tabs = site.tabs | sort: 'order' %}
+            {% for tab in sorted_tabs %}
+              {% if tab.order %}
+                <li>
+                  <a href="{{ tab.url | relative_url }}"
+                     {% if page.url == tab.url %}class="active"{% endif %}>
+                    {% if tab.icon %}<i class="{{ tab.icon }}"></i> {% endif %}
+                    {{ tab.title | default: tab.name }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            <li>
+              <a href="{{ 'assets/docs/boas-bas-van-der-veen-resume.pdf' | relative_url }}" target="_blank">
+                <i class="fas fa-file-pdf"></i> Resume
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-social">
+          {% if site.data.contact.links.github %}
+            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.linkedin %}
+            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.itch %}
+            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i></a>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile header -->
+    <header class="mobile-header">
+      <button class="sidebar-toggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+      <span class="mobile-title">{{ site.data.profile.name }}</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-wrapper">
+        {{ content }}
+      </div>
+
+      <footer class="site-footer">
+        <p>&copy; {{ site.time | date: '%Y' }} {{ site.data.profile.name }}. All rights reserved.</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Mobile sidebar toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.querySelector('.sidebar-toggle');
+      const sidebar = document.querySelector('.sidebar');
+      if (toggle && sidebar) {
+        toggle.addEventListener('click', function() {
+          sidebar.classList.toggle('open');
+        });
+        document.addEventListener('click', function(e) {
+          if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

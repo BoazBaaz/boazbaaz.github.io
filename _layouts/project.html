@@ -1,114 +1,114 @@
 ---
-layout: page
+layout: default
 ---
 
-<div class="project-meta-bar">
-  {% if page.start_date and page.end_date %}
-    <span class="project-dates">
-      <i class="far fa-calendar"></i>
-      {{ page.start_date | date: "%B %Y" }} - {{ page.end_date | date: "%B %Y" }}
-    </span>
-  {% elsif page.date %}
-    <span class="project-dates">
-      <i class="far fa-calendar"></i>
-      {{ page.date | date: "%B %Y" }}
-    </span>
-  {% endif %}
+<article>
+  <header class="page-header">
+    <h1>{{ page.title }}</h1>
+  </header>
 
-  {% if page.status %}
-    <span class="project-status status-{{ page.status | slugify }}">
-      {{ page.status }}
-    </span>
-  {% endif %}
-
-  {% if page.duration %}
-    <span class="project-duration">
-      <i class="far fa-clock"></i> {{ page.duration }}
-    </span>
-  {% endif %}
-
-  {% if page.role %}
-    <span class="project-role">
-      <i class="fas fa-user-tag"></i> {{ page.role }}
-    </span>
-  {% endif %}
-
-  {% if page.team-size %}
-    <span class="team-size-badge">
-      <i class="fas fa-users"></i> {{ page.team-size }} people
-    </span>
-  {% endif %}
-</div>
-
-{% if page.categories.size > 0 %}
-  <div class="project-categories">
-    <i class="far fa-folder"></i>
-    {% for category in page.categories %}
-      <span class="category-badge">{{ category }}</span>{% unless forloop.last %}, {% endunless %}
-    {% endfor %}
-  </div>
-{% endif %}
-
-{% if page.tags.size > 0 %}
-  <div class="project-tags-header">
-    {% for tag in page.tags %}
-      <span class="project-tag {{ tag | slugify }}">
-        {% assign tag_data = site.data.tags[tag] %}
-        {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+  <div class="project-meta-bar">
+    {% if page.start_date and page.end_date %}
+      <span class="project-dates">
+        <i class="far fa-calendar"></i>
+        {{ page.start_date | date: "%B %Y" }} - {{ page.end_date | date: "%B %Y" }}
       </span>
-    {% endfor %}
+    {% elsif page.end_date %}
+      <span class="project-dates">
+        <i class="far fa-calendar"></i>
+        {{ page.end_date | date: "%B %Y" }}
+      </span>
+    {% endif %}
+
+    {% if page.duration %}
+      <span class="project-duration">
+        <i class="far fa-clock"></i> {{ page.duration }}
+      </span>
+    {% endif %}
+
+    {% if page.role %}
+      <span class="project-role">
+        <i class="fas fa-user-tag"></i> {{ page.role }}
+      </span>
+    {% endif %}
+
+    {% if page.team-size %}
+      <span class="team-size-badge">
+        <i class="fas fa-users"></i> {{ page.team-size }} people
+      </span>
+    {% endif %}
   </div>
-{% endif %}
 
-{% if page.description %}
-  <p class="project-lead">{{ page.description }}</p>
-{% endif %}
-
-<hr>
-
-{% if page.team %}
-  <div class="project-team">
-    <h2>Team</h2>
-    <div class="team-roles">
-      {% for role in page.team %}
-        {% assign role_key = role[0] %}
-        {% assign members = role[1] %}
-        {% assign role_data = site.data.roles[role_key] %}
-
-        <div class="team-role">
-          <h3 class="role-name">
-            {% if role_data %}
-              <i class="{{ role_data.icon }}"></i>
-              {{ role_data.name }}
-            {% else %}
-              {{ role_key | capitalize }}
-            {% endif %}
-          </h3>
-          <ul class="role-members">
-            {% for member in members %}
-              <li>{{ member | capitalize }}</li>
-            {% endfor %}
-          </ul>
-        </div>
+  {% if page.categories.size > 0 %}
+    <div class="project-categories">
+      <i class="far fa-folder"></i>
+      {% for category in page.categories %}
+        <span class="category-badge">{{ category }}</span>{% unless forloop.last %}, {% endunless %}
       {% endfor %}
     </div>
-  </div>
-{% endif %}
+  {% endif %}
 
-<div class="project-body">
-  {{ content }}
-</div>
-
-{% if page.links %}
-  <div class="project-links">
-    <h2>Links</h2>
-    <div class="project-links-list">
-      {% for link in page.links %}
-        <a href="{{ link.url }}" target="_blank" rel="noopener" class="project-link-btn">
-          <i class="{{ link.icon | default: 'fas fa-link' }}"></i>
-          {{ link.name }}
-        </a>
+  {% if page.tags.size > 0 %}
+    <div class="project-tags-header">
+      {% for tag in page.tags %}
+        <span class="project-tag {{ tag | slugify }}">
+          {% assign tag_data = site.data.tags[tag] %}
+          {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+        </span>
       {% endfor %}
     </div>
+  {% endif %}
+
+  {% if page.description %}
+    <p class="project-lead">{{ page.description }}</p>
+  {% endif %}
+
+  <hr>
+
+  {% if page.team %}
+    <div class="project-team">
+      <h2>Team</h2>
+      <div class="team-roles">
+        {% for role in page.team %}
+          {% assign role_key = role[0] %}
+          {% assign members = role[1] %}
+          {% assign role_data = site.data.roles[role_key] %}
+
+          <div class="team-role">
+            <h3 class="role-name">
+              {% if role_data %}
+                <i class="{{ role_data.icon }}"></i>
+                {{ role_data.name }}
+              {% else %}
+                {{ role_key | capitalize }}
+              {% endif %}
+            </h3>
+            <ul class="role-members">
+              {% for member in members %}
+                <li>{{ member | capitalize }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="project-body">
+    {{ content }}
   </div>
-{% endif %}
+
+  {% if page.links %}
+    <div class="project-links">
+      <h2>Links</h2>
+      <div class="project-links-list">
+        {% for link in page.links %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener" class="project-link-btn">
+            <i class="{{ link.icon | default: 'fas fa-link' }}"></i>
+            {{ link.name }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</article>

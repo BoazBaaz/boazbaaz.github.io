@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 ---
 
 <div class="posts-page">
@@ -39,6 +39,11 @@ layout: page
                data-categories="{{ post.categories | join: ',' | slugify }}"
                data-tags="{{ post.tags | join: ',' }}">
         <a href="{{ post.url | relative_url }}" class="post-preview-link">
+          {% if post.thumbnail %}
+            <div class="post-preview-thumbnail">
+              <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}">
+            </div>
+          {% endif %}
           <h2 class="post-preview-title">{{ post.title }}</h2>
           <p class="post-preview-excerpt">
             {{ post.content | markdownify | strip_html | truncate: 200 }}

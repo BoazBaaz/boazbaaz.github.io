@@ -1,0 +1,40 @@
+---
+layout: default
+---
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        <i class="far fa-calendar"></i>
+        {{ page.date | date: "%B %d, %Y" }}
+      </time>
+
+      {% if page.categories.size > 0 %}
+        <span class="post-categories">
+          <i class="far fa-folder"></i>
+          {% for category in page.categories %}
+            {{ category }}{% unless forloop.last %}, {% endunless %}
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+
+    {% if page.tags.size > 0 %}
+      <div class="post-tags">
+        {% for tag in page.tags %}
+          <span class="project-tag {{ tag | slugify }}">
+            {% assign tag_data = site.data.tags[tag] %}
+            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+          </span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>

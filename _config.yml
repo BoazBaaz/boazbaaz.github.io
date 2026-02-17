@@ -2,79 +2,34 @@
 # JEKYLL SITE CONFIGURATION
 # ==========================================
 
-theme: jekyll-theme-chirpy
-
-# LANGUAGE & TIMEZONE
 lang: en
 timezone: Europe/Amsterdam
 
-# ==========================================
-# SITE INFORMATION (SEO & Display)
-# ==========================================
-
-title: Portfolio - Boas-Bas van der Veen
-
+title: Boas-Bas van der Veen
 tagline: Third-year Game Programming student at Breda University of Applied Sciences
 
 description: >-
   Portfolio showcasing game development projects and technical blog posts by Boas-Bas van der Veen.
 
 url: "https://boazbaaz.github.io"
-
-github:
-  username: BoazBaaz
-
-social:
-  name: Boas-Bas van der Veen
-  email: boas.bas@gmail.com
-  links:
-    - https://www.linkedin.com/in/boas-bas-van-der-veen/
-    - https://github.com/BoazBaaz
-    - https://boazbaaz.itch.io/
-
-# ==========================================
-# APPEARANCE
-# ==========================================
-
-theme_mode: dark
-
 avatar: /assets/img/profile_picture_sqr.jpg
-
-# ==========================================
-# FEATURES
-# ==========================================
-
-toc: true
 
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-redirect-from
 
-pwa:
-  enabled: true
-  cache:
-    enabled: true
-
-paginate: 10
-
 baseurl: ""
 
-# ==========================================
-# COLLECTIONS
-# ==========================================
 collections:
   tabs:
     output: true
     sort_by: order
   projects:
     output: true
-    sort_by: date
+    sort_by: end_date
     permalink: /projects/:title/
 
-# ==========================================
-# DEFAULT SETTINGS
-# ==========================================
 defaults:
   - scope:
       path: ""
@@ -97,11 +52,8 @@ defaults:
       layout: page
       permalink: /:title/
 
-# ==========================================
-# BUILD SETTINGS
-# ==========================================
-
 sass:
+  sass_dir: assets/css
   style: compressed
 
 compress_html:
@@ -121,12 +73,6 @@ exclude:
   - README.md
   - LICENSE
   - "package*.json"
-
-
-
-# ==========================================
-# MARKDOWN SETTINGS
-# ==========================================
 
 kramdown:
   footnote_backlink: "&#8617;&#xfe0e;"

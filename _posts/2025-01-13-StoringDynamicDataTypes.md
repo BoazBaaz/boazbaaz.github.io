@@ -7,8 +7,7 @@ tags:
   - cpp
   - visual-scripting
   - breda-university
-media_subpath: /assets/img/
-image: buas_logo.png
+thumbnail: assets/img/posts/storing_dynamic_variables/buas_logo.png
 ---
 
 I am a second year student at [BUAS](https://www.buas.nl/en) and this is my blog post on how to store dynamically store any data type in a class.

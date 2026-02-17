@@ -1,10 +1,9 @@
 ---
 title: "ZombieZnake"
-date: 2021-02-05
 start_date: 2021-02-01
 end_date: 2021-02-05
 description: "International GameJam project combining snake mechanics with zombie theme, featuring custom grid-based movement system"
-# thumbnail: /assets/img/projects/zombieznake.png  
+thumbnail: /assets/img/projects/placeholder.jpg
 categories:
   - Game
 tags:
@@ -14,7 +13,6 @@ tags:
   - gameplay
 featured: false
 
-# Team (International - NL/Sweden)
 team:
   programmer:
     - boas-bas
@@ -27,7 +25,6 @@ team:
 team-size: 5
 duration: "5 days"
 role: "Programmer"
-status: "Completed"
 
 links:
   - name: GitHub Repository
