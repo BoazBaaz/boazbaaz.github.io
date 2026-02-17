@@ -2,6 +2,8 @@
 # JEKYLL SITE CONFIGURATION
 # ==========================================
 
+theme: jekyll-theme-chirpy
+
 # LANGUAGE & TIMEZONE
 lang: en
 timezone: Europe/Amsterdam
@@ -10,25 +12,18 @@ timezone: Europe/Amsterdam
 # SITE INFORMATION (SEO & Display)
 # ==========================================
 
-# Site title - shows in browser tab, sidebar, footer
 title: Portfolio - Boas-Bas van der Veen
 
-# Tagline - shows under title in sidebar
 tagline: Third-year Game Programming student at Breda University of Applied Sciences
 
-# Description - used by search engines and RSS feeds
 description: >-
   Portfolio showcasing game development projects and technical blog posts by Boas-Bas van der Veen.
 
-# Your site URL - MUST match your GitHub Pages URL
 url: "https://boazbaaz.github.io"
 
-# GitHub username - enables GitHub links/features
 github:
   username: BoazBaaz
 
-# Social links - used in footer, SEO metadata
-# Contact details are in _data/contact.yml and _data/profile.yml
 social:
   name: Boas-Bas van der Veen
   email: boas.bas@gmail.com
@@ -41,17 +36,14 @@ social:
 # APPEARANCE
 # ==========================================
 
-# Theme mode: 'dark', 'light', or empty (user can toggle)
 theme_mode: dark
 
-# Avatar image - shows in sidebar
-avatar: assets/img/profile_picture_sqr.jpg
+avatar: /assets/img/profile_picture_sqr.jpg
 
 # ==========================================
 # FEATURES
 # ==========================================
 
-# Table of contents - shows on right sidebar of posts
 toc: true
 
 plugins:
@@ -61,13 +53,13 @@ plugins:
   - jekyll-feed
   - jekyll-redirect-from
 
-# PWA (Progressive Web App) - makes site installable
 pwa:
   enabled: true
   cache:
     enabled: true
 
-# Base URL - leave empty unless site is in a subdirectory
+paginate: 10
+
 baseurl: ""
 
 # ==========================================
@@ -81,7 +73,6 @@ collections:
     output: true
     sort_by: date
     permalink: /projects/:title/
-  # NOTE: _posts is built-in to Jekyll
 
 # ==========================================
 # DEFAULT SETTINGS
@@ -112,11 +103,9 @@ defaults:
 # BUILD SETTINGS
 # ==========================================
 
-# SASS compilation - compressed = minified CSS for production
 sass:
   style: compressed
 
-# HTML compression - removes whitespace for smaller files
 compress_html:
   clippings: all
   comments: all
@@ -126,7 +115,6 @@ compress_html:
   ignore:
     envs: [development]
 
-# Files to exclude from build
 exclude:
   - "*.gem"
   - "*.gemspec"
@@ -139,13 +127,12 @@ exclude:
 # ==========================================
 # JEKYLL ARCHIVES PLUGIN
 # ==========================================
-# Auto-generates category and tag pages
 
 jekyll-archives:
   enabled: [categories, tags]
   layouts:
-    tag: tag            # Uses theme's tag.html layout
-    category: category  # Uses theme's category.html layout
+    tag: tag
+    category: category
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/

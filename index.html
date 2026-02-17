@@ -4,18 +4,18 @@ layout: default
 
 <div id="home-wrapper">
   <!-- Featured Projects Section -->
-  <section class="featured-projects">
+  <section class="home-section">
     <div class="section-header">
       <h2 class="section-title">Featured Projects</h2>
-      <a href="{{ '/projects/' | relative_url }}" class="view-all-btn">View All →</a>
+      <a href="{{ '/projects/' | relative_url }}" class="view-all-btn">View All &rarr;</a>
     </div>
-    
+
     <div class="projects-grid">
       {% assign featured_projects = site.projects | where: "featured", true | sort: 'date' | reverse | limit: 3 %}
       {% if featured_projects.size == 0 %}
         {% assign featured_projects = site.projects | sort: 'date' | reverse | limit: 3 %}
       {% endif %}
-      
+
       {% for project in featured_projects %}
         <div class="card-wrapper featured">
           <div class="project-card">
@@ -26,14 +26,14 @@ layout: default
                 </a>
               </div>
             {% endif %}
-            
+
             <div class="project-content">
               <h3 class="project-title">
                 <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
               </h3>
-              
+
               <p class="project-description">{{ project.description }}</p>
-              
+
               {% if project.team-size %}
                 <div class="project-meta">
                   <span class="team-badge">
@@ -41,7 +41,7 @@ layout: default
                   </span>
                 </div>
               {% endif %}
-              
+
               {% if project.tags %}
                 <div class="project-tags">
                   {% for tag in project.tags %}
@@ -60,31 +60,28 @@ layout: default
   </section>
 
   <!-- Recent Posts Section -->
-  <section class="recent-posts">
+  <section class="home-section">
     <div class="section-header">
       <h2 class="section-title">Recent Posts</h2>
-      <a href="{{ '/posts/' | relative_url }}" class="view-all-btn">View All →</a>
+      <a href="{{ '/posts/' | relative_url }}" class="view-all-btn">View All &rarr;</a>
     </div>
-    
+
     <div class="posts-list">
-      {% assign posts = site.posts | limit: 5 %}
-      {% for post in posts %}
-        <article class="post-card">
-          <a href="{{ post.url | relative_url }}" class="post-card-link">
-            <h3 class="post-card-title">{{ post.title }}</h3>
-            
-            <p class="post-card-excerpt">
+      {% assign recent_posts = site.posts | limit: 5 %}
+      {% for post in recent_posts %}
+        <article class="post-preview">
+          <a href="{{ post.url | relative_url }}" class="post-preview-link">
+            <h3 class="post-preview-title">{{ post.title }}</h3>
+            <p class="post-preview-excerpt">
               {{ post.content | markdownify | strip_html | truncate: 150 }}
             </p>
-            
-            <div class="post-card-meta">
+            <div class="post-preview-meta">
               <time datetime="{{ post.date | date_to_xmlschema }}">
                 <i class="far fa-calendar"></i>
                 {{ post.date | date: "%B %d, %Y" }}
               </time>
-              
               {% if post.categories.size > 0 %}
-                <span class="post-card-categories">
+                <span>
                   <i class="far fa-folder"></i>
                   {% for category in post.categories %}
                     {{ category }}{% unless forloop.last %}, {% endunless %}
@@ -97,168 +94,4 @@ layout: default
       {% endfor %}
     </div>
   </section>
-
-  <!-- About Me Card Section -->
-  {% assign about_page = site.tabs | where_exp: "tab", "tab.url contains '/about/'" | first %}
-  {% if about_page %}
-    <section class="about-section">
-      <div class="section-header">
-        <h2 class="section-title">{{ about_page.title | default: "About Me" }}</h2>
-      </div>
-      
-      <a href="{{ '/about/' | relative_url }}" class="about-card-link">
-        <div class="about-card">
-          <div class="about-card-image">
-            <img src="{{ about_page.thumbnail | default: site.data.profile.images.avatar | relative_url }}" 
-                 alt="{{ site.data.profile.name }}">
-          </div>
-          <div class="about-card-content">
-            <h3>{{ site.data.profile.name }}</h3>
-            <p>{{ about_page.card_description | default: site.data.profile.bio.short }}</p>
-            <span class="about-card-cta">View Full Profile →</span>
-          </div>
-        </div>
-      </a>
-    </section>
-  {% endif %}
 </div>
-
-<style>
-/* Section Spacing */
-section {
-  margin-bottom: 4rem;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.section-title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.view-all-btn {
-  color: var(--link-color);
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-/* Projects Grid */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Recent Posts */
-.posts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.post-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.post-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.post-card-title {
-  font-size: 1.35rem;
-  color: var(--heading-color);
-  margin-bottom: 0.75rem;
-}
-
-.post-card-link:hover .post-card-title {
-  color: var(--link-color);
-}
-
-.post-card-excerpt {
-  color: var(--text-color);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.post-card-meta {
-  font-size: 0.875rem;
-  color: var(--text-color);
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.post-card-meta i {
-  margin-right: 0.25rem;
-}
-
-/* About Card */
-.about-card-link {
-  text-decoration: none;
-}
-
-.about-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 0.75rem;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.about-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.about-card-image img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--link-color);
-}
-
-.about-card-content h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.5rem;
-  color: var(--heading-color);
-}
-
-.about-card-content p {
-  color: var(--text-color);
-  margin: 0 0 0.75rem 0;
-  line-height: 1.6;
-}
-
-.about-card-cta {
-  color: var(--link-color);
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .about-card {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-</style>

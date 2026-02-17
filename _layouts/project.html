@@ -1,302 +1,114 @@
 ---
-layout: default
+layout: page
 ---
 
-<article class="project">
-  <header class="project-header">
-    <h1 class="project-title">{{ page.title }}</h1>
-    
-    <div class="project-meta-bar">
-      {% if page.start_date and page.end_date %}
-        <span class="project-dates">
-          <i class="far fa-calendar"></i>
-          {{ page.start_date | date: "%B %Y" }} - {{ page.end_date | date: "%B %Y" }}
-        </span>
-      {% elsif page.date %}
-        <span class="project-dates">
-          <i class="far fa-calendar"></i>
-          {{ page.date | date: "%B %Y" }}
-        </span>
-      {% endif %}
-      
-      {% if page.status %}
-        <span class="project-status status-{{ page.status | slugify }}">
-          {{ page.status }}
-        </span>
-      {% endif %}
-      
-      {% if page.team-size %}
-        <span class="team-size-badge">
-          <i class="fas fa-users"></i> {{ page.team-size }} people
-        </span>
-      {% endif %}
-    </div>
-    
-    {% if page.categories.size > 0 %}
-      <div class="project-categories">
-        <i class="far fa-folder"></i>
-        {% for category in page.categories %}
-          <span class="category-badge">{{ category }}</span>{% unless forloop.last %}, {% endunless %}
-        {% endfor %}
-      </div>
-    {% endif %}
-    
-    {% if page.tags.size > 0 %}
-      <div class="project-tags-header">
-        {% for tag in page.tags %}
-          <span class="project-tag {{ tag | slugify }}">
-            {% assign tag_data = site.data.tags[tag] %}
-            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-          </span>
-        {% endfor %}
-      </div>
-    {% endif %}
-    
-    {% if page.description %}
-      <p class="project-lead">{{ page.description }}</p>
-    {% endif %}
-  </header>
-
-  {% if page.team %}
-    <div class="project-team">
-      <h2>Team</h2>
-      <div class="team-roles">
-        {% for role in page.team %}
-          {% assign role_key = role[0] %}
-          {% assign members = role[1] %}
-          {% assign role_data = site.data.roles[role_key] %}
-          
-          <div class="team-role">
-            <h3 class="role-name">
-              {% if role_data %}
-                <i class="{{ role_data.icon }}"></i>
-                {{ role_data.name }}
-              {% else %}
-                {{ role_key | capitalize }}
-              {% endif %}
-            </h3>
-            <ul class="role-members">
-              {% for member in members %}
-                <li>{{ member | capitalize }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
+<div class="project-meta-bar">
+  {% if page.start_date and page.end_date %}
+    <span class="project-dates">
+      <i class="far fa-calendar"></i>
+      {{ page.start_date | date: "%B %Y" }} - {{ page.end_date | date: "%B %Y" }}
+    </span>
+  {% elsif page.date %}
+    <span class="project-dates">
+      <i class="far fa-calendar"></i>
+      {{ page.date | date: "%B %Y" }}
+    </span>
   {% endif %}
 
-  <div class="project-content">
-    {{ content }}
+  {% if page.status %}
+    <span class="project-status status-{{ page.status | slugify }}">
+      {{ page.status }}
+    </span>
+  {% endif %}
+
+  {% if page.duration %}
+    <span class="project-duration">
+      <i class="far fa-clock"></i> {{ page.duration }}
+    </span>
+  {% endif %}
+
+  {% if page.role %}
+    <span class="project-role">
+      <i class="fas fa-user-tag"></i> {{ page.role }}
+    </span>
+  {% endif %}
+
+  {% if page.team-size %}
+    <span class="team-size-badge">
+      <i class="fas fa-users"></i> {{ page.team-size }} people
+    </span>
+  {% endif %}
+</div>
+
+{% if page.categories.size > 0 %}
+  <div class="project-categories">
+    <i class="far fa-folder"></i>
+    {% for category in page.categories %}
+      <span class="category-badge">{{ category }}</span>{% unless forloop.last %}, {% endunless %}
+    {% endfor %}
   </div>
+{% endif %}
 
-  {% if page.links %}
-    <div class="project-links">
-      <h2>Links</h2>
-      <ul>
-        {% for link in page.links %}
-          <li>
-            <a href="{{ link.url }}" target="_blank" rel="noopener">
-              <i class="{{ link.icon | default: 'fas fa-link' }}"></i>
-              {{ link.name }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
+{% if page.tags.size > 0 %}
+  <div class="project-tags-header">
+    {% for tag in page.tags %}
+      <span class="project-tag {{ tag | slugify }}">
+        {% assign tag_data = site.data.tags[tag] %}
+        {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+      </span>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if page.description %}
+  <p class="project-lead">{{ page.description }}</p>
+{% endif %}
+
+<hr>
+
+{% if page.team %}
+  <div class="project-team">
+    <h2>Team</h2>
+    <div class="team-roles">
+      {% for role in page.team %}
+        {% assign role_key = role[0] %}
+        {% assign members = role[1] %}
+        {% assign role_data = site.data.roles[role_key] %}
+
+        <div class="team-role">
+          <h3 class="role-name">
+            {% if role_data %}
+              <i class="{{ role_data.icon }}"></i>
+              {{ role_data.name }}
+            {% else %}
+              {{ role_key | capitalize }}
+            {% endif %}
+          </h3>
+          <ul class="role-members">
+            {% for member in members %}
+              <li>{{ member | capitalize }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
     </div>
-  {% endif %}
-</article>
+  </div>
+{% endif %}
 
-<style>
-.project {
-  max-width: 900px;
-  margin: 0 auto;
-}
+<div class="project-body">
+  {{ content }}
+</div>
 
-.project-header {
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 2px solid var(--card-border);
-}
-
-.project-title {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.project-meta-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: var(--text-color);
-}
-
-.project-meta-bar i {
-  margin-right: 0.35rem;
-}
-
-.project-status {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-weight: 600;
-  font-size: 0.8rem;
-}
-
-.status-completed {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.status-in-progress {
-  background-color: #FF9800;
-  color: white;
-}
-
-.team-size-badge {
-  padding: 0.25rem 0.75rem;
-  background-color: #6C63FF;
-  color: white;
-  border-radius: 1rem;
-  font-weight: 600;
-}
-
-.project-categories {
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: var(--text-color);
-}
-
-.category-badge {
-  font-weight: 500;
-}
-
-.project-tags-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.project-lead {
-  font-size: 1.15rem;
-  color: var(--text-color);
-  line-height: 1.7;
-  margin-top: 1.5rem;
-}
-
-.project-team {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 0.5rem;
-  margin-bottom: 3rem;
-}
-
-.project-team h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-}
-
-.team-roles {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-}
-
-.team-role {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 1.25rem;
-  border-radius: 0.5rem;
-}
-
-.role-name {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-  color: var(--heading-color);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.role-name i {
-  color: var(--link-color);
-}
-
-.role-members {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.role-members li {
-  padding: 0.35rem 0;
-  color: var(--text-color);
-  font-size: 0.95rem;
-}
-
-.project-content {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  margin-bottom: 3rem;
-}
-
-.project-content h2 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.75rem;
-}
-
-.project-content h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  font-size: 1.35rem;
-}
-
-.project-content p {
-  margin-bottom: 1.25rem;
-}
-
-.project-content img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.5rem;
-  margin: 1.5rem 0;
-}
-
-.project-links {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 0.5rem;
-}
-
-.project-links h2 {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-}
-
-.project-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.project-links li a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.5rem;
-  color: var(--link-color);
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.project-links li a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-</style>
+{% if page.links %}
+  <div class="project-links">
+    <h2>Links</h2>
+    <div class="project-links-list">
+      {% for link in page.links %}
+        <a href="{{ link.url }}" target="_blank" rel="noopener" class="project-link-btn">
+          <i class="{{ link.icon | default: 'fas fa-link' }}"></i>
+          {{ link.name }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
