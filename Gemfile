@@ -7,7 +7,6 @@ gem "jekyll-theme-chirpy", "~> 7.2", ">= 7.2.4"
 # Plugins
 gem "jekyll-seo-tag"
 gem "jekyll-sitemap"
-gem "jekyll-feed"
 gem "jekyll-redirect-from"
 
 gem "html-proofer", "~> 5.0", group: :test

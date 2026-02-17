@@ -47,10 +47,8 @@ avatar: /assets/img/profile_picture_sqr.jpg
 toc: true
 
 plugins:
-  - jekyll-archives
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jekyll-feed
   - jekyll-redirect-from
 
 pwa:
@@ -124,18 +122,7 @@ exclude:
   - LICENSE
   - "package*.json"
 
-# ==========================================
-# JEKYLL ARCHIVES PLUGIN
-# ==========================================
 
-jekyll-archives:
-  enabled: [categories, tags]
-  layouts:
-    tag: tag
-    category: category
-  permalinks:
-    tag: /tags/:name/
-    category: /categories/:name/
 
 # ==========================================
 # MARKDOWN SETTINGS
