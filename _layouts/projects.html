@@ -9,19 +9,6 @@ layout: default
       <button id="filter-all" class="filter-all-btn">All</button>
 
       <div class="filter-section">
-        <h4>Categories</h4>
-        {% assign project_categories = site.projects | map: "categories" | join: "," | split: "," | uniq | sort %}
-        {% for category in project_categories %}
-          {% if category != "" %}
-            <label>
-              <input type="checkbox" class="filter-checkbox filter-category" value="{{ category | slugify }}">
-              {{ category }}
-            </label>
-          {% endif %}
-        {% endfor %}
-      </div>
-
-      <div class="filter-section">
         <h4>Tags</h4>
         {% for tag_entry in site.data.tags %}
           <label>
@@ -37,7 +24,6 @@ layout: default
     {% assign sorted_projects = site.projects | sort: 'end_date' | reverse %}
     {% for project in sorted_projects %}
       <div class="card-wrapper{% if project.featured %} featured{% endif %}"
-           data-categories="{{ project.categories | join: ',' | slugify }}"
            data-tags="{{ project.tags | join: ',' }}">
         <div class="project-card">
           {% if project.thumbnail %}
@@ -76,11 +62,11 @@ layout: default
 
             {% if project.start_date and project.end_date %}
               <div class="project-date">
-                {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
+                {{ project.start_date | date: "%B %d, %Y" }} - {{ project.end_date | date: "%B %d, %Y" }}
               </div>
             {% elsif project.end_date %}
               <div class="project-date">
-                {{ project.end_date | date: "%b %Y" }}
+                {{ project.end_date | date: "%B %d, %Y" }}
               </div>
             {% endif %}
           </div>

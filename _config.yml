@@ -1,25 +1,18 @@
-# ==========================================
-# JEKYLL SITE CONFIGURATION
-# ==========================================
-
+# Site structure
 lang: en
 timezone: Europe/Amsterdam
+url: "https://boazbaaz.github.io"
+baseurl: ""
 
+# SEO
 title: Boas-Bas van der Veen
-tagline: Third-year Game Programming student at Breda University of Applied Sciences
-
 description: >-
   Portfolio showcasing game development projects and technical blog posts by Boas-Bas van der Veen.
-
-url: "https://boazbaaz.github.io"
-avatar: /assets/img/profile_picture_sqr.jpg
 
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-redirect-from
-
-baseurl: ""
 
 collections:
   tabs:
@@ -29,22 +22,22 @@ collections:
     output: true
     sort_by: end_date
     permalink: /projects/:title/
+  blogs:
+    output: true
+    sort_by: date
+    permalink: /blogs/:title/
 
 defaults:
   - scope:
       path: ""
-      type: posts
+      type: blogs
     values:
-      layout: post
-      toc: true
-      permalink: /posts/:title/
+      layout: blog
   - scope:
       path: ""
       type: projects
     values:
       layout: project
-      toc: false
-      permalink: /projects/:title/
   - scope:
       path: ""
       type: tabs
@@ -56,15 +49,6 @@ sass:
   sass_dir: assets/css
   style: compressed
 
-compress_html:
-  clippings: all
-  comments: all
-  endings: all
-  profile: false
-  blanklines: false
-  ignore:
-    envs: [development]
-
 exclude:
   - "*.gem"
   - "*.gemspec"
@@ -75,7 +59,6 @@ exclude:
   - "package*.json"
 
 kramdown:
-  footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: highlight

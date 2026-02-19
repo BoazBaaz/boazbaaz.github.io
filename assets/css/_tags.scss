@@ -1,54 +1,53 @@
 @use 'variables' as *;
 
-// Base tag styling
 .project-tag {
-  padding: 4px 10px !important;
-  border-radius: 20px !important;
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  color: white !important;
-  display: inline-block !important;
-  line-height: 1.4 !important;
-  white-space: nowrap !important;
-  min-width: 40px !important;
-  text-align: center !important;
-  background-color: #6c757d !important;
-  text-decoration: none !important;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  display: inline-block;
+  line-height: 1.4;
+  white-space: nowrap;
+  min-width: 40px;
+  text-align: center;
+  background-color: #6c757d;
+  text-decoration: none;
   transition: opacity 0.2s, transform 0.1s;
 
   &:hover { opacity: 0.8; transform: translateY(-1px); }
 
-  &.cpp { background-color: $color-cpp !important; }
-  &.csharp { background-color: $color-csharp !important; }
-  &.python { background-color: $color-python !important; }
-  &.unreal-engine { background-color: $color-unrealengine !important; }
-  &.unity { background-color: $color-unity !important; }
-  &.godot { background-color: $color-godot !important; }
-  &.opengl { background-color: $color-opengl !important; }
-  &.vulkan { background-color: $color-vulkan !important; }
-  &.directx { background-color: $color-directx !important; }
-  &.cmake { background-color: $color-cmake !important; }
-  &.blender { background-color: $color-blender !important; }
-  &.gameplay { background-color: $color-gameplay !important; }
-  &.graphics { background-color: $color-graphics !important; }
-  &.shader { background-color: $color-shader !important; }
-  &.ai { background-color: $color-ai !important; }
-  &.networking { background-color: $color-networking !important; }
-  &.physics { background-color: $color-physics !important; }
-  &.animation { background-color: $color-animation !important; }
-  &.audio { background-color: $color-audio !important; }
-  &.optimization { background-color: $color-optimization !important; }
-  &.architecture { background-color: $color-architecture !important; }
-  &.engine { background-color: $color-engine !important; color: #333 !important; }
-  &.procedural-generation { background-color: $color-proceduralgeneration !important; }
-  &.visual-scripting { background-color: $color-visualscripting !important; }
-  &.plugin { background-color: $color-plugin !important; }
-  &.tool { background-color: $color-tool !important; }
-  &.editor { background-color: $color-editor !important; }
-  &.team { background-color: $color-team !important; }
-  &.solo { background-color: $color-solo !important; }
-  &.breda-university { background-color: $color-bredauniversity !important; }
-  &.blog { background-color: $color-blog !important; }
+  &.cpp { background-color: $color-cpp; }
+  &.csharp { background-color: $color-csharp; }
+  &.python { background-color: $color-python; }
+  &.unreal-engine { background-color: $color-unrealengine; }
+  &.unity { background-color: $color-unity; }
+  &.godot { background-color: $color-godot; }
+  &.opengl { background-color: $color-opengl; }
+  &.vulkan { background-color: $color-vulkan; }
+  &.directx { background-color: $color-directx; }
+  &.cmake { background-color: $color-cmake; }
+  &.blender { background-color: $color-blender; }
+  &.gameplay { background-color: $color-gameplay; }
+  &.graphics { background-color: $color-graphics; }
+  &.shader { background-color: $color-shader; }
+  &.ai { background-color: $color-ai; }
+  &.networking { background-color: $color-networking; }
+  &.physics { background-color: $color-physics; }
+  &.animation { background-color: $color-animation; }
+  &.audio { background-color: $color-audio; }
+  &.optimization { background-color: $color-optimization; }
+  &.architecture { background-color: $color-architecture; }
+  &.engine { background-color: $color-engine; color: #333; }
+  &.procedural-generation { background-color: $color-proceduralgeneration; }
+  &.visual-scripting { background-color: $color-visualscripting; }
+  &.plugin { background-color: $color-plugin; }
+  &.tool { background-color: $color-tool; }
+  &.editor { background-color: $color-editor; }
+  &.team { background-color: $color-team; }
+  &.solo { background-color: $color-solo; }
+  &.breda-university { background-color: $color-bredauniversity; }
+  &.blog { background-color: $color-blog; }
 }

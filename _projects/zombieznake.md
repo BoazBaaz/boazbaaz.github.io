@@ -4,38 +4,17 @@ start_date: 2021-02-01
 end_date: 2021-02-05
 description: "International GameJam project combining snake mechanics with zombie theme, featuring custom grid-based movement system"
 thumbnail: /assets/img/projects/placeholder.jpg
-categories:
-  - Game
-tags:
-  - unity
-  - csharp
-  - team
-  - gameplay
-featured: false
-
+tags: [unity, csharp, team, gameplay]
+featured: true
 team:
-  programmer:
-    - boas-bas
-    - oscar-wilhelmsson
-  artist:
-    - bart-van-twillert
-    - kimberly-g
-    - susanne-vermeulen
-
+  programmer: [Boas-Bas van der Veen, Oscar Wilhelmsson]
+  artist: [Bart van Twillert, Kimberly G., Susanne Vermeulen]
 team-size: 5
-duration: "5 days"
 role: "Programmer"
-
 links:
-  - name: GitHub Repository
-    url: https://github.com/poppzy/GameJamZombieTheme
-    icon: fab fa-github
-  - name: Miro Board
-    url: https://miro.com/app/board/o9J_lZByE5k=/
-    icon: fas fa-clipboard
-  - name: Itch.io
-    url: https://saltoc.itch.io/zombie-znake
-    icon: fab fa-itch-io
+  - { name: GitHub Repository, url: "https://github.com/poppzy/GameJamZombieTheme", icon: fab fa-github }
+  - { name: Miro Board, url: "https://miro.com/app/board/o9J_lZByE5k=/", icon: fas fa-clipboard }
+  - { name: Itch.io, url: "https://saltoc.itch.io/zombie-znake", icon: fab fa-itch-io }
 ---
 
 ## Overview

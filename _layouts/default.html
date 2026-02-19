@@ -23,7 +23,7 @@
       <div class="sidebar-inner">
         <div class="sidebar-profile">
           <a href="{{ '/' | relative_url }}">
-            <img src="{{ site.avatar | relative_url }}" alt="{{ site.data.profile.name }}" class="sidebar-avatar">
+            <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}" class="sidebar-avatar">
           </a>
           <h1 class="sidebar-name">{{ site.data.profile.name }}</h1>
           <p class="sidebar-bio">{{ site.data.profile.bio.short }}</p>
@@ -56,16 +56,22 @@
           </ul>
         </nav>
 
-        <div class="sidebar-social">
-          {% if site.data.contact.links.github %}
-            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.linkedin %}
-            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.itch %}
-            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i></a>
-          {% endif %}
+        <div class="sidebar-bottom">
+          <button id="mode-toggle" aria-label="Toggle dark/light mode">
+            <i class="fas fa-moon"></i>
+          </button>
+          <span class="sidebar-separator"></span>
+          <div class="sidebar-social">
+            {% if site.data.contact.links.github %}
+              <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+            {% endif %}
+            {% if site.data.contact.links.linkedin %}
+              <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+            {% endif %}
+            {% if site.data.contact.links.itch %}
+              <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i></a>
+            {% endif %}
+          </div>
         </div>
       </div>
     </aside>
@@ -93,18 +99,40 @@
   <!-- Mobile sidebar toggle -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const toggle = document.querySelector('.sidebar-toggle');
+      // Mobile sidebar
+      const sidebarToggle = document.querySelector('.sidebar-toggle');
       const sidebar = document.querySelector('.sidebar');
-      if (toggle && sidebar) {
-        toggle.addEventListener('click', function() {
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
           sidebar.classList.toggle('open');
         });
         document.addEventListener('click', function(e) {
-          if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+          if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
             sidebar.classList.remove('open');
           }
         });
       }
+
+      // Dark/light mode
+      const modeBtn = document.getElementById('mode-toggle');
+      const icon = modeBtn.querySelector('i');
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        icon.classList.replace('fa-moon', 'fa-sun');
+      }
+      modeBtn.addEventListener('click', function() {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        if (isLight) {
+          document.documentElement.removeAttribute('data-theme');
+          icon.classList.replace('fa-sun', 'fa-moon');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          icon.classList.replace('fa-moon', 'fa-sun');
+          localStorage.setItem('theme', 'light');
+        }
+      });
     });
   </script>
 </body>

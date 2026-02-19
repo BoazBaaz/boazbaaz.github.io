@@ -1,14 +1,14 @@
 REQUIRED:
-  title: "Tab Name"                    # Display name in sidebar
-  order: 1                             # Sort order in navigation
+  title: "Tab Name"
+  order: 1
 
 OPTIONAL:
-  layout: projects                     # Override layout (default: page)
-  icon: fas fa-folder-open             # Font Awesome icon for sidebar
-  thumbnail: /assets/img/thumb.jpg     # Used by about page card
-  card_description: "Short text"       # Used by about page card
+  layout: projects
+  icon: fas fa-folder-open
+  thumbnail: /assets/img/thumb.jpg
+  card_description: "Short text"
 
 CURRENT TABS:
   projects.md   order: 1, layout: projects
-  posts.md      order: 2, layout: posts
+  posts.md      order: 2, layout: blogs (uses _blogs collection)
   about.md      order: 3, layout: page

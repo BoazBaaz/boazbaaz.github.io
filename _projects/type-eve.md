@@ -4,31 +4,15 @@ start_date: 2021-01-04
 end_date: 2021-01-29
 description: "AI project implementing complex behavior tree system for strategic unit control and decision-making"
 thumbnail: /assets/img/projects/placeholder.jpg
-categories:
-  - Game
-tags:
-  - unity
-  - csharp
-  - ai
-  - team
+tags: [unity, csharp, ai, team]
 featured: false
-
 team:
-  programmer:
-    - boas-bas
-    - justin-comans
-
+  programmer: [Boas-Bas van der Veen, Justin Comans]
 team-size: 2
-duration: "4 weeks"
 role: "AI Programmer"
-
 links:
-  - name: GitLab Repository
-    url: https://gitlab.glu.nl/rbalkenende/SteeringBehaviorGame/-/tree/G25_Type.EVE
-    icon: fab fa-gitlab
-  - name: Trello
-    url: https://trello.com/b/ncOBEXRk/typeeve
-    icon: fab fa-trello
+  - { name: GitLab Repository, url: "https://gitlab.glu.nl/rbalkenende/SteeringBehaviorGame/-/tree/G25_Type.EVE", icon: fab fa-gitlab }
+  - { name: Trello, url: "https://trello.com/b/ncOBEXRk/typeeve", icon: fab fa-trello }
 ---
 
 ## Overview

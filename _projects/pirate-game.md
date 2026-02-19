@@ -4,27 +4,14 @@ start_date: 2021-11-02
 end_date: 2021-11-06
 description: "Complete solo game featuring NavMesh AI, object pooling, and procedural world generation"
 thumbnail: /assets/img/projects/placeholder.jpg
-categories:
-  - Game
-tags:
-  - unity
-  - csharp
-  - solo
-  - gameplay
+tags: [unity, csharp, solo, gameplay]
 featured: false
-
 team:
-  programmer:
-    - boas-bas
-
+  programmer: [Boas-Bas van der Veen]
 team-size: 1
-duration: "1 week"
 role: "Solo Developer"
-
 links:
-  - name: GitHub Repository
-    url: https://github.com/BoazBaaz/PirateGame
-    icon: fab fa-github
+  - { name: GitHub Repository, url: "https://github.com/BoazBaaz/PirateGame", icon: fab fa-github }
 ---
 
 ## Overview

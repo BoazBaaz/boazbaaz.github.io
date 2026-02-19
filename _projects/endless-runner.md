@@ -4,33 +4,16 @@ start_date: 2021-02-08
 end_date: 2021-02-18
 description: "Team project featuring a vertical endless runner with dynamic platform spawning using bitshift collision detection"
 thumbnail: /assets/img/projects/placeholder.jpg
-categories:
-  - Game
-tags:
-  - unity
-  - csharp
-  - team
+tags: [unity, csharp, team]
 featured: false
-
 team:
-  programmer:
-    - boas-bas
-    - luca-mouissie
-  artist:
-    - wesley-chan
-    - alicia-van-altena
-
+  programmer: [Boas-Bas van der Veen, Luca Mouissie]
+  artist: [Wesley Chan, Alicia van Altena]
 team-size: 4
-duration: "2 weeks"
 role: "Programmer"
-
 links:
-  - name: GitHub Repository
-    url: https://github.com/BoazBaaz/EndlessRunner
-    icon: fab fa-github
-  - name: Trello
-    url: https://trello.com/b/mXPNTskb/endless-runner
-    icon: fab fa-trello
+  - { name: GitHub Repository, url: "https://github.com/BoazBaaz/EndlessRunner", icon: fab fa-github }
+  - { name: Trello, url: "https://trello.com/b/mXPNTskb/endless-runner", icon: fab fa-trello }
 ---
 
 ## Overview

@@ -1,0 +1,14 @@
+REQUIRED:
+  title: "Post Title"
+  date: 2025-01-15 14:30:00 +0100
+
+DISPLAY:
+  tags: [cpp, unreal-engine]
+  thumbnail: /assets/img/post-header.jpg
+
+OPTIONAL:
+  published: false
+  excerpt: "Custom summary text"
+
+FILENAME FORMAT:
+  title-slug.md (no date prefix needed)

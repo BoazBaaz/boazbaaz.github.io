@@ -1,32 +1,30 @@
 REQUIRED:
   title: "Project Title"
-  start_date: 2024-10-01               # YYYY-MM-DD, project start
-  end_date: 2025-01-15                  # YYYY-MM-DD, project end, used for sorting
-  description: "Brief description"      # Shows on cards (truncated, expands on hover)
+  start_date: 2024-10-01
+  end_date: 2025-01-15
+  description: "Brief description"
 
 DISPLAY:
-  thumbnail: /assets/img/projects/x.jpg # Card image, 600x400px recommended
-  categories: [Game]                    # Broad category
-  tags: [cpp, unreal-engine, team]      # See _data/tags.yml for available tags
-  featured: true                        # Show on homepage (default: false)
+  thumbnail: /assets/img/projects/x.jpg
+  tags: [cpp, unreal-engine, team]
+  featured: true
 
 METADATA:
-  team-size: 6                          # Shows as badge
-  duration: "3 months"
+  team-size: 6
   role: "Lead Programmer"
 
 TEAM:
   team:
-    programmer: [bob, lorry]            # Role keys from _data/roles.yml
-    artist: [laysha, mike]
+    programmer: [Boas-Bas van der Veen, John Doe]
+    artist: [Jane Smith]
 
 LINKS:
   links:
-    - name: GitHub Repository
-      url: https://github.com/user/repo
-      icon: fab fa-github
+    - { name: GitHub, url: "https://github.com/user/repo", icon: fab fa-github }
 
 OPTIONAL:
-  published: false                      # Hide from site (default: true)
-  permalink: /projects/custom-url/      # Override default URL
-  last_modified_at: 2025-02-01
+  published: false
+  permalink: /projects/custom-url/
+
+NOTE:
+  Duration is auto-calculated from start_date and end_date.

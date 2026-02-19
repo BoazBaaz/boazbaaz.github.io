@@ -1,9 +1,34 @@
+// Shared card base - used by project cards, post previews, about card
+.card-base {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 0 15px rgba(0, 247, 255, 0.3),
+      0 0 15px rgba(168, 85, 247, 0.3),
+      inset 0 0 0 1px rgba(0, 247, 255, 0.3),
+      inset 0 0 0 1px rgba(168, 85, 247, 0.3);
+  }
+}
+
 // Project card grid
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin-top: 2rem;
+}
+
+@media (max-width: 1100px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 650px) {
+  .projects-grid { grid-template-columns: 1fr; }
 }
 
 .card-wrapper {
@@ -15,30 +40,11 @@
 }
 
 .project-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 0.75rem;
+  @extend .card-base;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  }
-}
-
-// Featured card glow
-.card-wrapper.featured .project-card {
-  border: 2px solid;
-  border-image: linear-gradient(135deg, #00f7ff, #a855f7) 1;
-  box-shadow: 0 0 15px rgba(0, 247, 255, 0.3), 0 0 15px rgba(168, 85, 247, 0.3);
-
-  &:hover {
-    box-shadow: 0 0 25px rgba(0, 247, 255, 0.5), 0 0 25px rgba(168, 85, 247, 0.5);
-  }
 }
 
 .project-thumbnail {

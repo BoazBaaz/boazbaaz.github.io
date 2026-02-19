@@ -1,13 +1,8 @@
 ---
 title: A Beginner's Guide to Storing Dynamic Data Types in C++
-date: 2025-01-13 15:42:00 +/-0100
-categories:
-  - Learning
-tags:
-  - cpp
-  - visual-scripting
-  - breda-university
-thumbnail: assets/img/posts/storing_dynamic_variables/buas_logo.png
+date: 2025-01-13 15:42:00 +0100
+tags: [cpp, visual-scripting, breda-university]
+thumbnail: /assets/img/blogs/storing_dynamic_variables/buas_logo.png
 ---
 
 I am a second year student at [BUAS](https://www.buas.nl/en) and this is my blog post on how to store dynamically store any data type in a class.

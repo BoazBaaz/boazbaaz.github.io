@@ -1,0 +1,54 @@
+---
+layout: default
+---
+
+<div class="blogs-page">
+  {% if site.blogs.size > 0 %}
+    <div class="project-filter-dropdown">
+      <button id="filter-toggle">Filters &#9660;</button>
+      <div id="filter-menu" class="filter-menu" style="display: none;">
+        <button id="filter-all" class="filter-all-btn">All</button>
+
+        <div class="filter-section">
+          <h4>Tags</h4>
+          {% for tag_entry in site.data.tags %}
+            <label>
+              <input type="checkbox" class="filter-checkbox filter-tag" value="{{ tag_entry[0] }}">
+              {{ tag_entry[1].label | default: tag_entry[0] }}
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="blogs-list">
+      {% assign sorted_blogs = site.blogs | sort: 'date' | reverse %}
+      {% for blog in sorted_blogs %}
+        <article class="blog-preview card-wrapper"
+                 data-tags="{{ blog.tags | join: ',' }}">
+          <a href="{{ blog.url | relative_url }}" class="blog-preview-link">
+            {% if blog.thumbnail %}
+              <div class="blog-preview-thumbnail">
+                <img src="{{ blog.thumbnail | relative_url }}" alt="{{ blog.title }}">
+              </div>
+            {% endif %}
+            <h2 class="blog-preview-title">{{ blog.title }}</h2>
+            <p class="blog-preview-excerpt">
+              {{ blog.content | markdownify | strip_html | truncate: 200 }}
+            </p>
+            <div class="blog-preview-meta">
+              <time datetime="{{ blog.date | date_to_xmlschema }}">
+                <i class="far fa-calendar"></i>
+                {{ blog.date | date: "%B %d, %Y" }}
+              </time>
+            </div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No blog posts yet.</p>
+  {% endif %}
+</div>
+
+<script src="{{ '/assets/js/filter_projects.js' | relative_url }}"></script>
