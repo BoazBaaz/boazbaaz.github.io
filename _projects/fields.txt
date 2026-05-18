@@ -6,6 +6,8 @@ REQUIRED:
 
 DISPLAY:
   thumbnail: /assets/img/projects/x.jpg
+  banner: /assets/img/projects/x/banner.png
+  video: https://www.youtube.com/embed/VIDEO_ID
   tags: [cpp, unreal-engine, team]
   featured: true
 
@@ -28,3 +30,6 @@ OPTIONAL:
 
 NOTE:
   Duration is auto-calculated from start_date and end_date.
+  Banner displays full-width above the title.
+  Video embeds below the title (use YouTube embed URL).
+  Team displays in side-by-side columns by role.

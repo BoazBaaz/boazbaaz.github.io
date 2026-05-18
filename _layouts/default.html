@@ -3,126 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   {% seo %}
-
-  <!-- Favicon -->
   <link rel="icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/img/favicons/apple-touch-icon.png' | relative_url }}">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="site-wrapper">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-inner">
-        <div class="sidebar-profile">
-          <a href="{{ '/' | relative_url }}">
-            <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}" class="sidebar-avatar">
-          </a>
-          <h1 class="sidebar-name">{{ site.data.profile.name }}</h1>
-          <p class="sidebar-bio">{{ site.data.profile.bio.short }}</p>
-        </div>
-
-        <nav class="sidebar-nav">
-          <ul>
-            <li>
-              <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>
-                <i class="fas fa-home"></i> Home
-              </a>
-            </li>
-            {% assign sorted_tabs = site.tabs | sort: 'order' %}
-            {% for tab in sorted_tabs %}
-              {% if tab.order %}
-                <li>
-                  <a href="{{ tab.url | relative_url }}"
-                     {% if page.url == tab.url %}class="active"{% endif %}>
-                    {% if tab.icon %}<i class="{{ tab.icon }}"></i> {% endif %}
-                    {{ tab.title | default: tab.name }}
-                  </a>
-                </li>
-              {% endif %}
-            {% endfor %}
-            <li>
-              <a href="{{ 'assets/docs/boas-bas-van-der-veen-resume.pdf' | relative_url }}" target="_blank">
-                <i class="fas fa-file-pdf"></i> Resume
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="sidebar-bottom">
-          <button id="mode-toggle" aria-label="Toggle dark/light mode">
-            <i class="fas fa-moon"></i>
-          </button>
-          <span class="sidebar-separator"></span>
-          <div class="sidebar-social">
-            {% if site.data.contact.links.github %}
-              <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-            {% endif %}
-            {% if site.data.contact.links.linkedin %}
-              <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
-            {% endif %}
-            {% if site.data.contact.links.itch %}
-              <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i></a>
-            {% endif %}
-          </div>
-        </div>
+  <canvas id="bg-canvas"></canvas>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-left">
+        <button id="mode-toggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-moon"></i>
+        </button>
+        <a href="{{ '/' | relative_url }}" class="navbar-brand">{{ site.data.profile.name }}</a>
       </div>
-    </aside>
 
-    <!-- Mobile header -->
-    <header class="mobile-header">
-      <button class="sidebar-toggle" aria-label="Toggle sidebar">
+      <button class="navbar-toggle" aria-label="Toggle menu">
         <i class="fas fa-bars"></i>
       </button>
-      <span class="mobile-title">{{ site.data.profile.name }}</span>
-    </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="content-wrapper">
-        {{ content }}
-      </div>
+      <ul class="navbar-links">
+        <li>
+          <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>
+            <i class="fas fa-home"></i> Home
+          </a>
+        </li>
+        {% assign sorted_tabs = site.tabs | sort: 'order' %}
+        {% for tab in sorted_tabs %}
+          {% if tab.order %}
+            <li>
+              <a href="{{ tab.url | relative_url }}"
+                 {% if page.url == tab.url %}class="active"{% endif %}>
+                {% if tab.icon %}<i class="{{ tab.icon }}"></i> {% endif %}
+                {{ tab.title | default: tab.name }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
 
-      <footer class="site-footer">
-        <p>&copy; {{ site.time | date: '%Y' }} {{ site.data.profile.name }}. All rights reserved.</p>
-      </footer>
-    </main>
-  </div>
+  <main class="main-content">
+    <div class="content-wrapper">
+      {{ content }}
+    </div>
+  </main>
 
-  <!-- Mobile sidebar toggle -->
+  <button id="scroll-top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <footer class="site-footer">
+    <p>&copy; {{ site.time | date: '%Y' }} {{ site.data.profile.name }}</p>
+  </footer>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile sidebar
-      const sidebarToggle = document.querySelector('.sidebar-toggle');
-      const sidebar = document.querySelector('.sidebar');
-      if (sidebarToggle && sidebar) {
-        sidebarToggle.addEventListener('click', function() {
-          sidebar.classList.toggle('open');
-        });
-        document.addEventListener('click', function(e) {
-          if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-            sidebar.classList.remove('open');
-          }
+      var navToggle = document.querySelector('.navbar-toggle');
+      var navLinks = document.querySelector('.navbar-links');
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('open');
         });
       }
 
-      // Dark/light mode
-      const modeBtn = document.getElementById('mode-toggle');
-      const icon = modeBtn.querySelector('i');
-      const saved = localStorage.getItem('theme');
+      var modeBtn = document.getElementById('mode-toggle');
+      var icon = modeBtn.querySelector('i');
+      var saved = localStorage.getItem('theme');
       if (saved === 'light') {
         document.documentElement.setAttribute('data-theme', 'light');
         icon.classList.replace('fa-moon', 'fa-sun');
       }
       modeBtn.addEventListener('click', function() {
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
         if (isLight) {
           document.documentElement.removeAttribute('data-theme');
           icon.classList.replace('fa-sun', 'fa-moon');
@@ -133,7 +89,15 @@
           localStorage.setItem('theme', 'light');
         }
       });
+      var scrollBtn = document.getElementById('scroll-top');
+      window.addEventListener('scroll', function() {
+        scrollBtn.classList.toggle('visible', window.scrollY > 300);
+      });
+      scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     });
   </script>
+  <script src="{{ '/assets/js/background.js' | relative_url }}"></script>
 </body>
 </html>

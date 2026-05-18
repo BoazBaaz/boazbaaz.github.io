@@ -92,7 +92,7 @@ architecture:
 
 engine:
   label: "Engine"
-  color: "#FFFFD2"
+  color: "#F8FFD2"
 
 procedural-generation:
   label: "Procedural Generation"

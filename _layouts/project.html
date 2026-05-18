@@ -7,6 +7,12 @@ layout: default
     <h1>{{ page.title }}</h1>
   </header>
 
+  {% if page.banner %}
+    <div class="project-banner">
+      <img src="{{ page.banner | relative_url }}" alt="{{ page.title }}">
+    </div>
+  {% endif %}
+
   <div class="project-meta-bar">
     {% if page.start_date and page.end_date %}
       <span><i class="far fa-calendar"></i> {{ page.start_date | date: "%B %d, %Y" }} - {{ page.end_date | date: "%B %d, %Y" }}</span>
@@ -51,24 +57,30 @@ layout: default
   {% endif %}
 
   {% if page.team %}
-    <div class="project-team-inline">
+    <div class="project-team-grid">
       {% for role in page.team %}
         {% assign role_key = role[0] %}
         {% assign members = role[1] %}
         {% assign role_data = site.data.roles[role_key] %}
-        <div class="team-entry">
-          <span class="team-role-label">
+        <div class="team-column">
+          <div class="team-column-header">
             {% if role_data %}
               <i class="{{ role_data.icon }}"></i> {{ role_data.name }}
             {% else %}
               {{ role_key | capitalize }}
             {% endif %}
-          </span>
+          </div>
           {% for member in members %}
-            <span class="team-member">{{ member }}</span>
+            <span class="team-column-member">{{ member }}</span>
           {% endfor %}
         </div>
       {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if page.video %}
+    <div class="video-embed">
+      <iframe src="{{ page.video }}" title="{{ page.title }} trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
   {% endif %}
 
