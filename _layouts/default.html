@@ -91,7 +91,7 @@
       });
       var scrollBtn = document.getElementById('scroll-top');
       window.addEventListener('scroll', function() {
-        scrollBtn.classList.toggle('visible', window.scrollY > 300);
+        scrollBtn.classList.toggle('visible', window.scrollY > 100);
       });
       scrollBtn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
