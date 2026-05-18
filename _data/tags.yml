@@ -132,3 +132,7 @@ breda-university:
 blog:
   label: "Blog"
   color: "#34cbd9"
+
+gamejam:
+  label: "Game Jam"
+  color: "#FF8C00"
