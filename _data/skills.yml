@@ -1,0 +1,24 @@
+Languages:
+  - { name: "C++", icon: /assets/img/skills/cplusplus.svg }
+  - { name: "C#", icon: /assets/img/skills/csharp.svg }
+  - { name: Python, icon: /assets/img/skills/python.svg, learning: true }
+
+Engines & Graphics:
+  - { name: Unreal Engine, icon: /assets/img/skills/unrealengine.svg, invert: true }
+  - { name: Unity, icon: /assets/img/skills/unity.svg, invert: true  }
+  - { name: OpenGL, icon: /assets/img/skills/opengl.svg, learning: true }
+
+IDEs:
+  - { name: Visual Studio 2022, icon: /assets/img/skills/visualstudio.svg }
+  - { name: Visual Studio Code, icon: /assets/img/skills/vscode.svg }
+  - { name: CLion, icon: /assets/img/skills/clion.svg }
+  - { name: JetBrains Rider, icon: /assets/img/skills/rider.svg }
+
+Version Control:
+  - { name: Git, icon: /assets/img/skills/git.svg }
+  - { name: GitHub, icon: /assets/img/skills/github.svg, invert: true }
+  - { name: Perforce, icon: /assets/img/skills/perforce.svg }
+
+Build & Project:
+  - { name: CMake, icon: /assets/img/skills/cmake.svg }
+  - { name: Jira, icon: /assets/img/skills/jira.svg }

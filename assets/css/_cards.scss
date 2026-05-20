@@ -1,34 +1,21 @@
-// Shared card base - used by project cards, post previews, about card
-.card-base {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 0.75rem;
-  transition: transform 0.3s, box-shadow 0.3s;
+@use "mixins";
 
-  &:hover {
-    transform: translateY(-6px);
-    box-shadow:
-      0 0 15px rgba(0, 247, 255, 0.3),
-      0 0 15px rgba(168, 85, 247, 0.3),
-      inset 0 0 0 1px rgba(0, 247, 255, 0.3),
-      inset 0 0 0 1px rgba(168, 85, 247, 0.3);
-  }
-}
+// Project card grid + shared card classes
 
-// Project card grid
-.projects-grid {
+.clickable-tag { cursor: pointer; }
+
+.project-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 @media (max-width: 1100px) {
-  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 650px) {
-  .projects-grid { grid-template-columns: 1fr; }
+  .project-cards { grid-template-columns: 1fr; }
 }
 
 .card-wrapper {
@@ -40,11 +27,12 @@
 }
 
 .project-card {
-  @extend .card-base;
+  @include mixins.card-base;
   overflow: hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
+  isolation: isolate;
 }
 
 .project-thumbnail {
@@ -52,12 +40,15 @@
   height: 220px;
   overflow: hidden;
   flex-shrink: 0;
+  position: relative;
+  z-index: 0;
 
-  img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  img, video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
   a { display: block; height: 100%; border: none !important; }
 }
 
-.project-card:hover .project-thumbnail img { transform: scale(1.08); }
+.project-card:hover .project-thumbnail img,
+.project-card:hover .project-thumbnail video { transform: scale(1.08); }
 
 .project-content {
   padding: 1.5rem;
@@ -84,20 +75,5 @@
   flex-grow: 1;
 }
 
-.project-meta { margin-bottom: 1rem; }
-
-.team-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.4rem 0.85rem;
-  background-color: #6C63FF;
-  color: white;
-  border-radius: 1rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
 .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
-
 .project-date { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.75rem; }

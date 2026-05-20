@@ -52,19 +52,19 @@ blender:
 # ===== Technical Topics =====
 gameplay:
   label: "Gameplay"
-  color: "#AA96DA"
+  color: "#7B4FBF"
 
 graphics:
   label: "Graphics"
-  color: "#A8D8EA"
+  color: "#2980B9"
 
 shader:
   label: "Shader"
-  color: "#95E1D3"
+  color: "#1DAB83"
 
 ai:
   label: "AI"
-  color: "#F38181"
+  color: "#C0392B"
 
 networking:
   label: "Networking"
@@ -72,44 +72,44 @@ networking:
 
 physics:
   label: "Physics"
-  color: "#E53935"
+  color: "#B71C1C"
 
 animation:
   label: "Animation"
-  color: "#1976D2"
+  color: "#1565C0"
 
 audio:
   label: "Audio"
-  color: "#D32F2F"
+  color: "#AD1457"
 
 optimization:
   label: "Optimization"
-  color: "#00897B"
+  color: "#00796B"
 
 architecture:
   label: "Architecture"
-  color: "#FFAAA7"
+  color: "#C0563A"
 
 engine:
   label: "Engine"
-  color: "#F8FFD2"
+  color: "#5C6BC0"
 
 procedural-generation:
   label: "Procedural Generation"
-  color: "#43A047"
+  color: "#2E7D32"
 
 visual-scripting:
   label: "Visual Scripting"
-  color: "#9B59B6"
+  color: "#7B1FA2"
 
 # ===== Project Types =====
 plugin:
   label: "Plugin"
-  color: "#009688"
+  color: "#00796B"
 
 tool:
   label: "Tool"
-  color: "#FCBAD3"
+  color: "#D45D79"
 
 editor:
   label: "Editor"
@@ -118,21 +118,21 @@ editor:
 # ===== Team Composition =====
 team:
   label: "Team"
-  color: "#FF6B6B"
+  color: "#2E86C1"
 
 solo:
   label: "Solo"
-  color: "#4ECDC4"
+  color: "#1A9E8F"
 
 # ===== Organization =====
 breda-university:
   label: "Breda University"
-  color: "#E74C3C"
+  color: "#EE7623"
 
 blog:
   label: "Blog"
-  color: "#34cbd9"
+  color: "#1A9EAD"
 
 gamejam:
   label: "Game Jam"
-  color: "#FF8C00"
+  color: "#E67E22"

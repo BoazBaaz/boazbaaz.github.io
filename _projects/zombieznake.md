@@ -4,8 +4,6 @@ start_date: 2021-02-01
 end_date: 2021-02-05
 description: "International Game Jam entry where you play as a zombie infecting humans in a snake-like chain. All grid movement and collisions built from scratch in code."
 thumbnail: /assets/img/projects/zombieznake/banner.png
-banner: /assets/img/projects/zombieznake/banner.png
-video: https://www.youtube.com/embed/tL_3l_RcgJM
 tags: [unity, csharp, team, gameplay, gamejam]
 featured: true
 team:

@@ -1,0 +1,80 @@
+// Code blocks and One Dark syntax highlighting
+
+code {
+  background-color: var(--code-bg);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.85em;
+  color: #abb2bf;
+  border: 1px solid var(--code-border);
+}
+
+pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  line-height: 1.5;
+
+  code { background: none; padding: 0; border: none; font-size: 0.875rem; color: #abb2bf; }
+}
+
+// One Dark theme
+.highlight { background-color: var(--code-bg); border-radius: 8px; }
+.highlight pre { margin: 0; background: none; border: none; }
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cd { color: #5c6370; font-style: italic; }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv { color: #c678dd; }
+.highlight .kc { color: #d19a66; }
+.highlight .kt { color: #e5c07b; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sh, .highlight .sx { color: #98c379; }
+.highlight .sr { color: #56b6c2; }
+.highlight .si, .highlight .se { color: #d19a66; }
+.highlight .nf, .highlight .fm { color: #61afef; }
+.highlight .nb, .highlight .nc, .highlight .nn { color: #e5c07b; }
+.highlight .na, .highlight .no { color: #d19a66; }
+.highlight .ni, .highlight .p, .highlight .w { color: #abb2bf; }
+.highlight .ne, .highlight .nt, .highlight .err { color: #e06c75; }
+.highlight .nd { color: #61afef; }
+.highlight .mi, .highlight .mf, .highlight .mh, .highlight .mo, .highlight .il, .highlight .mb { color: #d19a66; }
+.highlight .o, .highlight .ow { color: #56b6c2; }
+.highlight .cp, .highlight .cpf { color: #e5c07b; }
+.highlight .gd { color: #e06c75; background: rgba(224, 108, 117, 0.1); }
+.highlight .gi { color: #98c379; background: rgba(152, 195, 121, 0.1); }
+.highlight .gh, .highlight .gu { color: #61afef; font-weight: bold; }
+.highlight .gl { color: #5c6370; }
+
+.highlight .lineno {
+  color: #4b5263;
+  padding-right: 1rem;
+  border-right: 1px solid var(--code-border);
+  margin-right: 1rem;
+  user-select: none;
+}
+
+.highlight table {
+  border: none;
+  margin: 0;
+
+  td { padding: 0; border: none; }
+  td:first-child { padding-right: 0.75rem; user-select: none; }
+  pre { margin: 0; }
+}
+
+div[class^="language-"] {
+  position: relative;
+
+  &::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+    color: #5c6370;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}

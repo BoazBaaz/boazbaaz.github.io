@@ -9,15 +9,21 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body{% if page.background or page.page_background %} class="has-page-bg" style="background-image: url('{% if page.background %}{{ page.background | relative_url }}{% else %}{{ page.page_background | relative_url }}{% endif %}'); background-size: cover; background-position: center; background-attachment: fixed;"{% endif %}>
   <canvas id="bg-canvas"></canvas>
   <nav class="navbar">
     <div class="navbar-inner">
       <div class="navbar-left">
-        <button id="mode-toggle" aria-label="Toggle dark/light mode">
+        <button id="mode-toggle" aria-label="Toggle theme">
           <i class="fas fa-moon"></i>
         </button>
         <a href="{{ '/' | relative_url }}" class="navbar-brand">{{ site.data.profile.name }}</a>
+      </div>
+
+      <div class="navbar-search" id="search-wrapper">
+        <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+        <i class="fas fa-search"></i>
+        <div id="search-results"></div>
       </div>
 
       <button class="navbar-toggle" aria-label="Toggle menu">
@@ -35,7 +41,8 @@
           {% if tab.order %}
             <li>
               <a href="{{ tab.url | relative_url }}"
-                 {% if page.url == tab.url %}class="active"{% endif %}>
+                 {% if page.url == tab.url %}class="active"{% endif %}
+                 {% if tab.redirect_to %}target="_blank" rel="noopener"{% endif %}>
                 {% if tab.icon %}<i class="{{ tab.icon }}"></i> {% endif %}
                 {{ tab.title | default: tab.name }}
               </a>
@@ -50,54 +57,103 @@
     <div class="content-wrapper">
       {{ content }}
     </div>
+
+    <aside class="page-sidebar">
+      {% if site.projects.size > 0 %}
+        <div class="sidebar-widget">
+          <h4>Featured Projects</h4>
+          <ul class="sidebar-posts">
+            {% assign featured = site.projects | where: "featured", true | sort: 'end_date' | reverse %}
+            {% for project in featured limit: 5 %}
+              <li>
+                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+                <time>{% if project.role %}{{ project.role }} &bull; {% endif %}{{ project.end_date | date: "%b %Y" }}</time>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if site.blogs.size > 0 %}
+        <div class="sidebar-widget">
+          <h4>Recently Updated</h4>
+          <ul class="sidebar-posts">
+            {% assign recent = site.blogs | sort: 'date' | reverse %}
+            {% for blog in recent limit: 5 %}
+              <li>
+                <a href="{{ blog.url | relative_url }}">{{ blog.title }}</a>
+                <time>{{ blog.date | date: "%b %d, %Y" }}</time>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+    </aside>
   </main>
 
-  <button id="scroll-top" aria-label="Scroll to top">
-    <i class="fas fa-chevron-up"></i>
+  <button id="scroll-top" aria-label="Return to top" title="Return to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15l7-7 7 7"></path></svg>
   </button>
 
   <footer class="site-footer">
-    <p>&copy; {{ site.time | date: '%Y' }} {{ site.data.profile.name }}</p>
+    <div class="footer-inner">
+      <div class="footer-profile">
+        <a href="{{ '/' | relative_url }}">
+          <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}">
+        </a>
+        <p>{{ site.data.profile.bio.short }}</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Links</h4>
+        <div class="footer-social-icons">
+          {% if site.data.contact.links.linkedin %}
+            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.github %}
+            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.itch %}
+            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i></a>
+          {% endif %}
+          {% if site.data.contact.email %}
+            <a href="mailto:{{ site.data.contact.email }}"><i class="fas fa-envelope"></i></a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="footer-recent">
+        <h4>Recent Posts</h4>
+        {% if site.blogs %}
+          {% assign footer_blogs = site.blogs | sort: 'date' | reverse %}
+          {% for blog in footer_blogs limit: 3 %}
+            <a href="{{ blog.url | relative_url }}">{{ blog.title }}</a>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var navToggle = document.querySelector('.navbar-toggle');
-      var navLinks = document.querySelector('.navbar-links');
-      if (navToggle && navLinks) {
-        navToggle.addEventListener('click', function() {
-          navLinks.classList.toggle('open');
-        });
-      }
-
-      var modeBtn = document.getElementById('mode-toggle');
-      var icon = modeBtn.querySelector('i');
-      var saved = localStorage.getItem('theme');
-      if (saved === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        icon.classList.replace('fa-moon', 'fa-sun');
-      }
-      modeBtn.addEventListener('click', function() {
-        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        if (isLight) {
-          document.documentElement.removeAttribute('data-theme');
-          icon.classList.replace('fa-sun', 'fa-moon');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.setAttribute('data-theme', 'light');
-          icon.classList.replace('fa-moon', 'fa-sun');
-          localStorage.setItem('theme', 'light');
-        }
-      });
-      var scrollBtn = document.getElementById('scroll-top');
-      window.addEventListener('scroll', function() {
-        scrollBtn.classList.toggle('visible', window.scrollY > 100);
-      });
-      scrollBtn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    });
+    window.searchData = [];
+    {% if site.projects %}
+      {% for p in site.projects %}
+        window.searchData.push({ title: {{ p.title | jsonify }}, desc: {{ p.description | default: '' | jsonify }}, url: {{ p.url | relative_url | jsonify }}, type: 'Project' });
+      {% endfor %}
+    {% endif %}
+    {% if site.blogs %}
+      {% for b in site.blogs %}
+        window.searchData.push({ title: {{ b.title | jsonify }}, desc: {{ b.content | markdownify | strip_html | truncate: 200 | jsonify }}, url: {{ b.url | relative_url | jsonify }}, type: 'Blog' });
+      {% endfor %}
+    {% endif %}
+    {% for tab in site.tabs %}
+      {% if tab.order %}
+        window.searchData.push({ title: {{ tab.title | jsonify }}, desc: '', url: {{ tab.url | relative_url | jsonify }}, type: 'Page' });
+      {% endif %}
+    {% endfor %}
   </script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
   <script src="{{ '/assets/js/background.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>

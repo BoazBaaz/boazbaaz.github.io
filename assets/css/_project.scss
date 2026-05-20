@@ -1,0 +1,53 @@
+// Project detail page
+
+.project-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+
+  i { margin-right: 0.35rem; }
+}
+
+.team-size-badge {
+  padding: 0.25rem 0.75rem;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.project-tags-header { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+.project-team-grid {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.team-column { flex: 1; min-width: 0; }
+
+.team-column-header {
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--card-border);
+
+  i { color: var(--accent); margin-right: 0.35rem; }
+}
+
+.team-column-member { display: block; color: var(--text-muted); line-height: 1.7; }
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--card-border);
+}

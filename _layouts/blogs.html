@@ -4,51 +4,76 @@ layout: default
 
 <div class="blogs-page">
   {% if site.blogs.size > 0 %}
-    <div class="project-filter-dropdown">
-      <button id="filter-toggle">Filters &#9660;</button>
-      <div id="filter-menu" class="filter-menu" style="display: none;">
-        <button id="filter-all" class="filter-all-btn">All</button>
+    {% assign sorted_blogs = site.blogs | sort: 'date' | reverse %}
 
-        <div class="filter-section">
-          <h4>Tags</h4>
-          {% for tag_entry in site.data.tags %}
-            <label>
-              <input type="checkbox" class="filter-checkbox filter-tag" value="{{ tag_entry[0] }}">
-              {{ tag_entry[1].label | default: tag_entry[0] }}
-            </label>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-
-    <div class="blogs-list">
-      {% assign sorted_blogs = site.blogs | sort: 'date' | reverse %}
+    <div class="blog-cards">
       {% for blog in sorted_blogs %}
-        <article class="blog-preview card-wrapper"
-                 data-tags="{{ blog.tags | join: ',' }}">
-          <a href="{{ blog.url | relative_url }}" class="blog-preview-link">
-            {% if blog.thumbnail %}
-              <div class="blog-preview-thumbnail">
-                <img src="{{ blog.thumbnail | relative_url }}" alt="{{ blog.title }}">
+        <a href="{{ blog.url | relative_url }}" class="blog-card" data-tags="{{ blog.tags | join: ',' }}">
+          {% if blog.thumbnail %}
+            <div class="blog-card-image">
+              <img src="{{ blog.thumbnail | relative_url }}" alt="{{ blog.title }}">
+            </div>
+          {% endif %}
+          <div class="blog-card-content">
+            <h3>{{ blog.title }}</h3>
+            <p>{{ blog.content | markdownify | strip_html | truncate: 150 }}</p>
+            <div class="blog-card-meta">
+              <time><i class="far fa-calendar"></i> {{ blog.date | date: "%B %d, %Y" }}</time>
+            </div>
+            {% if blog.tags %}
+              <div class="blog-card-tags">
+                {% for tag in blog.tags %}
+                  <span class="project-tag {{ tag | slugify }} clickable-tag" data-tag="{{ tag }}">
+                    {% assign tag_data = site.data.tags[tag] %}
+                    {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                  </span>
+                {% endfor %}
               </div>
             {% endif %}
-            <h2 class="blog-preview-title">{{ blog.title }}</h2>
-            <p class="blog-preview-excerpt">
-              {{ blog.content | markdownify | strip_html | truncate: 200 }}
-            </p>
-            <div class="blog-preview-meta">
-              <time datetime="{{ blog.date | date_to_xmlschema }}">
-                <i class="far fa-calendar"></i>
-                {{ blog.date | date: "%B %d, %Y" }}
-              </time>
-            </div>
-          </a>
-        </article>
+          </div>
+        </a>
       {% endfor %}
     </div>
   {% else %}
-    <p>No blog posts yet.</p>
+    <p>No articles yet.</p>
   {% endif %}
 </div>
 
-<script src="{{ '/assets/js/filter_projects.js' | relative_url }}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cards = document.querySelectorAll('.blog-card');
+    var clickableTags = document.querySelectorAll('.clickable-tag');
+
+    function filterByTag(tag) {
+      cards.forEach(function(card) {
+        if (tag === 'all') {
+          card.style.display = '';
+        } else {
+          var tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
+          card.style.display = tags.indexOf(tag) === -1 ? 'none' : '';
+        }
+      });
+    }
+
+    clickableTags.forEach(function(tag) {
+      tag.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var t = this.dataset.tag;
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('tag') === t) {
+          params.delete('tag');
+          filterByTag('all');
+        } else {
+          params.set('tag', t);
+          filterByTag(t);
+        }
+        history.replaceState(null, '', window.location.pathname + (params.toString() ? '?' + params : ''));
+      });
+    });
+
+    var params = new URLSearchParams(window.location.search);
+    var initialTag = params.get('tag');
+    if (initialTag) filterByTag(initialTag);
+  });
+</script>

@@ -1,0 +1,49 @@
+---
+layout: default
+---
+
+<div class="about-page">
+  <div class="about-intro">
+    <h1>{{ site.data.profile.name }}</h1>
+    <p class="about-tagline">{{ site.data.profile.specialization }} &bull; {{ site.data.profile.university }}</p>
+    <div class="about-social">
+      {% if site.data.contact.email %}
+        <a href="mailto:{{ site.data.contact.email }}" title="Email"><i class="fas fa-envelope"></i></a>
+      {% endif %}
+      {% if site.data.contact.links.github %}
+        <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+      {% endif %}
+      {% if site.data.contact.links.linkedin %}
+        <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      {% endif %}
+      {% if site.data.contact.links.itch %}
+        <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener" title="Itch.io"><i class="fab fa-itch-io"></i></a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="content-bubble">
+    {{ content }}
+  </div>
+
+  <section class="about-section">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      {% for category in site.data.skills %}
+        <div class="skills-group">
+          <h4>{{ category[0] }}</h4>
+          <div class="skills-items">
+            {% for skill in category[1] %}
+              <div class="skill-item{% if skill.learning %} skill-learning{% endif %}">
+                {% if skill.icon %}
+                  <img src="{{ skill.icon | relative_url }}" alt="{{ skill.name }}"{% if skill.invert %} class="icon-invert"{% endif %}>
+                {% endif %}
+                <span>{{ skill.name }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>

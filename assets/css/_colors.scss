@@ -1,0 +1,42 @@
+// ======================
+// Color System
+// ======================
+
+// ---- Dark mode (matches live site) ----
+$dark-bg: #161618;
+$dark-surface: #1c1c1f;
+$dark-navbar: rgba(28, 28, 31, 0.9);
+$dark-card: #222225;
+$dark-border: #333338;
+$dark-text: #d4d4d8;
+$dark-muted: #8b8b94;
+$dark-heading: #f0f0f2;
+$dark-link: #7eb8da;
+$dark-link-hover: #a3d0ec;
+$dark-accent: #5a9ec4;
+$dark-accent-hover: #4a8bb0;
+$dark-code: #282c34;
+$dark-code-border: #3e4451;
+$dark-nav-hover: rgba(126, 184, 218, 0.08);
+
+// ---- Light mode ----
+$light-bg: #f5f5f7;
+$light-surface: rgba(245, 245, 247, 0.88);
+$light-navbar: rgba(234, 234, 237, 0.92);
+$light-card: #ffffff;
+$light-border: #d8d8dc;
+$light-text: #2c2c30;
+$light-muted: #6b6b73;
+$light-heading: #1a1a1e;
+$light-link: #3B6599;
+$light-link-hover: #2C5280;
+$light-accent: #3B6599;
+$light-accent-hover: #2C5280;
+$light-code: #f0f0f3;
+$light-code-border: #d8d8dc;
+$light-nav-hover: rgba(59, 101, 153, 0.08);
+
+// ---- Shared glow ----
+$glow-color: rgba(126, 184, 218, 0.3);
+$glow-color-light: rgba(163, 208, 236, 0.2);
+$glow-border: rgba(126, 184, 218, 0.4);

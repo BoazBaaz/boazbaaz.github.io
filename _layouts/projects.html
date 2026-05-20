@@ -3,77 +3,96 @@ layout: default
 ---
 
 <div class="projects-page">
-  <div class="project-filter-dropdown">
-    <button id="filter-toggle">Filters &#9660;</button>
-    <div id="filter-menu" class="filter-menu" style="display: none;">
-      <button id="filter-all" class="filter-all-btn">All</button>
-
-      <div class="filter-section">
-        <h4>Tags</h4>
-        {% for tag_entry in site.data.tags %}
-          <label>
-            <input type="checkbox" class="filter-checkbox filter-tag" value="{{ tag_entry[0] }}">
-            {{ tag_entry[1].label | default: tag_entry[0] }}
-          </label>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-
   <div class="projects-grid">
     {% assign sorted_projects = site.projects | sort: 'end_date' | reverse %}
-    {% for project in sorted_projects %}
-      <div class="card-wrapper{% if project.featured %} featured{% endif %}"
-           data-tags="{{ project.tags | join: ',' }}">
-        <div class="project-card">
-          {% if project.thumbnail %}
-            <div class="project-thumbnail">
-              <a href="{{ project.url | relative_url }}">
-                <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
-              </a>
+    <div class="project-cards">
+      {% for project in sorted_projects %}
+        <div class="card-wrapper{% if project.featured %} featured{% endif %}"
+             data-tags="{{ project.tags | join: ',' }}">
+          <div class="project-card">
+            {% if project.thumbnail %}
+              {% assign thumb_ext = project.thumbnail | split: '.' | last | downcase %}
+              <div class="project-thumbnail">
+                <a href="{{ project.url | relative_url }}">
+                  {% if thumb_ext == 'mp4' or thumb_ext == 'webm' or thumb_ext == 'gif' %}
+                    <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ thumb_ext }}"></video>
+                  {% else %}
+                    <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+                  {% endif %}
+                </a>
+              </div>
+            {% endif %}
+
+            <div class="project-content">
+              <h2 class="project-title">
+                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+              </h2>
+
+              <p class="project-description">{{ project.description }}</p>
+
+              {% if project.tags %}
+                <div class="project-tags">
+                  {% for tag in project.tags %}
+                    <span class="project-tag {{ tag | slugify }} clickable-tag" data-tag="{{ tag }}">
+                      {% assign tag_data = site.data.tags[tag] %}
+                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              {% if project.start_date and project.end_date %}
+                <div class="project-date">
+                  {{ project.start_date | date: "%B %d, %Y" }} - {{ project.end_date | date: "%B %d, %Y" }}
+                </div>
+              {% elsif project.end_date %}
+                <div class="project-date">
+                  {{ project.end_date | date: "%B %d, %Y" }}
+                </div>
+              {% endif %}
             </div>
-          {% endif %}
-
-          <div class="project-content">
-            <h2 class="project-title">
-              <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-            </h2>
-
-            <p class="project-description">{{ project.description }}</p>
-
-            {% if project.team-size %}
-              <div class="project-meta">
-                <span class="team-badge">
-                  <i class="fas fa-users"></i> {{ project.team-size }}
-                </span>
-              </div>
-            {% endif %}
-
-            {% if project.tags %}
-              <div class="project-tags">
-                {% for tag in project.tags %}
-                  <span class="project-tag {{ tag | slugify }}">
-                    {% assign tag_data = site.data.tags[tag] %}
-                    {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                  </span>
-                {% endfor %}
-              </div>
-            {% endif %}
-
-            {% if project.start_date and project.end_date %}
-              <div class="project-date">
-                {{ project.start_date | date: "%B %d, %Y" }} - {{ project.end_date | date: "%B %d, %Y" }}
-              </div>
-            {% elsif project.end_date %}
-              <div class="project-date">
-                {{ project.end_date | date: "%B %d, %Y" }}
-              </div>
-            {% endif %}
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 
-<script src="{{ '/assets/js/filter_projects.js' | relative_url }}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var cards = document.querySelectorAll('.card-wrapper');
+    var clickableTags = document.querySelectorAll('.clickable-tag');
+
+    function filterByTag(tag) {
+      cards.forEach(function(card) {
+        if (tag === 'all') {
+          card.classList.remove('hidden');
+        } else {
+          var tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
+          card.classList.toggle('hidden', tags.indexOf(tag) === -1);
+        }
+      });
+    }
+
+    clickableTags.forEach(function(tag) {
+      tag.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var t = this.dataset.tag;
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('tag') === t) {
+          params.delete('tag');
+          filterByTag('all');
+        } else {
+          params.set('tag', t);
+          filterByTag(t);
+        }
+        history.replaceState(null, '', window.location.pathname + (params.toString() ? '?' + params : ''));
+      });
+    });
+
+    var params = new URLSearchParams(window.location.search);
+    var initialTag = params.get('tag');
+    if (initialTag) filterByTag(initialTag);
+  });
+</script>

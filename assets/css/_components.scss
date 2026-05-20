@@ -1,0 +1,94 @@
+@use "mixins";
+
+// Shared components: buttons, skills, video, resume
+
+// Buttons
+.btn-primary { @include mixins.btn-primary; }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+
+  &:hover { color: var(--link-color); }
+}
+
+// Skills grid
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+}
+
+.skills-group {
+  h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+}
+
+.skills-items { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--heading-color);
+
+  img { width: 24px; height: 24px; }
+}
+
+.skill-learning {
+  opacity: 0.55;
+  border: 1px dashed var(--text-muted);
+}
+
+// Video embed
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+}
+
+// Resume page
+.resume-page { display: flex; flex-direction: column; }
+
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.resume-download-btn { @include mixins.btn-primary; }
+
+.resume-viewer {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: #525659;
+
+  iframe { width: 100%; aspect-ratio: 1 / 1.414; border: none; display: block; }
+}

@@ -1,0 +1,33 @@
+// Shared mixins used across multiple partials
+
+@mixin card-base {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 0 15px var(--glow-color),
+      0 0 15px var(--glow-color-light),
+      inset 0 0 0 1px var(--glow-border);
+  }
+}
+
+@mixin btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover { background: var(--accent-hover); color: white; transform: translateY(-1px); }
+}

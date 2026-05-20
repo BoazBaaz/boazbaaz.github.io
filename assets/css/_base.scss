@@ -1,0 +1,80 @@
+// Base reset, typography, global elements
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 { color: var(--heading-color); font-weight: 600; }
+a { color: var(--link-color); text-decoration: none; }
+a:hover { color: var(--link-hover); }
+hr { border: none; border-top: 1px solid var(--card-border); margin: 2rem 0; }
+
+// Background canvas
+.has-page-bg { #bg-canvas { display: none; } }
+
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+// Scroll to top
+#scroll-top {
+  position: fixed;
+  bottom: 1.5rem;
+  right: max(1.5rem, calc((100vw - 1280px) / 2));
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s, transform 0.1s, opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+
+  &:hover { background: var(--accent-hover); transform: translateY(-2px); }
+}
+
+// Theme toggle
+#mode-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+
+  &:hover { border-color: var(--accent); color: var(--heading-color); }
+}
+
+// Icon inversion for dark/light mode
+.icon-invert { filter: invert(0.85); }
+[data-theme="light"] .icon-invert { filter: none; }

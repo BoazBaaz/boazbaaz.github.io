@@ -3,104 +3,90 @@ layout: default
 ---
 
 <article>
+  <a href="{{ '/projects/' | relative_url }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+
   <header class="page-header">
     <h1>{{ page.title }}</h1>
   </header>
 
-  {% if page.banner %}
-    <div class="project-banner">
-      <img src="{{ page.banner | relative_url }}" alt="{{ page.title }}">
-    </div>
-  {% endif %}
+  <div class="content-bubble">
+    <div class="project-meta-bar">
+      {% if page.start_date and page.end_date %}
+        <span><i class="far fa-calendar"></i> {{ page.start_date | date: "%B %d, %Y" }} - {{ page.end_date | date: "%B %d, %Y" }}</span>
+      {% elsif page.end_date %}
+        <span><i class="far fa-calendar"></i> {{ page.end_date | date: "%B %d, %Y" }}</span>
+      {% endif %}
 
-  <div class="project-meta-bar">
-    {% if page.start_date and page.end_date %}
-      <span><i class="far fa-calendar"></i> {{ page.start_date | date: "%B %d, %Y" }} - {{ page.end_date | date: "%B %d, %Y" }}</span>
-    {% elsif page.end_date %}
-      <span><i class="far fa-calendar"></i> {{ page.end_date | date: "%B %d, %Y" }}</span>
-    {% endif %}
-
-    {% if page.start_date and page.end_date %}
-      {% assign start_s = page.start_date | date: "%s" | plus: 0 %}
-      {% assign end_s = page.end_date | date: "%s" | plus: 0 %}
-      {% assign diff_days = end_s | minus: start_s | divided_by: 86400 %}
-      <span><i class="far fa-clock"></i>
-        {% if diff_days < 14 %}{{ diff_days }} days
-        {% elsif diff_days < 60 %}{{ diff_days | divided_by: 7 }} weeks
-        {% else %}{{ diff_days | divided_by: 30 }} months
-        {% endif %}
-      </span>
-    {% endif %}
-
-    {% if page.role %}
-      <span><i class="fas fa-user-tag"></i> {{ page.role }}</span>
-    {% endif %}
-
-    {% if page.team-size %}
-      <span class="team-size-badge"><i class="fas fa-users"></i> {{ page.team-size }} people</span>
-    {% endif %}
-  </div>
-
-  {% if page.tags.size > 0 %}
-    <div class="project-tags-header">
-      {% for tag in page.tags %}
-        <span class="project-tag {{ tag | slugify }}">
-          {% assign tag_data = site.data.tags[tag] %}
-          {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+      {% if page.start_date and page.end_date %}
+        {% assign start_s = page.start_date | date: "%s" | plus: 0 %}
+        {% assign end_s = page.end_date | date: "%s" | plus: 0 %}
+        {% assign diff_days = end_s | minus: start_s | divided_by: 86400 %}
+        <span><i class="far fa-clock"></i>
+          {% if diff_days < 14 %}{{ diff_days }} days
+          {% elsif diff_days < 60 %}{{ diff_days | divided_by: 7 }} weeks
+          {% else %}{{ diff_days | divided_by: 30 }} months
+          {% endif %}
         </span>
-      {% endfor %}
+      {% endif %}
+
+      {% if page.role %}
+        <span><i class="fas fa-user-tag"></i> {{ page.role }}</span>
+      {% endif %}
+
+      {% if page.team-size %}
+        <span class="team-size-badge"><i class="fas fa-users"></i> {{ page.team-size }} people</span>
+      {% endif %}
     </div>
-  {% endif %}
 
-  {% if page.description %}
-    <p class="project-lead">{{ page.description }}</p>
-  {% endif %}
+    {% if page.tags.size > 0 %}
+      <div class="project-tags-header">
+        {% for tag in page.tags %}
+          <a href="{{ '/projects/' | relative_url }}?tag={{ tag }}" class="project-tag {{ tag | slugify }}">
+            {% assign tag_data = site.data.tags[tag] %}
+            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
 
-  {% if page.team %}
-    <div class="project-team-grid">
-      {% for role in page.team %}
-        {% assign role_key = role[0] %}
-        {% assign members = role[1] %}
-        {% assign role_data = site.data.roles[role_key] %}
-        <div class="team-column">
-          <div class="team-column-header">
-            {% if role_data %}
-              <i class="{{ role_data.icon }}"></i> {{ role_data.name }}
-            {% else %}
-              {{ role_key | capitalize }}
-            {% endif %}
+
+    {% if page.team %}
+      <div class="project-team-grid">
+        {% for role in page.team %}
+          {% assign role_key = role[0] %}
+          {% assign members = role[1] %}
+          {% assign role_data = site.data.roles[role_key] %}
+          <div class="team-column">
+            <div class="team-column-header">
+              {% if role_data %}
+                <i class="{{ role_data.icon }}"></i> {{ role_data.name }}
+              {% else %}
+                {{ role_key | capitalize }}
+              {% endif %}
+            </div>
+            {% for member in members %}
+              <span class="team-column-member">{{ member }}</span>
+            {% endfor %}
           </div>
-          {% for member in members %}
-            <span class="team-column-member">{{ member }}</span>
-          {% endfor %}
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <hr>
+
+    <div class="project-body">
+      {{ content }}
     </div>
-  {% endif %}
 
-  {% if page.video %}
-    <div class="video-embed">
-      <iframe src="{{ page.video }}" title="{{ page.title }} trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-  {% endif %}
-
-  <hr>
-
-  <div class="project-body">
-    {{ content }}
-  </div>
-
-  {% if page.links %}
-    <div class="project-links">
-      <h2>Links</h2>
-      <div class="project-links-list">
+    {% if page.links %}
+      <div class="project-actions">
         {% for link in page.links %}
-          <a href="{{ link.url }}" target="_blank" rel="noopener" class="project-link-btn">
-            <i class="{{ link.icon | default: 'fas fa-link' }}"></i>
+          <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-primary"{% if link.color %} style="background: {{ link.color }};"{% endif %}>
+            {% if link.icon %}<i class="{{ link.icon }}"></i> {% endif %}
             {{ link.name }}
           </a>
         {% endfor %}
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
 </article>

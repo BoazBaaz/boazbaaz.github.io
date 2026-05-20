@@ -3,19 +3,20 @@
 
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
 
+  var particleColor = [25, 45, 110];
+
   var config = {
     count: isMobile ? 32 : 64,
     lineDistance: isMobile ? 128 : 256,
     lineOpacity: 0.35,
-    lineColor: [126, 184, 218],
-    shapeColor: 'rgba(126, 184, 218, 0.3)',
-    shapeStroke: 'rgba(126, 184, 218, 0.5)',
-    minSize: isMobile ? 4 : 8,
+    lineColor: particleColor,
+    shapeStroke: 'rgba(' + particleColor.join(',') + ', 0.5)',
+    minSize: isMobile ? 6 : 8,
     maxSize: isMobile ? 8 : 16,
-    speed: 0.3,
+    speed: 0.35,
     rotSpeed: 0.3,
-    repulseDistance: 120,
-    repulseStrength: 0.8,
+    repulseDistance: isMobile ? 32 : 64,
+    repulseStrength: 0.5,
     thickness: 1.8
   };
 
@@ -31,7 +32,6 @@
   }
 
   Particle.prototype.update = function() {
-    // Mouse repulsion
     var dx = this.x - mouse.x;
     var dy = this.y - mouse.y;
     var dist = Math.sqrt(dx * dx + dy * dy);
@@ -41,11 +41,9 @@
       this.vy += (dy / dist) * force;
     }
 
-    // Dampen velocity
     this.vx *= 0.99;
     this.vy *= 0.99;
 
-    // Ensure minimum speed
     var speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
     if (speed < config.speed * 0.3) {
       this.vx += (Math.random() - 0.5) * 0.1;
@@ -56,7 +54,6 @@
     this.y += this.vy;
     this.angle += config.rotSpeed * this.rotDir;
 
-    // Wrap edges
     if (this.x < -this.size) this.x = w + this.size;
     if (this.x > w + this.size) this.x = -this.size;
     if (this.y < -this.size) this.y = h + this.size;
@@ -129,6 +126,13 @@
   function init() {
     canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
+
+    // Hide canvas if page has a custom background
+    if (document.body.classList.contains('has-page-bg')) {
+      canvas.style.display = 'none';
+      return;
+    }
+
     ctx = canvas.getContext('2d');
     resize();
     populate();
@@ -142,19 +146,6 @@
       mouse.x = -9999;
       mouse.y = -9999;
     });
-
-    // Update colors when theme changes
-    var observer = new MutationObserver(function() {
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (isLight) {
-        config.lineColor = [53, 116, 165];
-        config.shapeStroke = 'rgba(53, 116, 165, 0.35)';
-      } else {
-        config.lineColor = [126, 184, 218];
-        config.shapeStroke = 'rgba(126, 184, 218, 0.5)';
-      }
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     requestAnimationFrame(loop);
   }

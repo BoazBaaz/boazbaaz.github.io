@@ -4,30 +4,29 @@ layout: default
 
 <div id="home-wrapper">
   <section class="home-section" id="info-card">
-    <h2 class="section-title"></h2>
-
-    <div class="about-block">
-      <div class="about-photo">
-        <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}">
+    <div class="about-block about-block-link" data-href="{{ '/about/' | relative_url }}">
+      <div class="about-sidebar">
+        <div class="about-photo">
+          <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}">
+        </div>
+        <div class="about-icons">
+          {% if site.data.contact.email %}
+            <a href="mailto:{{ site.data.contact.email }}" title="Email"><i class="fas fa-envelope"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.github %}
+            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.linkedin %}
+            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          {% endif %}
+          {% if site.data.contact.links.itch %}
+            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener" title="Itch.io"><i class="fab fa-itch-io"></i></a>
+          {% endif %}
+        </div>
       </div>
       <div class="about-info">
         <h3>{{ site.data.profile.name }}</h3>
         <p>{{ site.data.profile.bio.long | default: site.data.profile.bio.short }}</p>
-
-        <div class="about-links">
-          {% if site.data.contact.email %}
-            <a href="mailto:{{ site.data.contact.email }}"><i class="fas fa-envelope"></i> {{ site.data.contact.email }}</a>
-          {% endif %}
-          {% if site.data.contact.links.github %}
-            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
-          {% endif %}
-          {% if site.data.contact.links.linkedin %}
-            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
-          {% endif %}
-          {% if site.data.contact.links.itch %}
-            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i> Itch.io</a>
-          {% endif %}
-        </div>
       </div>
     </div>
   </section>
@@ -39,8 +38,13 @@ layout: default
     {% for project in featured_projects %}
       <a href="{{ project.url | relative_url }}" class="highlight-card">
         {% if project.thumbnail %}
+          {% assign thumb_ext = project.thumbnail | split: '.' | last | downcase %}
           <div class="highlight-image">
-            <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+            {% if thumb_ext == 'mp4' or thumb_ext == 'webm' or thumb_ext == 'gif' %}
+              <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ thumb_ext }}"></video>
+            {% else %}
+              <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+            {% endif %}
           </div>
         {% endif %}
         <div class="highlight-content">
@@ -57,7 +61,7 @@ layout: default
           {% if project.tags %}
             <div class="highlight-tags">
               {% for tag in project.tags %}
-                <span class="project-tag {{ tag | slugify }}">
+                <span class="project-tag {{ tag | slugify }}" data-tag-href="{{ '/projects/' | relative_url }}?tag={{ tag }}">
                   {% assign tag_data = site.data.tags[tag] %}
                   {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
                 </span>
@@ -67,68 +71,54 @@ layout: default
         </div>
       </a>
     {% endfor %}
+
+    <div class="section-view-all">
+      <a href="{{ '/projects/' | relative_url }}" class="view-all-btn-large">
+        <i class="fas fa-folder-open"></i> View All Projects
+      </a>
+    </div>
   </section>
 
   <section class="home-section" id="blogs">
-    <div class="section-header">
-      <h2 class="section-title">Recent Blogs</h2>
-      <a href="{{ '/blogs/' | relative_url }}" class="view-all-btn">View All &rarr;</a>
-    </div>
+    <h2 class="section-title">Articles</h2>
 
-    <div class="blogs-list">
+    <div class="blog-cards">
       {% if site.blogs %}
         {% assign recent_blogs = site.blogs | sort: 'date' | reverse %}
-        {% for blog in recent_blogs limit: 5 %}
-        <article class="blog-preview">
-          <a href="{{ blog.url | relative_url }}" class="blog-preview-link">
+        {% for blog in recent_blogs limit: 3 %}
+          <a href="{{ blog.url | relative_url }}" class="blog-card">
             {% if blog.thumbnail %}
-              <div class="blog-preview-thumbnail">
+              <div class="blog-card-image">
                 <img src="{{ blog.thumbnail | relative_url }}" alt="{{ blog.title }}">
               </div>
             {% endif %}
-            <h3 class="blog-preview-title">{{ blog.title }}</h3>
-            <p class="blog-preview-excerpt">
-              {{ blog.content | markdownify | strip_html | truncate: 150 }}
-            </p>
-            <div class="blog-preview-meta">
-              <time datetime="{{ blog.date | date_to_xmlschema }}">
-                <i class="far fa-calendar"></i>
-                {{ blog.date | date: "%B %d, %Y" }}
-              </time>
+            <div class="blog-card-content">
+              <h3>{{ blog.title }}</h3>
+              <p>{{ blog.content | markdownify | strip_html | truncate: 150 }}</p>
+              <div class="blog-card-meta">
+                <time><i class="far fa-calendar"></i> {{ blog.date | date: "%B %d, %Y" }}</time>
+              </div>
+              {% if blog.tags %}
+                <div class="blog-card-tags">
+                  {% for tag in blog.tags %}
+                    <span class="project-tag {{ tag | slugify }}" data-tag-href="{{ '/blogs/' | relative_url }}?tag={{ tag }}">
+                      {% assign tag_data = site.data.tags[tag] %}
+                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
           </a>
-        </article>
         {% endfor %}
       {% endif %}
     </div>
-  </section>
 
-  <section class="home-section" id="skills">
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-grid">
-      <div class="skills-group">
-        <h4>Languages</h4>
-        <div class="skills-items">
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="C++"><span>C++</span></div>
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#"><span>C#</span></div>
-        </div>
-      </div>
-      <div class="skills-group">
-        <h4>Engines</h4>
-        <div class="skills-items">
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unrealengine/unrealengine-original.svg" alt="Unreal"><span>Unreal</span></div>
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" alt="Unity"><span>Unity</span></div>
-        </div>
-      </div>
-      <div class="skills-group">
-        <h4>Tools</h4>
-        <div class="skills-items">
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cmake/cmake-original.svg" alt="CMake"><span>CMake</span></div>
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
-          <div class="skill-item"><img src="https://cdn.simpleicons.org/perforce/%23404040" alt="Perforce"><span>Perforce</span></div>
-          <div class="skill-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/visualstudio/visualstudio-plain.svg" alt="Visual Studio"><span>VS</span></div>
-        </div>
-      </div>
+    <div class="section-view-all">
+      <a href="{{ '/blogs/' | relative_url }}" class="view-all-btn-large">
+        <i class="fas fa-newspaper"></i> View All Articles
+      </a>
     </div>
   </section>
+
 </div>

@@ -1,0 +1,113 @@
+@use "mixins";
+
+// Homepage: sections, highlights, about card
+
+.home-section { margin-bottom: 3.5rem; }
+.home-section:first-child { margin-top: 0; }
+
+.section-title { font-size: 1.6rem; font-weight: 600; margin: 0 0 1.5rem 0; }
+
+.section-view-all { text-align: center; margin-top: 1.5rem; }
+.view-all-btn-large { @include mixins.btn-primary; }
+
+// Highlight cards (featured projects on homepage)
+.highlight-card {
+  @include mixins.card-base;
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.highlight-image {
+  width: 320px;
+  min-height: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  img, video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+}
+
+.highlight-card:hover .highlight-image img,
+.highlight-card:hover .highlight-image video { transform: scale(1.05); }
+
+.highlight-content {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.highlight-title { font-size: 1.5rem; margin: 0 0 0.75rem 0; }
+.highlight-card:hover .highlight-title { color: var(--link-color); }
+.highlight-description { color: var(--text-muted); line-height: 1.6; margin: 0 0 1rem 0; }
+
+.highlight-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+
+  i { margin-right: 0.25rem; }
+}
+
+.highlight-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+// About card (homepage)
+.about-block {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+}
+
+.about-block-link {
+  @include mixins.card-base;
+  text-decoration: none !important;
+  color: inherit;
+  cursor: pointer;
+}
+
+.about-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.about-photo img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+}
+
+.about-icons {
+  display: flex;
+  gap: 0.75rem;
+
+  a, span {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    position: relative;
+    z-index: 1;
+
+    &:hover { color: var(--link-color); }
+  }
+}
+
+.about-info {
+  flex: 1;
+
+  h3 { font-size: 1.5rem; margin: 0 0 0.75rem 0; }
+  p { color: var(--text-muted); line-height: 1.7; margin: 0; }
+}
