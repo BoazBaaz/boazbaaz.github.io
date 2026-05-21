@@ -34,43 +34,48 @@ layout: default
   <section class="home-section" id="highlights">
     <h2 class="section-title">Highlights</h2>
 
-    {% assign featured_projects = site.projects | where: "featured", true | sort: 'end_date' | reverse | limit: 3 %}
-    {% for project in featured_projects %}
-      <a href="{{ project.url | relative_url }}" class="highlight-card">
-        {% if project.thumbnail %}
-          {% assign thumb_ext = project.thumbnail | split: '.' | last | downcase %}
-          <div class="highlight-image">
-            {% if thumb_ext == 'mp4' or thumb_ext == 'webm' or thumb_ext == 'gif' %}
-              <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ thumb_ext }}"></video>
-            {% else %}
-              <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+    {% assign featured_projects = site.projects | where: "featured", true | sort: 'end_date' | reverse %}
+    <div class="project-cards">
+      {% for project in featured_projects limit: 3 %}
+        <div class="card-wrapper">
+          <article class="project-card">
+            {% if project.thumbnail %}
+              <div class="project-thumbnail">
+                {% assign ext = project.thumbnail | split: '.' | last | downcase %}
+                <a href="{{ project.url | relative_url }}">
+                  {% if ext == 'mp4' or ext == 'webm' or ext == 'gif' %}
+                    <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ ext }}"></video>
+                  {% else %}
+                    <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
+                  {% endif %}
+                </a>
+              </div>
             {% endif %}
-          </div>
-        {% endif %}
-        <div class="highlight-content">
-          <h3 class="highlight-title">{{ project.title }}</h3>
-          <p class="highlight-description">{{ project.description }}</p>
-          <div class="highlight-meta">
-            {% if project.start_date and project.end_date %}
-              <span><i class="far fa-calendar"></i> {{ project.start_date | date: "%B %d, %Y" }} - {{ project.end_date | date: "%B %d, %Y" }}</span>
-            {% endif %}
-            {% if project.role %}
-              <span><i class="fas fa-user-tag"></i> {{ project.role }}</span>
-            {% endif %}
-          </div>
-          {% if project.tags %}
-            <div class="highlight-tags">
-              {% for tag in project.tags %}
-                <span class="project-tag {{ tag | slugify }}" data-tag-href="{{ '/projects/' | relative_url }}?tag={{ tag }}">
-                  {% assign tag_data = site.data.tags[tag] %}
-                  {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                </span>
-              {% endfor %}
+            <div class="project-content">
+              <h3 class="project-title"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+              <p class="project-description">{{ project.description }}</p>
+              {% if project.tags %}
+                <div class="project-tags">
+                  {% for tag in project.tags %}
+                    <span class="project-tag {{ tag | slugify }}" data-tag-href="{{ '/projects/' | relative_url }}?tag={{ tag }}">
+                      {% assign tag_data = site.data.tags[tag] %}
+                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <div class="project-card-meta">
+                {% if project.role %}<span><i class="fas fa-user-tag"></i>{{ project.role }}</span>{% endif %}
+                {% if project["team-size"] %}<span><i class="fas fa-users"></i>{% if project["team-size"] == 1 %}Solo{% else %}Team of {{ project["team-size"] }}{% endif %}</span>{% endif %}
+              </div>
+              <div class="project-date">
+                {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
+              </div>
             </div>
-          {% endif %}
+          </article>
         </div>
-      </a>
-    {% endfor %}
+      {% endfor %}
+    </div>
 
     <div class="section-view-all">
       <a href="{{ '/projects/' | relative_url }}" class="view-all-btn-large">

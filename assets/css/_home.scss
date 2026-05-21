@@ -1,6 +1,6 @@
 @use "mixins";
 
-// Homepage: sections, highlights, about card
+// Homepage: sections, about card
 
 .home-section { margin-bottom: 3.5rem; }
 .home-section:first-child { margin-top: 0; }
@@ -9,52 +9,6 @@
 
 .section-view-all { text-align: center; margin-top: 1.5rem; }
 .view-all-btn-large { @include mixins.btn-primary; }
-
-// Highlight cards (featured projects on homepage)
-.highlight-card {
-  @include mixins.card-base;
-  display: flex;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  text-decoration: none !important;
-  color: inherit;
-}
-
-.highlight-image {
-  width: 320px;
-  min-height: 200px;
-  flex-shrink: 0;
-  overflow: hidden;
-
-  img, video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-}
-
-.highlight-card:hover .highlight-image img,
-.highlight-card:hover .highlight-image video { transform: scale(1.05); }
-
-.highlight-content {
-  padding: 1.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.highlight-title { font-size: 1.5rem; margin: 0 0 0.75rem 0; }
-.highlight-card:hover .highlight-title { color: var(--link-color); }
-.highlight-description { color: var(--text-muted); line-height: 1.6; margin: 0 0 1rem 0; }
-
-.highlight-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-
-  i { margin-right: 0.25rem; }
-}
-
-.highlight-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 // About card (homepage)
 .about-block {

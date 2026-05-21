@@ -11,7 +11,7 @@ team:
 team-size: 1
 role: "Solo Developer"
 links:
-  - { name: GitHub Repository, url: "https://github.com/BoazBaaz/PirateGame", icon: fab fa-github }
+  - { name: GitHub, url: "https://github.com/BoazBaaz/PirateGame", icon: fab fa-github, color: "#3a3a3f" }
 ---
 
 ## Overview

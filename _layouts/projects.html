@@ -9,27 +9,22 @@ layout: default
       {% for project in sorted_projects %}
         <div class="card-wrapper{% if project.featured %} featured{% endif %}"
              data-tags="{{ project.tags | join: ',' }}">
-          <div class="project-card">
+          <article class="project-card">
             {% if project.thumbnail %}
-              {% assign thumb_ext = project.thumbnail | split: '.' | last | downcase %}
               <div class="project-thumbnail">
+                {% assign ext = project.thumbnail | split: '.' | last | downcase %}
                 <a href="{{ project.url | relative_url }}">
-                  {% if thumb_ext == 'mp4' or thumb_ext == 'webm' or thumb_ext == 'gif' %}
-                    <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ thumb_ext }}"></video>
+                  {% if ext == 'mp4' or ext == 'webm' or ext == 'gif' %}
+                    <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ ext }}"></video>
                   {% else %}
                     <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
                   {% endif %}
                 </a>
               </div>
             {% endif %}
-
             <div class="project-content">
-              <h2 class="project-title">
-                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-              </h2>
-
+              <h3 class="project-title"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
               <p class="project-description">{{ project.description }}</p>
-
               {% if project.tags %}
                 <div class="project-tags">
                   {% for tag in project.tags %}
@@ -40,18 +35,15 @@ layout: default
                   {% endfor %}
                 </div>
               {% endif %}
-
-              {% if project.start_date and project.end_date %}
-                <div class="project-date">
-                  {{ project.start_date | date: "%B %d, %Y" }} - {{ project.end_date | date: "%B %d, %Y" }}
-                </div>
-              {% elsif project.end_date %}
-                <div class="project-date">
-                  {{ project.end_date | date: "%B %d, %Y" }}
-                </div>
-              {% endif %}
+              <div class="project-card-meta">
+                {% if project.role %}<span><i class="fas fa-user-tag"></i>{{ project.role }}</span>{% endif %}
+                {% if project["team-size"] %}<span><i class="fas fa-users"></i>{% if project["team-size"] == 1 %}Solo{% else %}Team of {{ project["team-size"] }}{% endif %}</span>{% endif %}
+              </div>
+              <div class="project-date">
+                {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
+              </div>
             </div>
-          </div>
+          </article>
         </div>
       {% endfor %}
     </div>
@@ -66,10 +58,10 @@ layout: default
     function filterByTag(tag) {
       cards.forEach(function(card) {
         if (tag === 'all') {
-          card.classList.remove('hidden');
+          card.style.display = '';
         } else {
           var tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
-          card.classList.toggle('hidden', tags.indexOf(tag) === -1);
+          card.style.display = tags.indexOf(tag) === -1 ? 'none' : '';
         }
       });
     }

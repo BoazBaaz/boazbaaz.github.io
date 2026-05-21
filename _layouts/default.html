@@ -67,7 +67,7 @@
             {% for project in featured limit: 5 %}
               <li>
                 <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-                <time>{% if project.role %}{{ project.role }} &bull; {% endif %}{{ project.end_date | date: "%b %Y" }}</time>
+                <time>{% if project.role %}{{ project.role }}{% endif %}</time>
               </li>
             {% endfor %}
           </ul>

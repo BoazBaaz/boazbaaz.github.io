@@ -1,5 +1,19 @@
 // Project detail page
 
+.project-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  h1 { font-size: 2.25rem; margin: 0 0 1rem 0; }
+}
+
+.project-tags-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
 .project-meta-bar {
   display: flex;
   flex-wrap: wrap;
@@ -20,34 +34,11 @@
   font-size: 0.8rem;
 }
 
-.project-tags-header { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-
-.project-team-grid {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
-}
-
-.team-column { flex: 1; min-width: 0; }
-
-.team-column-header {
-  font-weight: 600;
-  color: var(--heading-color);
-  margin-bottom: 0.35rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--card-border);
-
-  i { color: var(--accent); margin-right: 0.35rem; }
-}
-
-.team-column-member { display: block; color: var(--text-muted); line-height: 1.7; }
-
 .project-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 2.5rem;
-  padding-top: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--card-border);
 }

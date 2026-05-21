@@ -11,8 +11,7 @@ team:
 team-size: 2
 role: "AI Programmer"
 links:
-  - { name: GitLab Repository, url: "https://gitlab.glu.nl/rbalkenende/SteeringBehaviorGame/-/tree/G25_Type.EVE", icon: fab fa-gitlab }
-  - { name: Trello, url: "https://trello.com/b/ncOBEXRk/typeeve", icon: fab fa-trello }
+  - { name: GitLab, url: "https://gitlab.glu.nl/rbalkenende/SteeringBehaviorGame/-/tree/G25_Type.EVE", icon: fab fa-gitlab, color: "#FC6D26" }
 ---
 
 ## Overview

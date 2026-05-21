@@ -3,150 +3,39 @@ title: "ZombieZnake"
 start_date: 2021-02-01
 end_date: 2021-02-05
 description: "International Game Jam entry where you play as a zombie infecting humans in a snake-like chain. All grid movement and collisions built from scratch in code."
-thumbnail: /assets/img/projects/zombieznake/banner.png
+thumbnail: /assets/img/projects/zombieznake/thumbnail.png
+background: /assets/img/projects/zombieznake/background.png
 tags: [unity, csharp, team, gameplay, gamejam]
-featured: true
+featured: false
 team:
   programmer: [Boas-Bas van der Veen, Oscar Wilhelmsson]
   artist: [Bart van Twillert, Kimberly G., Susanne Vermeulen]
 team-size: 5
 role: "Programmer"
 links:
-  - { name: Itch.io, url: "https://saltoc.itch.io/zombie-znake", icon: fab fa-itch-io }
-  - { name: Game Jam Page, url: "https://itch.io/jam/international-educations-jam/rate/908946", icon: fas fa-trophy }
-  - { name: GitHub, url: "https://github.com/poppzy/GameJamZombieTheme", icon: fab fa-github }
+  - { name: Itch.io, url: "https://saltoc.itch.io/zombie-znake", icon: fab fa-itch-io, color: "#FA5C5C" }
+  - { name: Game Jam, url: "https://itch.io/jam/international-educations-jam/rate/908946", icon: fas fa-trophy, color: "#E67E22" }
+  - { name: GitHub, url: "https://github.com/poppzy/GameJamZombieTheme", icon: fab fa-github, color: "#3a3a3f" }
 ---
 
 ## Overview
 
-ZombieZnake was made in 5 days for the **International Educations Game Jam 2021** (theme: "...and zombie") with an international team from the Netherlands and Sweden. You play as a zombie roaming a town -- infect humans to grow your zombie chain, but don't let your own zombies collide with each other. The game ranked **26th out of 34** entries.
-
-All grid logic, movement, and collisions were built entirely from code rather than relying on Unity's built-in physics -- a deliberate choice for full control, though in hindsight Unity's tools would have been more practical for a 5-day jam.
+ZombieZnake was made in 5 days for the **International Educations Game Jam 2021** (theme: "...and zombie") with an international team from the Netherlands and Sweden. You play as a zombie roaming a town -- infect humans to grow your zombie chain, but don't collide with your own tail. The game ranked **26th out of 34** entries.
 
 ![Gameplay](/assets/img/projects/zombieznake/gameplay.png)
 
 ---
 
-## Grid System
+## What I Did
 
-The grid is generated from top-left to bottom-right. In retrospect, building it from bottom-left to top-right would have simplified the coordinate math.
+### Custom Grid System
 
-```csharp
-private void CreateGrid(float _width, float _length)
-{
-    for (int y = 0; y < _length; y++)
-    {
-        for (int x = 0; x < _width; x++)
-        {
-            m_Grid[x, y] = new Vector2(m_GridOffset.x + x, m_GridOffset.y - y);
-        }
-    }
-}
-```
+Built the entire grid and movement system from scratch rather than using Unity's built-in physics. The grid generates from top-left to bottom-right, with each cell tracked as a coordinate pair. In hindsight, building from bottom-left would have simplified the math, and relying on Unity's physics would have been more practical for a 5-day jam -- but it was a great learning experience in understanding what engines do for you under the hood.
 
----
+### Snake Movement & Infection
 
-## Player Movement
+Player movement runs on a coroutine-based tick system. Each tick, the head moves in the current direction and every body segment shifts forward to the previous position of the one in front of it. Animator parameters are set per-segment for directional sprites. When the head's grid position overlaps a human, the human is destroyed, a new zombie segment is added to the chain, and the score updates.
 
-Movement is coroutine-based with a fixed tick rate. The snake chain updates head-first -- each segment takes the previous position of the one in front. Animator parameters are set per-segment for directional sprites.
+### Grid-Based Collision
 
-```csharp
-private IEnumerator Movement()
-{
-    while (healthScript.isAlive)
-    {
-        yield return new WaitForSeconds(GridManager.instance.m_MovementUpdate);
-
-        Vector2 desiredPosition = grid.m_PlayerGridLocations[0].gridLocation;
-        Vector2 previousPosition = Vector2.zero;
-
-        switch (m_Faceing)
-        {
-            case Direction.Up:    desiredPosition += new Vector2(0, -1); break;
-            case Direction.Down:  desiredPosition += new Vector2(0, 1);  break;
-            case Direction.Left:  desiredPosition += new Vector2(-1, 0); break;
-            case Direction.Right: desiredPosition += new Vector2(1, 0);  break;
-        }
-
-        for (int i = 0; i < m_PlayerZombies.Count; i++)
-        {
-            if (i != 0) desiredPosition = previousPosition;
-
-            m_PlayerZombies[i].transform.position =
-                grid.GetPlayerGridPosition((int)desiredPosition.x, (int)desiredPosition.y)
-                * GridManager.instance.m_StepSize;
-
-            previousPosition = grid.m_PlayerGridLocations[i].gridLocation;
-
-            m_PlayerZombies[i].GetComponent<Animator>().SetFloat("X",
-                desiredPosition.x - previousPosition.x);
-            m_PlayerZombies[i].GetComponent<Animator>().SetFloat("Y",
-                desiredPosition.y - previousPosition.y);
-
-            grid.m_PlayerGridLocations[i] =
-                new GridManager.GridObject(m_PlayerZombies[i], desiredPosition);
-        }
-    }
-}
-```
-
----
-
-## Collision & Infection
-
-All collision is grid-based -- no Unity physics involved. The `GetPlayerGridPosition` function handles three cases: boundary death, self-collision death, and human infection (which grows the chain and updates the score).
-
-```csharp
-public Vector2 GetPlayerGridPosition(int xVariable, int yVariable)
-{
-    IDamagable IDamageble = PlayerController.instance.GetComponent<IDamagable>();
-
-    // Boundary check -- kill player if out of bounds
-    if (xVariable < 0 || xVariable >= m_GridSize.x ||
-        yVariable < 0 || yVariable >= m_GridSize.y)
-    {
-        if (IDamageble != null)
-        {
-            IDamageble.ChangeHealth(-IDamageble.healthpoints);
-            return m_Grid[(int)m_PlayerGridLocations[0].gridLocation.x,
-                          (int)m_PlayerGridLocations[0].gridLocation.y];
-        }
-    }
-
-    // Self-collision -- kill player if head hits body
-    for (int i = 1; i < m_PlayerGridLocations.Count; i++)
-    {
-        if (m_PlayerGridLocations[0].gridLocation == m_PlayerGridLocations[i].gridLocation)
-            IDamageble.ChangeHealth(-IDamageble.healthpoints);
-    }
-
-    // Human infection -- eat human, grow chain, add score
-    for (int i = 0; i < m_HumanGridLocations.Count; i++)
-    {
-        if (m_PlayerGridLocations[0].gridLocation == m_HumanGridLocations[i].gridLocation)
-        {
-            Destroy(m_HumanGridLocations[i].gridObject);
-            m_HumanGridLocations.RemoveAt(i);
-            UI_Manager.instance.AddScore(1);
-
-            GameObject zombie = Instantiate(
-                PlayerController.instance.m_ZombiePrefab,
-                PlayerController.instance.gameObject.transform);
-            PlayerController.instance.m_PlayerZombies.Add(zombie);
-            m_PlayerGridLocations.Add(new GridObject(zombie,
-                m_PlayerGridLocations[m_PlayerGridLocations.Count - 1].gridLocation));
-        }
-    }
-
-    return m_Grid[xVariable, yVariable];
-}
-```
-
----
-
-## Technologies
-
-- **Engine:** Unity 2D
-- **Language:** C#
-- **Key Systems:** Custom grid, coroutine movement, IDamagable interface, animator blending
-- **Event:** International Educations Game Jam 2021
+All collision detection is handled through grid coordinate comparison -- no Unity physics involved. The system checks three cases every tick: boundary collision (instant death if the head moves off-grid), self-collision (death if the head overlaps any body segment), and human intersection (triggers infection and chain growth).

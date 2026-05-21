@@ -5,8 +5,18 @@ layout: default
 <article>
   <a href="{{ '/projects/' | relative_url }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
 
-  <header class="page-header">
+  <header class="project-header">
     <h1>{{ page.title }}</h1>
+    {% if page.tags.size > 0 %}
+      <div class="project-tags-header">
+        {% for tag in page.tags %}
+          <a href="{{ '/projects/' | relative_url }}?tag={{ tag }}" class="project-tag {{ tag | slugify }}">
+            {% assign tag_data = site.data.tags[tag] %}
+            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
   </header>
 
   <div class="content-bubble">
@@ -37,40 +47,6 @@ layout: default
         <span class="team-size-badge"><i class="fas fa-users"></i> {{ page.team-size }} people</span>
       {% endif %}
     </div>
-
-    {% if page.tags.size > 0 %}
-      <div class="project-tags-header">
-        {% for tag in page.tags %}
-          <a href="{{ '/projects/' | relative_url }}?tag={{ tag }}" class="project-tag {{ tag | slugify }}">
-            {% assign tag_data = site.data.tags[tag] %}
-            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-          </a>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-
-    {% if page.team %}
-      <div class="project-team-grid">
-        {% for role in page.team %}
-          {% assign role_key = role[0] %}
-          {% assign members = role[1] %}
-          {% assign role_data = site.data.roles[role_key] %}
-          <div class="team-column">
-            <div class="team-column-header">
-              {% if role_data %}
-                <i class="{{ role_data.icon }}"></i> {{ role_data.name }}
-              {% else %}
-                {{ role_key | capitalize }}
-              {% endif %}
-            </div>
-            {% for member in members %}
-              <span class="team-column-member">{{ member }}</span>
-            {% endfor %}
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
 
     <hr>
 
