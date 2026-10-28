@@ -4,7 +4,7 @@ start_date: 2021-11-02
 end_date: 2021-11-06
 description: "Complete solo game featuring NavMesh AI, object pooling, and procedural world generation"
 thumbnail: /assets/img/projects/placeholder.jpg
-tags: [unity, csharp, solo, gameplay]
+tags: [unity, csharp, solo, gameplay, game]
 featured: false
 team:
   programmer: [Boas-Bas van der Veen]
@@ -16,45 +16,18 @@ links:
 
 ## Overview
 
-Early project demonstrating NavMesh AI implementation and procedural generation. Features enemy AI, resource collection, shop system, and randomized world layouts.
+A solo project built in one week featuring NavMesh AI enemies, object pooling, a shop system with resource management, and procedurally generated world layouts.
 
-## Key Features
+## What I Did
 
-- **NavMesh AI:** Enemy pathfinding and behavior
-- **Object Pooling:** Efficient enemy and lootbox management
-- **Procedural Generation:** Random world layouts with collision-free spawning
-- **Shop System:** Resource management and upgrades
-- **3D to 2D Controller:** Top-down movement in 3D space
+### Procedural World Generation
 
-## Code Highlight
+Built a spawn system that randomly distributes loot boxes and enemies across available tiles, removing used tiles to prevent overlaps. Uses object pooling for both enemies and loot boxes to avoid runtime instantiation.
 
-World generation with randomized spawning and object pooling:
+### NavMesh AI
 
-```csharp
-private void SpawnObjectsOnTiles(Transform[] spawnedObjects) {
-    for (int i = 0; i < spawnedObjects.Length; i++) {
-        int randomInt = Random.Range(0, m_AvailableSpawnTiles.Count);
-        spawnedObjects[i] = m_AvailableSpawnTiles[randomInt];
-        m_AvailableSpawnTiles.RemoveAt(randomInt);
-        
-        if (spawnedObjects == lootBoxSpawnTiles) {
-            GameObject lootBoxOBJ = GameManager.instance.lootBoxPool.GetObjectFromPool();
-            lootBoxOBJ.transform.position = spawnedObjects[i].position;
-            lootBoxOBJ.transform.rotation = Quaternion.identity;
-        } else if (spawnedObjects == enemySpawnTiles) {
-            GameObject enemyOBJ = GameManager.instance.enemyPool.GetObjectFromPool();
-            enemyOBJ.transform.position = new Vector3(
-                spawnedObjects[i].position.x, -0.5f, spawnedObjects[i].position.z
-            );
-            enemyOBJ.GetComponent<Enemy>().Initialize();
-        }
-    }
-}
-```
+Enemies use Unity's NavMeshAgent for pathfinding, chasing the player when in range and patrolling otherwise.
 
-## Technologies
+### Shop & Resource System
 
-- **Engine:** Unity3D
-- **Language:** C#
-- **Key Systems:** NavMeshAgent, Object Pooling, Scriptable Objects, Grid Layout
-- **Design Patterns:** Singleton, Object Pool
+Players collect resources from loot boxes and spend them in a shop to upgrade stats. Uses ScriptableObjects for item definitions.

@@ -2,9 +2,9 @@
 title: "Type.EVE"
 start_date: 2021-01-04
 end_date: 2021-01-29
-description: "AI project implementing complex behavior tree system for strategic unit control and decision-making"
+description: "AI project implementing a behavior tree system for strategic unit control and decision-making"
 thumbnail: /assets/img/projects/placeholder.jpg
-tags: [unity, csharp, ai, team]
+tags: [unity, csharp, ai, team, game]
 featured: false
 team:
   programmer: [Boas-Bas van der Veen, Justin Comans]
@@ -16,46 +16,14 @@ links:
 
 ## Overview
 
-School project focused on implementing Behavior Trees for AI control. Created a strategic game where AI units make complex decisions using hierarchical behavior tree structures.
+A two-person project focused on AI decision-making. Built a strategic game where units make hierarchical decisions using behavior trees -- pursuing targets, attacking when in range, patrolling waypoints, and retreating when health is low.
 
-## Technical Focus: Behavior Trees
+## What I Did
 
-Implemented a comprehensive behavior tree system with over 600 lines of AI logic, featuring sequences, selectors, conditions, and actions for strategic unit control.
+### Behavior Tree System
 
-## Code Highlight
+Implemented a full behavior tree framework with sequences, selectors, conditions, actions, and repeat-until-failure nodes. The tree evaluates top-down each frame, choosing between aggressive behavior (chase and attack) and defensive behavior (waypoint patrol with opportunistic attacks). Over 600 lines of AI logic.
 
-Behavior tree builder showing hierarchical decision-making structure:
+### Unit AI
 
-```csharp
-private RootNode BuildBehaviourTree() {
-    return new RootNode(new Selector(new List<Node>() {
-        new Sequence(new List<Node>() {
-            new Condition(NormalBehaviour) { Name="AggressiveCheck" },
-            new Action(ToPursue) { Name="ToPursue" },
-            new Sequence(new List<Node>() {
-                new Condition(CanAttackTarget) { Name="CanAttackTarget" },
-                new Action(ToIdle) { Name="ToIdle" },
-                new Sequence(new List<Node>() {
-                    new Action(DealDamage) { Name="DealDamage" },
-                    new RepeatUntilFailure(new Condition(TargetDied)) { Name="TargetDied" }
-                })
-            }) { Name="AttackTarget" },
-        }) { Name="NormalBehaviour" },
-        
-        new Sequence(new List<Node>() {
-            new Condition(UsingWaypoints) { Name="DefensiveCheck" },
-            new Action(ToPursue) { Name="ToPursue" },
-            new Selector(new List<Node>() {
-                // ... waypoint and attack logic
-            })
-        }) { Name="WaypointBehaviour" },
-    }));
-}
-```
-
-## Technologies
-
-- **Engine:** Unity3D
-- **Language:** C#
-- **Key Systems:** Behavior Trees, AI, NavMesh, coroutines
-- **Libraries:** TextMeshPro
+Each unit runs its own behavior tree instance with configurable parameters for aggression range, attack cooldowns, and waypoint routes. Units use NavMeshAgent for pathfinding and switch between idle, pursue, and attack states based on tree evaluation.

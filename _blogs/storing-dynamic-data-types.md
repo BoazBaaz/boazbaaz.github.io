@@ -125,3 +125,27 @@ In the end the best way to store the data depends on your situation.
 Templated classes are useful in case you know the type at compile time and a single instance of the class does not need to store multiple types. 
 
 Depending on the situation you might want to even combine multiple approaches. 
+
+## Real-World Application
+
+I wrote this post while building a [visual scripting language](/projects/visual-scripting/) where node pins need to store arbitrary data types. I ended up using the **template approach** with a `BasePin` / `Pin<T>` class hierarchy:
+
+```cpp
+class BasePin {
+public:
+    template <typename Type>
+    const Type& GetData() {
+        auto* pin = dynamic_cast<Pin<Type>*>(this);
+        if (!pin) Log::Critical("Type mismatch in pin!");
+        return pin->GetData();
+    }
+};
+
+template <typename DataType>
+class Pin : public BasePin {
+private:
+    DataType m_data{};
+};
+```
+
+This gave compile-time type safety per pin instance, with `dynamic_cast` as the runtime fallback when accessing data through the base class. The downside is that `GetData<>` relies on a runtime check rather than a compile-time guarantee. In hindsight, a `std::variant` with a fixed set of supported types (int, float, bool, string, vec3) would have been safer for this specific use case, since visual scripting pins only need a handful of types anyway.

@@ -5,7 +5,7 @@ end_date: 2025-06-27
 description: "Voxel puzzle platformer built in the custom Kudzu engine. Contributed engine console, hot reloading system, and PS5 platform support."
 thumbnail: /assets/img/projects/zentera/thumbnail.png
 background: /assets/img/projects/zentera/background.png
-tags: [cpp, vulkan, engine, tool, team, breda-university]
+tags: [cpp, vulkan, engine, tool, team, breda-university, game]
 featured: true
 team:
   producer: [Ivan Nekrasov]

@@ -14,9 +14,9 @@ pre {
   background-color: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 8px;
-  padding: 1.25rem;
+  padding: 0.75rem 1rem;
   overflow-x: auto;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   line-height: 1.5;
 
   code { background: none; padding: 0; border: none; font-size: 0.875rem; color: #abb2bf; }
@@ -48,10 +48,13 @@ pre {
 
 .highlight .lineno {
   color: #4b5263;
-  padding-right: 1rem;
+  padding-right: 0.5rem;
+  margin-right: 0.5rem;
   border-right: 1px solid var(--code-border);
-  margin-right: 1rem;
   user-select: none;
+  min-width: 1.5em;
+  text-align: right;
+  display: inline-block;
 }
 
 .highlight table {
@@ -59,8 +62,8 @@ pre {
   margin: 0;
 
   td { padding: 0; border: none; }
-  td:first-child { padding-right: 0.75rem; user-select: none; }
-  pre { margin: 0; }
+  td:first-child { padding-right: 0.5rem; user-select: none; width: 1px; white-space: nowrap; }
+  pre { margin: 0; padding: 0.5rem 0; }
 }
 
 div[class^="language-"] {

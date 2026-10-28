@@ -5,7 +5,7 @@ end_date: 2021-02-18
 description: "Team project featuring a vertical endless runner with dynamic platform spawning using bitshift collision detection"
 thumbnail: /assets/img/projects/endlesstunner/thumbnail.png
 background: /assets/img/projects/endlesstunner/background.png
-tags: [unity, csharp, team]
+tags: [unity, csharp, team, game]
 featured: false
 team:
   programmer: [Boas-Bas van der Veen, Luca Mouissie]

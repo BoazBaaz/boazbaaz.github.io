@@ -109,7 +109,7 @@ plugin:
 
 tool:
   label: "Tool"
-  color: "#D45D79"
+  color: "#607D8B"
 
 editor:
   label: "Editor"
@@ -135,4 +135,8 @@ blog:
 
 gamejam:
   label: "Game Jam"
-  color: "#E67E22"
+  color: "#FA5C5C"
+
+game:
+  label: "Game"
+  color: "#43A047"
