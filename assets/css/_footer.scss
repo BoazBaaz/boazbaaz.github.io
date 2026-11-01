@@ -1,4 +1,4 @@
-// Site footer
+// Site footer: three columns next to each other, kept short
 
 .site-footer {
   border-top: 1px solid var(--card-border);
@@ -8,54 +8,47 @@
 .footer-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1.5rem;
-  display: grid;
-  grid-template-columns: 1.5fr 0.5fr 1fr;
-  gap: 2rem;
-  align-items: start;
-}
-
-.footer-profile {
+  padding: 1rem 1.5rem;
   display: flex;
-  gap: 1rem;
-  align-items: center;
-
-  img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--accent);
-    flex-shrink: 0;
-  }
-
-  p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5rem;
 }
 
-.footer-links {
-  h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--heading-color); margin: 0 0 0.5rem 0; }
+.footer-column {
+  min-width: 0;
+
+  h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--heading-color);
+    margin: 0 0 0.4rem 0;
+  }
 }
 
 .footer-social-icons {
   display: flex;
   gap: 1rem;
 
-  a { font-size: 1.25rem; color: var(--text-muted); transition: color 0.2s; &:hover { color: var(--link-color); } }
+  a { font-size: 1.2rem; color: var(--text-muted); transition: color 0.2s; &:hover { color: var(--link-color); } }
 }
 
-.footer-recent {
-  h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--heading-color); margin: 0 0 0.5rem 0; }
+// One line per item so long post titles don't make the footer taller
+.footer-list {
+  max-width: 480px;
 
   a {
     display: block;
     font-size: 0.8rem;
+    line-height: 1.5;
+    padding: 0.1rem 0;
     color: var(--text-muted);
-    padding: 0.25rem 0;
-    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: color 0.2s;
-    line-height: 1.4;
 
     &:hover { color: var(--link-color); }
-    &:last-child { border-bottom: none; }
   }
 }

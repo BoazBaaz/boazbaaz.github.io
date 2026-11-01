@@ -1,0 +1,22 @@
+{%- comment -%}
+  Renders one tag. Label and color come from _data/tags.yml.
+
+  Parameters:
+    tag   - the tag key, e.g. "cpp"
+    base  - listing page the tag filters, "/projects/" or "/blogs/"
+    mode  - "link"    : <a> to the listing page, for detail pages
+            "filter"  : <span> that filters the current listing page in place
+            "nested"  : <span> that navigates via JS, for tags inside a card that is already a link
+{%- endcomment -%}
+{%- assign tag_data = site.data.tags[include.tag] -%}
+{%- capture tag_label -%}{% if tag_data %}{{ tag_data.label }}{% else %}{{ include.tag }}{% endif %}{%- endcapture -%}
+{%- capture tag_class -%}project-tag{% unless tag_data %}{% if jekyll.environment == "development" %} tag-unknown{% endif %}{% endunless %}{%- endcapture -%}
+{%- capture tag_style -%}{% if tag_data %}background-color: {{ tag_data.color }};{% endif %}{%- endcapture -%}
+{%- capture tag_href -%}{{ include.base | default: '/projects/' | relative_url }}?tag={{ include.tag }}{%- endcapture -%}
+{%- if include.mode == "filter" -%}
+<span class="{{ tag_class }} clickable-tag" style="{{ tag_style }}" data-tag="{{ include.tag }}">{{ tag_label }}</span>
+{%- elsif include.mode == "nested" -%}
+<span class="{{ tag_class }}" style="{{ tag_style }}" data-tag-href="{{ tag_href }}">{{ tag_label }}</span>
+{%- else -%}
+<a href="{{ tag_href }}" class="{{ tag_class }}" style="{{ tag_style }}">{{ tag_label }}</a>
+{%- endif -%}

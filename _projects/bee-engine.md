@@ -3,8 +3,8 @@ title: "Bee Engine Editor"
 start_date: 2024-09-02
 end_date: 2024-10-25
 description: "Custom engine editor built on top of the in-house Bee engine, featuring a full ImGui-based editor with hierarchy, inspector, particle system, and scene serialization."
-thumbnail: /assets/img/projects/bee-engine/engine_interface.png
-tags: [cpp, opengl, engine, tool, breda-university]
+thumbnail: /assets/img/projects/bee-engine/thumbnail.png
+tags: [cpp, opengl, engine, tool, breda-university, solo]
 featured: true
 team:
   programmer: [Boas-Bas van der Veen]
@@ -16,7 +16,7 @@ links:
 
 ## Overview
 
-For the Year 2 Engine & Tools specialization at BUAS, I built a full editor on top of the in-house Bee engine. The goal was to create an environment where you could create, edit, and save scenes with entities and components -- similar to how Unity or Unreal work under the hood. Everything runs through EnTT for entity management and ImGui for the interface.
+For the Year 2 Engine & Tools specialization at BUAS, I built a full editor on top of the in-house Bee engine. The goal was to create an environment where you could create, edit, and save scenes with entities and components, similar to how Unity or Unreal work under the hood. Everything runs through EnTT for entity management and ImGui for the interface.
 
 ![Editor Interface](/assets/img/projects/bee-engine/engine_interface.png)
 
@@ -24,7 +24,9 @@ For the Year 2 Engine & Tools specialization at BUAS, I built a full editor on t
 
 ### Editor & Inspector
 
-Built the full editor layout with docking, a scene hierarchy with parent/child relationships, and a component inspector. The inspector uses EnTT's `entt::meta` reflection system -- every component registers itself once and is automatically displayed with the correct UI fields. Selecting an entity in the hierarchy or clicking it in the viewport shows its properties in the inspector.
+Built the full editor layout with docking, a scene hierarchy with parent/child relationships, and a component inspector. The inspector uses EnTT's `entt::meta` reflection system, so every component registers itself once and is automatically displayed with the correct UI fields. Selecting an entity in the hierarchy or clicking it in the viewport shows its properties in the inspector.
+
+<a href="/blogs/entt-runtime-reflection/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
 
 ### Particle System
 

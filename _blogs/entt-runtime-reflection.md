@@ -1,6 +1,7 @@
 ---
 title: "Runtime Reflection with EnTT Meta for Editor Tooling"
 date: 2024-10-20 12:00:00 +0100
+project: bee-engine
 tags: [cpp, engine, tool, breda-university]
 thumbnail: /assets/img/projects/bee-engine/engine_interface.png
 ---

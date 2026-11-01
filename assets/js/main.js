@@ -93,4 +93,45 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // Tag filtering on listing pages (projects, articles)
+  var filterTags = document.querySelectorAll('.clickable-tag');
+  if (filterTags.length > 0) {
+    var filterItems = document.querySelectorAll('.card-wrapper[data-tags], .blog-card[data-tags]');
+
+    var filterByTag = function(tag) {
+      filterItems.forEach(function(item) {
+        if (!tag) {
+          item.style.display = '';
+          return;
+        }
+        var tags = item.dataset.tags ? item.dataset.tags.split(',') : [];
+        item.style.display = tags.indexOf(tag) === -1 ? 'none' : '';
+      });
+      filterTags.forEach(function(t) {
+        t.classList.toggle('tag-active', t.dataset.tag === tag);
+      });
+    };
+
+    filterTags.forEach(function(tagEl) {
+      tagEl.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var params = new URLSearchParams(window.location.search);
+        var t = this.dataset.tag;
+        if (params.get('tag') === t) {
+          params.delete('tag');
+          filterByTag(null);
+        } else {
+          params.set('tag', t);
+          filterByTag(t);
+        }
+        var query = params.toString();
+        history.replaceState(null, '', window.location.pathname + (query ? '?' + query : ''));
+      });
+    });
+
+    var initialTag = new URLSearchParams(window.location.search).get('tag');
+    if (initialTag) filterByTag(initialTag);
+  }
 });

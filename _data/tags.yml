@@ -1,5 +1,3 @@
-# Tag color definitions - Organized by category
-
 # ===== Programming Languages =====
 cpp:
   label: "C++"
@@ -62,8 +60,8 @@ shader:
   label: "Shader"
   color: "#1DAB83"
 
-ai:
-  label: "AI"
+behaviour-tree:
+  label: "Behaviour Tree"
   color: "#C0392B"
 
 networking:

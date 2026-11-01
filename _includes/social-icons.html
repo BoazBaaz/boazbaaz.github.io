@@ -1,0 +1,16 @@
+{%- comment -%}
+  Social icon links from _data/contact.yml, in one fixed order everywhere.
+  Wrap it in the container you need (.about-social, .about-icons, .footer-social-icons).
+{%- endcomment -%}
+{% if site.data.contact.email %}
+  <a href="mailto:{{ site.data.contact.email }}" title="Email"><i class="fas fa-envelope"></i></a>
+{% endif %}
+{% if site.data.contact.links.github %}
+  <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+{% endif %}
+{% if site.data.contact.links.linkedin %}
+  <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+{% endif %}
+{% if site.data.contact.links.itch %}
+  <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener" title="Itch.io"><i class="fab fa-itch-io"></i></a>
+{% endif %}

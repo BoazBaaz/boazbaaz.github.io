@@ -3,88 +3,10 @@ layout: default
 ---
 
 <div class="projects-page">
-  <div class="projects-grid">
-    {% assign sorted_projects = site.projects | sort: 'end_date' | reverse %}
-    <div class="project-cards">
-      {% for project in sorted_projects %}
-        <div class="card-wrapper{% if project.featured %} featured{% endif %}"
-             data-tags="{{ project.tags | join: ',' }}">
-          <article class="project-card">
-            {% if project.thumbnail %}
-              <div class="project-thumbnail">
-                {% assign ext = project.thumbnail | split: '.' | last | downcase %}
-                <a href="{{ project.url | relative_url }}">
-                  {% if ext == 'mp4' or ext == 'webm' or ext == 'gif' %}
-                    <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ ext }}"></video>
-                  {% else %}
-                    <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
-                  {% endif %}
-                </a>
-              </div>
-            {% endif %}
-            <div class="project-content">
-              <h3 class="project-title"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
-              <p class="project-description">{{ project.description }}</p>
-              {% if project.tags %}
-                <div class="project-tags">
-                  {% for tag in project.tags %}
-                    <span class="project-tag {{ tag | slugify }} clickable-tag" data-tag="{{ tag }}">
-                      {% assign tag_data = site.data.tags[tag] %}
-                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                    </span>
-                  {% endfor %}
-                </div>
-              {% endif %}
-              <div class="project-card-meta">
-                {% if project.role %}<span><i class="fas fa-user-tag"></i>{{ project.role }}</span>{% endif %}
-                {% if project["team-size"] %}<span><i class="fas fa-users"></i>{% if project["team-size"] == 1 %}Solo{% else %}Team of {{ project["team-size"] }}{% endif %}</span>{% endif %}
-              </div>
-              <div class="project-date">
-                {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
-              </div>
-            </div>
-          </article>
-        </div>
-      {% endfor %}
-    </div>
+  {% assign sorted_projects = site.projects | sort: 'end_date' | reverse %}
+  <div class="project-cards">
+    {% for project in sorted_projects %}
+      {% include project-card.html project=project tag_mode="filter" %}
+    {% endfor %}
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var cards = document.querySelectorAll('.card-wrapper');
-    var clickableTags = document.querySelectorAll('.clickable-tag');
-
-    function filterByTag(tag) {
-      cards.forEach(function(card) {
-        if (tag === 'all') {
-          card.style.display = '';
-        } else {
-          var tags = card.dataset.tags ? card.dataset.tags.split(',') : [];
-          card.style.display = tags.indexOf(tag) === -1 ? 'none' : '';
-        }
-      });
-    }
-
-    clickableTags.forEach(function(tag) {
-      tag.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var t = this.dataset.tag;
-        var params = new URLSearchParams(window.location.search);
-        if (params.get('tag') === t) {
-          params.delete('tag');
-          filterByTag('all');
-        } else {
-          params.set('tag', t);
-          filterByTag(t);
-        }
-        history.replaceState(null, '', window.location.pathname + (params.toString() ? '?' + params : ''));
-      });
-    });
-
-    var params = new URLSearchParams(window.location.search);
-    var initialTag = params.get('tag');
-    if (initialTag) filterByTag(initialTag);
-  });
-</script>

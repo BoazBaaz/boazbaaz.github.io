@@ -1,0 +1,27 @@
+{%- comment -%}
+  Blog card used on the homepage and the articles page.
+
+  Parameters:
+    blog     - the blog document
+    tag_mode - "filter" on the articles page, "nested" elsewhere
+{%- endcomment -%}
+{%- assign b = include.blog -%}
+<a href="{{ b.url | relative_url }}" class="blog-card" data-tags="{{ b.tags | join: ',' }}">
+  {% if b.thumbnail %}
+    <div class="blog-card-image">
+      <img src="{{ b.thumbnail | relative_url }}" alt="{{ b.title }}">
+    </div>
+  {% endif %}
+  <div class="blog-card-content">
+    <h3>{{ b.title }}</h3>
+    <p>{{ b.content | markdownify | strip_html | truncate: 150 }}</p>
+    <div class="blog-card-meta">
+      <time><i class="far fa-calendar"></i> {{ b.date | date: "%B %d, %Y" }}</time>
+    </div>
+    {% if b.tags %}
+      <div class="blog-card-tags">
+        {% for tag in b.tags %}{% include tag.html tag=tag base="/blogs/" mode=include.tag_mode %}{% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</a>

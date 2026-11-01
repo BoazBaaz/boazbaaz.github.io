@@ -16,13 +16,12 @@ team-size: 16
 role: "Engine & Tools Programmer"
 links:
   - { name: Itch.io, url: "https://buas.itch.io/zentera", icon: fab fa-itch-io, color: "#FA5C5C" }
-  - { name: Article, url: "/blogs/zentera-engine-tools/", icon: fas fa-newspaper, color: "#E74C3C" }
   - { name: Engine Source, url: "https://buas.itch.io/zentera/devlog/1001019/zentera-goes-open-game-engine-release", icon: fas fa-code, color: "#3a3a3f" }
 ---
 
 ## Overview
 
-Zentera is a voxel-based puzzle platformer where you control Gori, a lizard who uses his tongue to push, pull, and swing through miniature dioramic worlds. Built in **Kudzu**, a custom C++/Vulkan voxel engine, by a team of 16 at Breda University of Applied Sciences. The game shipped with 3 early access builds and a final release on itch.io, including full engine source code.
+Zentera is a voxel-based puzzle platformer where you control Gori, a lizard who uses his tongue to push, pull, and swing through miniature dioramic worlds. It was built in **Kudzu**, a custom C++/Vulkan voxel engine, by a team of 16 at Breda University of Applied Sciences. The game shipped with 3 early access builds and a final release on itch.io, including the full engine source code.
 
 <div class="video-embed">
   <iframe src="https://www.youtube.com/embed/Z_Zsby4ZBBI" title="Zentera Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -32,23 +31,26 @@ Zentera is a voxel-based puzzle platformer where you control Gori, a lizard who 
 
 ## What I Did
 
-My role was **Engine & Tools Programmer**, focused on building developer tooling and platform support for the team.
+My role was **Engine & Tools Programmer**. I focused on developer tooling and platform support for the rest of the team.
 
 ### Engine Console
 
-Built a full debug console for the engine using ImGui. The system captures all `stdout`/`stderr` output via C-level stream redirection and presents it in a searchable, filterable UI with color-coded warning levels. Used by the entire team across all disciplines -- artists, designers, and programmers -- and served as the only debugging tool when running release builds.
+I built a debug console for the engine using ImGui. It captures everything the engine and its libraries print and shows it in a searchable, filterable window with color-coded warning levels. The whole team used it, artists and designers included, and it was the only way to debug release builds.
 
 ![Console](/assets/img/projects/zentera/console_final.png)
 
-### Hot Reloading System
+<a href="/blogs/zentera-engine-console/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
 
-Implemented real-time asset hot reloading so artists could edit voxel models in MagicaVoxel and see changes instantly in-engine without restarting. The initial implementation had serious performance issues at 7.28ms per frame, which I optimized down to **0.012ms per frame** -- a **910x improvement** -- by redesigning the file monitoring architecture.
+### Hot Reloading
 
-![Before optimization](/assets/img/projects/zentera/hot_reloading_before_optimization.png)
-![After optimization](/assets/img/projects/zentera/hot_reloading_after_optimization.png)
+I made it possible for artists to edit voxel models in MagicaVoxel and see the changes in-engine right away, without restarting. The first version was slow at production asset counts, so I redesigned it until the cost per frame was basically gone.
+
+<div class="image-todo">GIF of a model being saved in MagicaVoxel and updating live in the Kudzu editor, side by side.</div>
+
+<a href="/blogs/zentera-hot-reloading/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
 
 ### PlayStation 5 Support
 
-> *Due to NDA restrictions, implementation details for PS5 work are limited.*
+> *Due to NDA restrictions, details on the PS5 work are limited.*
 
-Fixed the AngelScript scripting engine for PS5's stricter calling conventions and built a multithreaded packaging pipeline so the engine stays responsive during PS5 builds, with real-time progress displayed in the editor toolbar.
+I fixed the scripting engine so it ran on PS5 and made the packaging pipeline run on a background thread, so the editor stays usable during a PS5 build and shows the progress in the toolbar.

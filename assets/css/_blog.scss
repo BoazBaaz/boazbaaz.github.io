@@ -28,6 +28,12 @@
   i { margin-right: 0.25rem; }
 }
 
+.blog-project-link {
+  color: var(--link-color);
+
+  &:hover { color: var(--link-hover); }
+}
+
 .blog-content {
   font-size: 1.05rem;
   line-height: 1.8;

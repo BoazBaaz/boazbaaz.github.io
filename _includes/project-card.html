@@ -1,0 +1,41 @@
+{%- comment -%}
+  Project card used on the homepage and the projects page.
+
+  Parameters:
+    project  - the project document
+    tag_mode - "filter" on the projects page, "nested" elsewhere
+{%- endcomment -%}
+{%- assign p = include.project -%}
+<div class="card-wrapper{% if p.featured %} featured{% endif %}" data-tags="{{ p.tags | join: ',' }}">
+  <article class="project-card">
+    {% if p.thumbnail %}
+      <div class="project-thumbnail">
+        {% assign ext = p.thumbnail | split: '.' | last | downcase %}
+        <a href="{{ p.url | relative_url }}">
+          {% if ext == 'mp4' or ext == 'webm' %}
+            <video autoplay muted loop playsinline><source src="{{ p.thumbnail | relative_url }}" type="video/{{ ext }}"></video>
+          {% else %}
+            <img src="{{ p.thumbnail | relative_url }}" alt="{{ p.title }}">
+          {% endif %}
+        </a>
+        {% if p.status == "wip" %}<span class="wip-badge">In progress</span>{% endif %}
+      </div>
+    {% endif %}
+    <div class="project-content">
+      <h3 class="project-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+      <p class="project-description">{{ p.description }}</p>
+      {% if p.tags %}
+        <div class="project-tags">
+          {% for tag in p.tags %}{% include tag.html tag=tag base="/projects/" mode=include.tag_mode %}{% endfor %}
+        </div>
+      {% endif %}
+      <div class="project-card-meta">
+        {% if p.role %}<span><i class="fas fa-user-tag"></i>{{ p.role }}</span>{% endif %}
+        {% if p["team-size"] %}<span><i class="fas fa-users"></i>{% if p["team-size"] == 1 %}Solo{% else %}Team of {{ p["team-size"] }}{% endif %}</span>{% endif %}
+      </div>
+      <div class="project-date">
+        {{ p.start_date | date: "%b %Y" }} - {{ p.end_date | date: "%b %Y" }}
+      </div>
+    </div>
+  </article>
+</div>

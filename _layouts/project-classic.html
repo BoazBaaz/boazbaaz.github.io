@@ -1,0 +1,106 @@
+---
+layout: default
+---
+
+{%- comment -%}
+  Previous project layout, meta at the top of the content.
+  To switch back, set the projects layout in _config.yml defaults to "project-classic".
+{%- endcomment -%}
+
+<article>
+  <a href="{{ '/projects/' | relative_url }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+
+  <header class="project-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.tags.size > 0 %}
+      <div class="project-tags-header">
+        {% for tag in page.tags %}{% include tag.html tag=tag base="/projects/" mode="link" %}{% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  {% if page.status == "wip" %}
+    <div class="wip-banner">
+      <i class="fas fa-person-digging"></i>
+      <span><strong>Work in progress.</strong> This project is still in development, so this page will keep changing.</span>
+    </div>
+  {% endif %}
+
+  <div class="content-bubble">
+    <div class="project-meta-bar">
+      {% if page.start_date and page.end_date %}
+        <span><i class="far fa-calendar"></i> {{ page.start_date | date: "%B %d, %Y" }} - {{ page.end_date | date: "%B %d, %Y" }}</span>
+      {% elsif page.end_date %}
+        <span><i class="far fa-calendar"></i> {{ page.end_date | date: "%B %d, %Y" }}</span>
+      {% endif %}
+
+      {% if page.start_date and page.end_date %}
+        {% assign start_s = page.start_date | date: "%s" | plus: 0 %}
+        {% assign end_s = page.end_date | date: "%s" | plus: 0 %}
+        {% assign diff_days = end_s | minus: start_s | divided_by: 86400 %}
+        <span><i class="far fa-clock"></i>
+          {% if diff_days < 14 %}{{ diff_days }} days
+          {% elsif diff_days < 60 %}{{ diff_days | divided_by: 7 }} weeks
+          {% else %}{{ diff_days | divided_by: 30 }} months
+          {% endif %}
+        </span>
+      {% endif %}
+
+      {% if page.role %}
+        <span><i class="fas fa-user-tag"></i> {{ page.role }}</span>
+      {% endif %}
+
+      {% if page["team-size"] %}
+        <span class="team-size-badge"><i class="fas fa-users"></i> {% if page["team-size"] == 1 %}Solo{% else %}{{ page["team-size"] }} people{% endif %}</span>
+      {% endif %}
+    </div>
+
+    {% if page.team and page["team-size"] != 1 %}
+      <details class="project-team">
+        <summary><i class="fas fa-users"></i> Team{% if page["team-size"] %} ({{ page["team-size"] }}){% endif %}</summary>
+        <div class="project-team-grid">
+          {% for role in page.team %}
+            {% assign role_data = site.data.roles[role[0]] %}
+            <div class="team-column">
+              <div class="team-column-header">
+                {% if role_data %}<i class="{{ role_data.icon }}"></i> {{ role_data.name }}{% else %}{{ role[0] | capitalize }}{% endif %}
+              </div>
+              {% for member in role[1] %}
+                <span class="team-column-member">{{ member }}</span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </details>
+    {% endif %}
+
+    <hr>
+
+    <div class="project-body">
+      {{ content }}
+    </div>
+
+    {% assign related_articles = site.blogs | where: "project", page.slug | sort: "date" %}
+    {% if related_articles.size > 0 %}
+      <div class="project-articles">
+        <h3><i class="fas fa-newspaper"></i> Related Articles</h3>
+        <ul>
+          {% for article in related_articles %}
+            <li><a href="{{ article.url | relative_url }}">{{ article.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if page.links %}
+      <div class="project-actions">
+        {% for link in page.links %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-primary"{% if link.color %} style="background: {{ link.color }};"{% endif %}>
+            {% if link.icon %}<i class="{{ link.icon }}"></i> {% endif %}
+            {{ link.name }}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</article>

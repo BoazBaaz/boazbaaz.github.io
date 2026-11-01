@@ -10,18 +10,7 @@ layout: default
           <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}">
         </div>
         <div class="about-icons">
-          {% if site.data.contact.email %}
-            <a href="mailto:{{ site.data.contact.email }}" title="Email"><i class="fas fa-envelope"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.github %}
-            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.linkedin %}
-            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.itch %}
-            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener" title="Itch.io"><i class="fab fa-itch-io"></i></a>
-          {% endif %}
+          {% include social-icons.html %}
         </div>
       </div>
       <div class="about-info">
@@ -37,43 +26,7 @@ layout: default
     {% assign featured_projects = site.projects | where: "featured", true | sort: 'end_date' | reverse %}
     <div class="project-cards">
       {% for project in featured_projects limit: 3 %}
-        <div class="card-wrapper">
-          <article class="project-card">
-            {% if project.thumbnail %}
-              <div class="project-thumbnail">
-                {% assign ext = project.thumbnail | split: '.' | last | downcase %}
-                <a href="{{ project.url | relative_url }}">
-                  {% if ext == 'mp4' or ext == 'webm' or ext == 'gif' %}
-                    <video autoplay muted loop playsinline><source src="{{ project.thumbnail | relative_url }}" type="video/{{ ext }}"></video>
-                  {% else %}
-                    <img src="{{ project.thumbnail | relative_url }}" alt="{{ project.title }}">
-                  {% endif %}
-                </a>
-              </div>
-            {% endif %}
-            <div class="project-content">
-              <h3 class="project-title"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
-              <p class="project-description">{{ project.description }}</p>
-              {% if project.tags %}
-                <div class="project-tags">
-                  {% for tag in project.tags %}
-                    <span class="project-tag {{ tag | slugify }}" data-tag-href="{{ '/projects/' | relative_url }}?tag={{ tag }}">
-                      {% assign tag_data = site.data.tags[tag] %}
-                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                    </span>
-                  {% endfor %}
-                </div>
-              {% endif %}
-              <div class="project-card-meta">
-                {% if project.role %}<span><i class="fas fa-user-tag"></i>{{ project.role }}</span>{% endif %}
-                {% if project["team-size"] %}<span><i class="fas fa-users"></i>{% if project["team-size"] == 1 %}Solo{% else %}Team of {{ project["team-size"] }}{% endif %}</span>{% endif %}
-              </div>
-              <div class="project-date">
-                {{ project.start_date | date: "%b %Y" }} - {{ project.end_date | date: "%b %Y" }}
-              </div>
-            </div>
-          </article>
-        </div>
+        {% include project-card.html project=project tag_mode="nested" %}
       {% endfor %}
     </div>
 
@@ -88,35 +41,10 @@ layout: default
     <h2 class="section-title">Articles</h2>
 
     <div class="blog-cards">
-      {% if site.blogs %}
-        {% assign recent_blogs = site.blogs | sort: 'date' | reverse %}
-        {% for blog in recent_blogs limit: 3 %}
-          <a href="{{ blog.url | relative_url }}" class="blog-card">
-            {% if blog.thumbnail %}
-              <div class="blog-card-image">
-                <img src="{{ blog.thumbnail | relative_url }}" alt="{{ blog.title }}">
-              </div>
-            {% endif %}
-            <div class="blog-card-content">
-              <h3>{{ blog.title }}</h3>
-              <p>{{ blog.content | markdownify | strip_html | truncate: 150 }}</p>
-              <div class="blog-card-meta">
-                <time><i class="far fa-calendar"></i> {{ blog.date | date: "%B %d, %Y" }}</time>
-              </div>
-              {% if blog.tags %}
-                <div class="blog-card-tags">
-                  {% for tag in blog.tags %}
-                    <span class="project-tag {{ tag | slugify }}" data-tag-href="{{ '/blogs/' | relative_url }}?tag={{ tag }}">
-                      {% assign tag_data = site.data.tags[tag] %}
-                      {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-                    </span>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-          </a>
-        {% endfor %}
-      {% endif %}
+      {% assign recent_blogs = site.blogs | sort: 'date' | reverse %}
+      {% for blog in recent_blogs limit: 3 %}
+        {% include blog-card.html blog=blog tag_mode="nested" %}
+      {% endfor %}
     </div>
 
     <div class="section-view-all">
@@ -125,5 +53,4 @@ layout: default
       </a>
     </div>
   </section>
-
 </div>

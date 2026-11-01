@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+{%- comment -%}
+  Previous blog layout, meta at the top of the content.
+  To switch back, set the blogs layout in _config.yml defaults to "blog-classic".
+{%- endcomment -%}
+
+<article class="blog">
+  <a href="{{ '/blogs/' | relative_url }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Articles</a>
+
+  <header class="blog-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.tags.size > 0 %}
+      <div class="blog-tags">
+        {% for tag in page.tags %}{% include tag.html tag=tag base="/blogs/" mode="link" %}{% endfor %}
+      </div>
+    {% endif %}
+  </header>
+
+  <div class="content-bubble">
+    <div class="blog-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        <i class="far fa-calendar"></i>
+        {{ page.date | date: "%B %d, %Y" }}
+      </time>
+      {% if page.project %}
+        {% assign parent_project = site.projects | where: "slug", page.project | first %}
+        {% if parent_project %}
+          <a href="{{ parent_project.url | relative_url }}" class="blog-project-link">
+            <i class="fas fa-folder-open"></i> Part of {{ parent_project.title }}
+          </a>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="blog-content">
+      {{ content }}
+    </div>
+  </div>
+</article>

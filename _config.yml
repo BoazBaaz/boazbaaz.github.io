@@ -57,6 +57,9 @@ exclude:
   - README.md
   - LICENSE
   - "package*.json"
+  - "*.bat"
+  - _projects/fields.txt
+  - _blogs/fields.txt
 
 kramdown:
   syntax_highlighter: rouge

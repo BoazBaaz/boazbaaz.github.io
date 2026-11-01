@@ -1,4 +1,4 @@
-@use 'variables' as *;
+// Tag pill. Background color is set inline from _data/tags.yml by _includes/tag.html.
 
 .project-tag {
   padding: 4px 10px;
@@ -19,37 +19,8 @@
 
   &:hover { opacity: 0.8; transform: translateY(-1px); color: white; }
 
-  &.cpp { background-color: $color-cpp; }
-  &.csharp { background-color: $color-csharp; }
-  &.python { background-color: $color-python; }
-  &.unreal-engine { background-color: $color-unrealengine; }
-  &.unity { background-color: $color-unity; }
-  &.godot { background-color: $color-godot; }
-  &.opengl { background-color: $color-opengl; }
-  &.vulkan { background-color: $color-vulkan; }
-  &.directx { background-color: $color-directx; }
-  &.cmake { background-color: $color-cmake; }
-  &.blender { background-color: $color-blender; }
-  &.gameplay { background-color: $color-gameplay; }
-  &.graphics { background-color: $color-graphics; }
-  &.shader { background-color: $color-shader; }
-  &.ai { background-color: $color-ai; }
-  &.networking { background-color: $color-networking; }
-  &.physics { background-color: $color-physics; }
-  &.animation { background-color: $color-animation; }
-  &.audio { background-color: $color-audio; }
-  &.optimization { background-color: $color-optimization; }
-  &.architecture { background-color: $color-architecture; }
-  &.engine { background-color: $color-engine; }
-  &.procedural-generation { background-color: $color-proceduralgeneration; }
-  &.visual-scripting { background-color: $color-visualscripting; }
-  &.plugin { background-color: $color-plugin; }
-  &.tool { background-color: $color-tool; }
-  &.editor { background-color: $color-editor; }
-  &.team { background-color: $color-team; }
-  &.solo { background-color: $color-solo; }
-  &.breda-university { background-color: $color-bredauniversity; }
-  &.blog { background-color: $color-blog; }
-  &.gamejam { background-color: $color-gamejam; }
-  &.game { background-color: $color-game; }
+  &.tag-active { outline: 2px solid white; outline-offset: 1px; }
+
+  // Only added in local builds, for tags missing from tags.yml
+  &.tag-unknown { outline: 2px dashed #ff4d4d; outline-offset: 1px; }
 }

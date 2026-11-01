@@ -2,67 +2,98 @@
 layout: default
 ---
 
-<article>
+{%- comment -%}
+  Project layout: info column on the left, content in the middle, global sidebar on the right.
+  The previous layout is kept as project-classic.html.
+{%- endcomment -%}
+
+<article class="detail-page">
   <a href="{{ '/projects/' | relative_url }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
 
   <header class="project-header">
     <h1>{{ page.title }}</h1>
     {% if page.tags.size > 0 %}
       <div class="project-tags-header">
-        {% for tag in page.tags %}
-          <a href="{{ '/projects/' | relative_url }}?tag={{ tag }}" class="project-tag {{ tag | slugify }}">
-            {% assign tag_data = site.data.tags[tag] %}
-            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-          </a>
-        {% endfor %}
+        {% for tag in page.tags %}{% include tag.html tag=tag base="/projects/" mode="link" %}{% endfor %}
       </div>
     {% endif %}
   </header>
 
-  <div class="content-bubble">
-    <div class="project-meta-bar">
-      {% if page.start_date and page.end_date %}
-        <span><i class="far fa-calendar"></i> {{ page.start_date | date: "%B %d, %Y" }} - {{ page.end_date | date: "%B %d, %Y" }}</span>
-      {% elsif page.end_date %}
-        <span><i class="far fa-calendar"></i> {{ page.end_date | date: "%B %d, %Y" }}</span>
-      {% endif %}
+  {% if page.status == "wip" %}
+    <div class="wip-banner">
+      <i class="fas fa-person-digging"></i>
+      <span><strong>Work in progress.</strong> This project is still in development, so this page will keep changing.</span>
+    </div>
+  {% endif %}
 
-      {% if page.start_date and page.end_date %}
-        {% assign start_s = page.start_date | date: "%s" | plus: 0 %}
-        {% assign end_s = page.end_date | date: "%s" | plus: 0 %}
-        {% assign diff_days = end_s | minus: start_s | divided_by: 86400 %}
-        <span><i class="far fa-clock"></i>
-          {% if diff_days < 14 %}{{ diff_days }} days
-          {% elsif diff_days < 60 %}{{ diff_days | divided_by: 7 }} weeks
-          {% else %}{{ diff_days | divided_by: 30 }} months
+  <div class="detail-layout">
+    <aside class="detail-info">
+      <div class="info-panel">
+        <ul class="info-list">
+          {% if page.role %}
+            <li><span class="info-label">Role</span><span class="info-value">{{ page.role }}</span></li>
           {% endif %}
-        </span>
-      {% endif %}
 
-      {% if page.role %}
-        <span><i class="fas fa-user-tag"></i> {{ page.role }}</span>
-      {% endif %}
+          {% if page.start_date and page.end_date %}
+            {% assign start_s = page.start_date | date: "%s" | plus: 0 %}
+            {% assign end_s = page.end_date | date: "%s" | plus: 0 %}
+            {% assign diff_days = end_s | minus: start_s | divided_by: 86400 %}
+            <li>
+              <span class="info-label">Duration</span>
+              <span class="info-value">
+                {% if diff_days < 14 %}{{ diff_days }} days{% elsif diff_days < 60 %}{{ diff_days | divided_by: 7 }} weeks{% else %}{{ diff_days | divided_by: 30 }} months{% endif %}
+              </span>
+            </li>
+            <li><span class="info-label">Date</span><span class="info-value">{{ page.start_date | date: "%b %Y" }} - {{ page.end_date | date: "%b %Y" }}</span></li>
+          {% elsif page.end_date %}
+            <li><span class="info-label">Date</span><span class="info-value">{{ page.end_date | date: "%b %Y" }}</span></li>
+          {% endif %}
+        </ul>
 
-      {% if page.team-size %}
-        <span class="team-size-badge"><i class="fas fa-users"></i> {{ page.team-size }} people</span>
-      {% endif %}
-    </div>
+        {% if page["team-size"] or page.team %}
+          <div class="info-section info-team">
+            <span class="info-label">Team</span>
+            {% if page["team-size"] %}
+              <span class="info-value">{% if page["team-size"] == 1 %}Solo{% else %}{{ page["team-size"] }} people{% endif %}</span>
+            {% endif %}
 
-    <hr>
-
-    <div class="project-body">
-      {{ content }}
-    </div>
-
-    {% if page.links %}
-      <div class="project-actions">
-        {% for link in page.links %}
-          <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-primary"{% if link.color %} style="background: {{ link.color }};"{% endif %}>
-            {% if link.icon %}<i class="{{ link.icon }}"></i> {% endif %}
-            {{ link.name }}
-          </a>
-        {% endfor %}
+            {% if page.team and page["team-size"] != 1 %}
+              <details class="info-team-roles">
+                <summary><span>Members</span><i class="fas fa-chevron-down"></i></summary>
+                {% for role in page.team %}
+                  {% assign role_data = site.data.roles[role[0]] %}
+                  <div class="info-team-role">
+                    <div class="info-team-header">
+                      {% if role_data %}<i class="{{ role_data.icon }}"></i> {{ role_data.name }}{% else %}{{ role[0] | capitalize }}{% endif %}
+                    </div>
+                    {% for member in role[1] %}
+                      <span class="info-team-member">{{ member }}</span>
+                    {% endfor %}
+                  </div>
+                {% endfor %}
+              </details>
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
-    {% endif %}
+    </aside>
+
+    <div class="content-bubble detail-main">
+      <div class="project-body">
+        {{ content }}
+      </div>
+
+      {% if page.links %}
+        <div class="project-actions">
+          {% for link in page.links %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-primary"{% if link.color %} style="background: {{ link.color }};"{% endif %}>
+              {% if link.icon %}<i class="{{ link.icon }}"></i> {% endif %}{{ link.name }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% include site-sidebar.html %}
   </div>
 </article>

@@ -1,0 +1,29 @@
+REQUIRED:
+  title: "Project Title"
+  start_date: 2025-01-15
+  end_date: 2025-03-20
+  description: "One or two sentences, shown on the card."
+
+DISPLAY:
+  thumbnail: /assets/img/projects/name/thumbnail.png   # png, jpg, gif, mp4 or webm
+  tags: [cpp, unreal-engine]                           # keys from _data/tags.yml, that's the only place to add a new tag
+  role: "Engine & Tools Programmer"
+  team-size: 4                                         # 1 shows as "Solo"
+
+OPTIONAL:
+  featured: true             # can show in Highlights on the homepage (3 most recent)
+  status: wip                # shows the work in progress banner and card badge
+  background: /assets/img/projects/name/background.png
+  team:                      # shown in a collapsed dropdown, role keys from _data/roles.yml
+    programmer: [Name One, Name Two]
+    designer: [Name Three]
+  links:
+    - { name: GitHub, url: "https://...", icon: fab fa-github, color: "#3a3a3f" }
+
+ARTICLES:
+  Articles with "project: <this file name>" in their front matter are listed automatically.
+  To link one under a specific section, add:
+  <a href="/blogs/article-slug/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+
+IMAGE PLACEHOLDER:
+  <div class="image-todo">What the image should show</div>

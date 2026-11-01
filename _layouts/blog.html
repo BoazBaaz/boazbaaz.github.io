@@ -2,33 +2,50 @@
 layout: default
 ---
 
-<article class="blog">
+{%- comment -%}
+  Blog layout: info column on the left, content in the middle, global sidebar on the right.
+  The previous layout is kept as blog-classic.html.
+{%- endcomment -%}
+
+<article class="blog detail-page">
   <a href="{{ '/blogs/' | relative_url }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Articles</a>
 
   <header class="blog-header">
     <h1>{{ page.title }}</h1>
     {% if page.tags.size > 0 %}
       <div class="blog-tags">
-        {% for tag in page.tags %}
-          <a href="{{ '/blogs/' | relative_url }}?tag={{ tag }}" class="project-tag {{ tag | slugify }}">
-            {% assign tag_data = site.data.tags[tag] %}
-            {% if tag_data %}{{ tag_data.label }}{% else %}{{ tag }}{% endif %}
-          </a>
-        {% endfor %}
+        {% for tag in page.tags %}{% include tag.html tag=tag base="/blogs/" mode="link" %}{% endfor %}
       </div>
     {% endif %}
   </header>
 
-  <div class="content-bubble">
-    <div class="blog-meta">
-      <time datetime="{{ page.date | date_to_xmlschema }}">
-        <i class="far fa-calendar"></i>
-        {{ page.date | date: "%B %d, %Y" }}
-      </time>
+  <div class="detail-layout">
+    <aside class="detail-info">
+      <div class="info-panel">
+        {% assign word_count = content | strip_html | number_of_words %}
+        {% assign read_minutes = word_count | divided_by: 200 | at_least: 1 %}
+        <ul class="info-list">
+          <li>
+            <span class="info-label">Published</span>
+            <span class="info-value"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></span>
+          </li>
+          <li><span class="info-label">Reading time</span><span class="info-value">{{ read_minutes }} min</span></li>
+          {% if page.project %}
+            {% assign parent_project = site.projects | where: "slug", page.project | first %}
+            {% if parent_project %}
+              <li><span class="info-label">Part of</span><a href="{{ parent_project.url | relative_url }}" class="info-value">{{ parent_project.title }}</a></li>
+            {% endif %}
+          {% endif %}
+        </ul>
+      </div>
+    </aside>
+
+    <div class="content-bubble detail-main">
+      <div class="blog-content">
+        {{ content }}
+      </div>
     </div>
 
-    <div class="blog-content">
-      {{ content }}
-    </div>
+    {% include site-sidebar.html %}
   </div>
 </article>

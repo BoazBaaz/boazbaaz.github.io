@@ -11,6 +11,8 @@
 </head>
 <body{% if page.background or page.page_background %} class="has-page-bg" style="background-image: url('{% if page.background %}{{ page.background | relative_url }}{% else %}{{ page.page_background | relative_url }}{% endif %}'); background-size: cover; background-position: center; background-attachment: fixed;"{% endif %}>
   <canvas id="bg-canvas"></canvas>
+  {% assign is_detail = false %}
+  {% if page.layout == 'project' or page.layout == 'blog' or page.layout == 'about' %}{% assign is_detail = true %}{% endif %}
   <nav class="navbar">
     <div class="navbar-inner">
       <div class="navbar-left">
@@ -53,43 +55,13 @@
     </div>
   </nav>
 
-  <main class="main-content">
-    <div class="content-wrapper">
+  <main class="main-content{% if is_detail %} is-detail{% endif %}">
+    <div class="content-wrapper{% if is_detail %} is-detail{% endif %}">
       {{ content }}
     </div>
 
-    <aside class="page-sidebar">
-      {% if site.projects.size > 0 %}
-        <div class="sidebar-widget">
-          <h4>Featured Projects</h4>
-          <ul class="sidebar-posts">
-            {% assign featured = site.projects | where: "featured", true | sort: 'end_date' | reverse %}
-            {% for project in featured limit: 5 %}
-              <li>
-                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
-                <time>{% if project.role %}{{ project.role }}{% endif %}</time>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-
-      {% if site.blogs.size > 0 %}
-        <div class="sidebar-widget">
-          <h4>Recently Updated</h4>
-          <ul class="sidebar-posts">
-            {% assign recent = site.blogs | sort: 'date' | reverse %}
-            {% for blog in recent limit: 5 %}
-              <li>
-                <a href="{{ blog.url | relative_url }}">{{ blog.title }}</a>
-                <time>{{ blog.date | date: "%b %d, %Y" }}</time>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-
-    </aside>
+    {%- comment -%} Detail layouts place the sidebar inside their own grid. {%- endcomment -%}
+    {% unless is_detail %}{% include site-sidebar.html %}{% endunless %}
   </main>
 
   <button id="scroll-top" aria-label="Return to top" title="Return to top">
@@ -98,39 +70,27 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-profile">
-        <a href="{{ '/' | relative_url }}">
-          <img src="{{ site.data.profile.images.avatar | relative_url }}" alt="{{ site.data.profile.name }}">
-        </a>
-        <p>{{ site.data.profile.bio.short }}</p>
-      </div>
-
-      <div class="footer-links">
+      <div class="footer-column footer-links">
         <h4>Links</h4>
         <div class="footer-social-icons">
-          {% if site.data.contact.links.linkedin %}
-            <a href="{{ site.data.contact.links.linkedin }}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.github %}
-            <a href="{{ site.data.contact.links.github }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-          {% endif %}
-          {% if site.data.contact.links.itch %}
-            <a href="{{ site.data.contact.links.itch }}" target="_blank" rel="noopener"><i class="fab fa-itch-io"></i></a>
-          {% endif %}
-          {% if site.data.contact.email %}
-            <a href="mailto:{{ site.data.contact.email }}"><i class="fas fa-envelope"></i></a>
-          {% endif %}
+          {% include social-icons.html %}
         </div>
       </div>
 
-      <div class="footer-recent">
+      <div class="footer-column footer-list footer-projects">
+        <h4>Recent Projects</h4>
+        {% assign footer_projects = site.projects | sort: 'end_date' | reverse %}
+        {% for project in footer_projects limit: 3 %}
+          <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+        {% endfor %}
+      </div>
+
+      <div class="footer-column footer-list footer-posts">
         <h4>Recent Posts</h4>
-        {% if site.blogs %}
-          {% assign footer_blogs = site.blogs | sort: 'date' | reverse %}
-          {% for blog in footer_blogs limit: 3 %}
-            <a href="{{ blog.url | relative_url }}">{{ blog.title }}</a>
-          {% endfor %}
-        {% endif %}
+        {% assign footer_blogs = site.blogs | sort: 'date' | reverse %}
+        {% for blog in footer_blogs limit: 3 %}
+          <a href="{{ blog.url | relative_url }}">{{ blog.title }}</a>
+        {% endfor %}
       </div>
     </div>
   </footer>

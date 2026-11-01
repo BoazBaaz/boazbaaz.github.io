@@ -3,12 +3,12 @@ REQUIRED:
   date: 2025-01-15 14:30:00 +0100
 
 DISPLAY:
-  tags: [cpp, unreal-engine]
+  tags: [cpp, unreal-engine]          # keys from _data/tags.yml, that's the only place to add a new tag
   thumbnail: /assets/img/post-header.jpg
 
 OPTIONAL:
+  project: zentera                    # project file name without .md, adds "Part of" here and lists the post on that project page
   published: false
-  excerpt: "Custom summary text"
 
 FILENAME FORMAT:
   title-slug.md (no date prefix needed)

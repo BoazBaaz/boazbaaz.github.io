@@ -1,0 +1,36 @@
+{%- comment -%}
+  Global right sidebar. default.html renders it on normal pages.
+  Project, blog and about layouts render it themselves as the third column of .detail-layout,
+  so it lines up with the info column and the content.
+{%- endcomment -%}
+<aside class="page-sidebar">
+  {% assign featured = site.projects | where: "featured", true | sort: 'end_date' | reverse %}
+  {% if featured.size > 0 %}
+    <div class="sidebar-widget">
+      <h4>Featured Projects</h4>
+      <ul class="sidebar-posts">
+        {% for project in featured limit: 3 %}
+          <li>
+            <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+            {% if project.role %}<time>{{ project.role }}</time>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% assign recent = site.blogs | sort: 'date' | reverse %}
+  {% if recent.size > 0 %}
+    <div class="sidebar-widget">
+      <h4>Recently Updated</h4>
+      <ul class="sidebar-posts">
+        {% for blog in recent limit: 5 %}
+          <li>
+            <a href="{{ blog.url | relative_url }}">{{ blog.title }}</a>
+            <time>{{ blog.date | date: "%b %d, %Y" }}</time>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</aside>
