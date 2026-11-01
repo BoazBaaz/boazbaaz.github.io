@@ -10,8 +10,6 @@ team:
   programmer: [Boas-Bas van der Veen]
 team-size: 1
 role: "Engine & Tools Programmer"
-links:
-  - { name: GitHub, url: "https://github.com/BredaUniversityGames/2425-Y2A-PR-230896", icon: fab fa-github, color: "#3a3a3f" }
 ---
 
 ## Overview
