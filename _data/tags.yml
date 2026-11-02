@@ -84,12 +84,8 @@ optimization:
   label: "Optimization"
   color: "#00796B"
 
-architecture:
-  label: "Architecture"
-  color: "#C0563A"
-
 engine:
-  label: "Engine"
+  label: "Custom Engine"
   color: "#5C6BC0"
 
 procedural-generation:
@@ -109,19 +105,6 @@ tool:
   label: "Tool"
   color: "#607D8B"
 
-editor:
-  label: "Editor"
-  color: "#5D4037"
-
-# ===== Team Composition =====
-team:
-  label: "Team"
-  color: "#2E86C1"
-
-solo:
-  label: "Solo"
-  color: "#1A9E8F"
-
 # ===== Organization =====
 buas:
   label: "Breda University"
@@ -130,10 +113,8 @@ buas:
 glu:
   label: "Graphic Lyceum"
   color: "#FFD800"
+  text: "#1a1a1a"   # optional, text color for light backgrounds (default white)
 
-blog:
-  label: "Blog"
-  color: "#1A9EAD"
 
 gamejam:
   label: "Game Jam"

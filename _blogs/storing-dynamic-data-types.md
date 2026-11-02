@@ -3,7 +3,7 @@ title: Storing Dynamic Data Types for Visual Scripting Pins
 date: 2025-01-13 15:42:00 +0100
 project: visual-scripting
 status: done
-tags: [cpp, visual-scripting, buas]
+tags: [cpp, engine, visual-scripting, buas]
 thumbnail: /assets/img/projects/visual-scripting/thumbnail.png
 ---
 

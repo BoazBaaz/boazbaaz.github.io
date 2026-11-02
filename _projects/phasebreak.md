@@ -4,7 +4,7 @@ start_date: 2025-11-10
 end_date: 2026-06-19
 description: "Turn-based tactical heist game in Unreal Engine 5, played across two overlapping dimensions. I owned the grid system and its editor tooling."
 thumbnail: /assets/img/projects/placeholder.jpg
-tags: [unreal-engine, cpp, tool, team, buas, game]
+tags: [unreal-engine, cpp, tool, buas, game]
 featured: true
 role: "Grid System & Tools Programmer"
 ---

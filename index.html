@@ -21,7 +21,7 @@ layout: default
   </section>
 
   <section class="home-section" id="highlights">
-    <h2 class="section-title">Highlights</h2>
+    <h2 class="section-title">Featured Projects</h2>
 
     {% assign featured_projects = site.projects | where: "featured", true | sort: 'end_date' | reverse %}
     <div class="project-cards">
@@ -38,7 +38,7 @@ layout: default
   </section>
 
   <section class="home-section" id="blogs">
-    <h2 class="section-title">Articles</h2>
+    <h2 class="section-title">Recent Posts</h2>
 
     <div class="blog-cards">
       {% assign recent_blogs = site.blogs | sort: 'date' | reverse %}
@@ -49,7 +49,7 @@ layout: default
 
     <div class="section-view-all">
       <a href="{{ '/blogs/' | relative_url }}" class="view-all-btn-large">
-        <i class="fas fa-newspaper"></i> View All Articles
+        <i class="fas fa-newspaper"></i> View All Posts
       </a>
     </div>
   </section>

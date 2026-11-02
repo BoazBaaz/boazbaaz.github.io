@@ -4,7 +4,7 @@ start_date: 2024-11-11
 end_date: 2025-01-17
 description: "A node-based visual scripting system inspired by Unreal Engine Blueprints, built as a self-study project with typed pins, topological execution, and an ImGui node editor."
 thumbnail: /assets/img/projects/visual-scripting/thumbnail.png
-tags: [cpp, tool, solo, buas]
+tags: [cpp, engine, visual-scripting, buas]
 featured: false
 team:
   programmer: [Boas-Bas van der Veen]

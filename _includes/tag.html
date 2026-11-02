@@ -11,7 +11,7 @@
 {%- assign tag_data = site.data.tags[include.tag] -%}
 {%- capture tag_label -%}{% if tag_data %}{{ tag_data.label }}{% else %}{{ include.tag }}{% endif %}{%- endcapture -%}
 {%- capture tag_class -%}project-tag{% unless tag_data %}{% if jekyll.environment == "development" %} tag-unknown{% endif %}{% endunless %}{%- endcapture -%}
-{%- capture tag_style -%}{% if tag_data %}background-color: {{ tag_data.color }};{% endif %}{%- endcapture -%}
+{%- capture tag_style -%}{% if tag_data %}background-color: {{ tag_data.color }};{% if tag_data.text %} color: {{ tag_data.text }};{% endif %}{% endif %}{%- endcapture -%}
 {%- capture tag_href -%}{{ include.base | default: '/projects/' | relative_url }}?tag={{ include.tag }}{%- endcapture -%}
 {%- if include.mode == "filter" -%}
 <span class="{{ tag_class }} clickable-tag" style="{{ tag_style }}" data-tag="{{ include.tag }}">{{ tag_label }}</span>

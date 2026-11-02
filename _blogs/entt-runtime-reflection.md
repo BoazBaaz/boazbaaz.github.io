@@ -3,7 +3,7 @@ title: "Runtime Reflection with EnTT Meta for Editor Tooling"
 date: 2024-10-20 12:00:00 +0100
 project: bee-engine
 status: done
-tags: [cpp, engine, tool, buas]
+tags: [cpp, engine, buas]
 thumbnail: /assets/img/projects/bee-engine/thumbnail.png
 ---
 

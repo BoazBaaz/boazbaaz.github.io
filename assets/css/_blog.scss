@@ -83,6 +83,9 @@
 .blog-card:hover h3 { color: var(--link-color); }
 
 .blog-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-bottom: 0.5rem;

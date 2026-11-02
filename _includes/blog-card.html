@@ -17,7 +17,9 @@
     <h3>{{ b.title }}</h3>
     <p>{{ b.content | markdownify | strip_html | truncate: 150 }}</p>
     <div class="blog-card-meta">
+      {% assign card_words = b.content | strip_html | number_of_words %}
       <time><i class="far fa-calendar"></i> {{ b.date | date: "%B %d, %Y" }}</time>
+      <span><i class="far fa-clock"></i> {{ card_words | divided_by: 200 | at_least: 1 }} min read</span>
     </div>
     {% if b.tags %}
       <div class="blog-card-tags">

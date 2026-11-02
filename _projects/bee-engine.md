@@ -4,7 +4,7 @@ start_date: 2024-09-02
 end_date: 2024-10-25
 description: "Custom engine editor built on top of the in-house Bee engine, featuring a full ImGui-based editor with hierarchy, inspector, particle system, and scene serialization."
 thumbnail: /assets/img/projects/bee-engine/thumbnail.png
-tags: [cpp, opengl, engine, tool, buas]
+tags: [cpp, opengl, engine, buas]
 featured: true
 team:
   programmer: [Boas-Bas van der Veen]

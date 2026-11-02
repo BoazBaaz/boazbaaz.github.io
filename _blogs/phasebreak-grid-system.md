@@ -3,7 +3,7 @@ title: "Building a Two-Dimension Grid System for PhaseBreak"
 date: 2026-06-19 12:00:00 +0100
 project: phasebreak
 status: done
-tags: [unreal-engine, cpp, tool, architecture, buas]
+tags: [unreal-engine, cpp, tool, buas]
 thumbnail: /assets/img/blogs/phasebreak-grid/after_trace_channel_rework.png
 ---
 

@@ -5,7 +5,7 @@ start_date: 2026-09-01
 end_date: 2027-01-29
 description: "Roguelite deckbuilder and grid puzzle game in Unreal Engine 5, made in the first semester of my 4th year at Breda University of Applied Sciences."
 thumbnail: /assets/gif/projects/interlock/combat_preview.gif
-tags: [unreal-engine, cpp, tool, team, buas, game]
+tags: [unreal-engine, cpp, tool, buas, game]
 featured: true
 team:
   programmer: [Boas-Bas van der Veen, Justin Comans]

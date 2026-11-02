@@ -4,7 +4,7 @@ start_date: 2021-01-04
 end_date: 2021-01-29
 description: "AI project implementing a behavior tree system for strategic unit control and decision-making"
 thumbnail: /assets/img/projects/placeholder.jpg
-tags: [unity, csharp, behaviour-tree, team, glu, game]
+tags: [unity, csharp, behaviour-tree, glu, game]
 featured: false
 status: draft
 team:
