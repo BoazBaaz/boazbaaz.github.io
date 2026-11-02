@@ -2,7 +2,7 @@
 title: "Building an Engine Console for Zentera"
 date: 2025-06-27 11:00:00 +0100
 project: zentera
-status: draft
+status: done
 tags: [cpp, engine, tool, buas]
 thumbnail: /assets/img/projects/zentera/console_final.png
 ---

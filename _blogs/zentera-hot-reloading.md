@@ -2,7 +2,7 @@
 title: "Hot Reloading in Zentera: From 7.28ms to 0.012ms per Frame"
 date: 2025-06-27 12:00:00 +0100
 project: zentera
-status: draft
+status: done
 redirect_from: /blogs/zentera-engine-tools/
 tags: [cpp, engine, tool, optimization, buas]
 thumbnail: /assets/img/projects/zentera/hot_reloading_after_optimization.png
