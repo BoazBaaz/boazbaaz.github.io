@@ -170,3 +170,15 @@
 
   &::before { content: "IMAGE TODO: "; font-weight: 700; }
 }
+
+// Placeholder for text only you can write (what you thought, tried or learned)
+.text-todo {
+  margin: 1rem 0;
+  padding: 0.9rem 1.25rem;
+  border: 2px dashed #5aa0d6;
+  border-radius: 0.5rem;
+  color: #5aa0d6;
+  font-size: 0.9rem;
+
+  &::before { content: "WRITING TODO: "; font-weight: 700; }
+}

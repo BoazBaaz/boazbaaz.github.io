@@ -134,4 +134,55 @@ document.addEventListener('DOMContentLoaded', function() {
     var initialTag = new URLSearchParams(window.location.search).get('tag');
     if (initialTag) filterByTag(initialTag);
   }
+
+  // Table of contents in the info column, built from the headings in the content
+  var toc = document.querySelector('.info-toc');
+  var tocContent = document.querySelector('.detail-main .project-body, .detail-main .blog-content');
+  if (toc && tocContent) {
+    var headings = Array.prototype.slice.call(tocContent.querySelectorAll('h1, h2, h3'));
+
+    if (headings.length > 1) {
+      var list = toc.querySelector('ul');
+      var topLevel = Math.min.apply(null, headings.map(function(h) { return parseInt(h.tagName[1], 10); }));
+      var links = [];
+      var usedIds = {};
+
+      headings.forEach(function(heading) {
+        // kramdown already gives headings an id, this is a fallback for headings written as HTML
+        if (!heading.id) {
+          var base = heading.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          var id = base;
+          var n = 2;
+          while (usedIds[id] || document.getElementById(id)) { id = base + '-' + n++; }
+          heading.id = id;
+        }
+        usedIds[heading.id] = true;
+
+        var item = document.createElement('li');
+        item.className = 'toc-level-' + (parseInt(heading.tagName[1], 10) - topLevel);
+
+        var link = document.createElement('a');
+        link.href = '#' + heading.id;
+        link.textContent = heading.textContent;
+        item.appendChild(link);
+        list.appendChild(item);
+        links.push(link);
+      });
+
+      toc.hidden = false;
+
+      // Highlight the section you're currently reading
+      var setActive = function() {
+        var offset = 120;
+        var current = 0;
+        headings.forEach(function(heading, i) {
+          if (heading.getBoundingClientRect().top - offset <= 0) current = i;
+        });
+        links.forEach(function(link, i) { link.classList.toggle('active', i === current); });
+      };
+
+      window.addEventListener('scroll', setActive, { passive: true });
+      setActive();
+    }
+  }
 });

@@ -5,8 +5,9 @@ end_date: 2021-02-18
 description: "Team project featuring a vertical endless runner with dynamic platform spawning using bitshift collision detection"
 thumbnail: /assets/img/projects/endlesstunner/thumbnail.png
 background: /assets/img/projects/endlesstunner/background.png
-tags: [unity, csharp, team, game]
+tags: [unity, csharp, team, glu, game]
 featured: false
+status: draft
 team:
   programmer: [Boas-Bas van der Veen, Luca Mouissie]
   artist: [Wesley Chan, Alicia van Altena]
@@ -18,9 +19,9 @@ links:
 
 ## Overview
 
-A two-week team project focused on both game development and learning Scrum methodology. We decided early on to keep the scope small and achievable, settling on a 2D game after a team-wide poll chose "Hell" as the theme. I took on the role of Scrum Master alongside programming, keeping the team on track with standups and sprint tasks.
+A two-week school project at Grafisch Lyceum Utrecht with a team of two programmers and two artists. The assignment was a game with an endless level, but the main goal of the project was learning Scrum. At the start I told the team we'd better make something simple that we could actually finish, so we went with a 2D game. We picked the theme with a poll in the group chat, and Hell won.
 
-The game is a vertical endless runner -- instead of running sideways, the player descends deeper into Hell. Platforms spawn below the camera and scroll upward. Your score is the number of seconds you survive, and the goal is to reach the deepest point of Hell to find a portal back to Earth. Fall off-screen and you're dead.
+The game is a vertical endless runner. Platforms spawn below the camera and move up, and you try to get to the deepest point of Hell to find a portal back to Earth. If you fall out of the camera you die, and your score is the number of seconds you survived.
 
 <div class="video-embed">
   <iframe src="https://www.youtube.com/embed/BKa8aL9P0iY" title="Endless Runner Gameplay" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -30,16 +31,18 @@ The game is a vertical endless runner -- instead of running sideways, the player
 
 ## What I Did
 
-### Platform Spawning System
+### Platform Spawning
 
-Built the core platform spawning system, which I'm still proud of for this stage of my development. Rather than spawning platforms and removing them if they overlapped with something, I wrote a pre-spawn check that uses `Physics2D.OverlapAreaAll` with Unity's layermask bitmask system to verify there's room before anything gets instantiated. This was my first time working with bitwise operations in a practical context.
-
-### Player Controller
-
-Implemented the player movement using force-based physics with a velocity dampening system for responsive directional changes. The player has boundary checks on both axes -- walls on the sides and death zones above and below the camera.
-
-### Team Lead & Code Quality
-
-As Scrum Master I kept the team organized with regular check-ins and managed the sprint board. I also went through all scripts -- including those written by teammates -- and added documentation and comments throughout the codebase.
+The part I'm most proud of. Instead of spawning a platform and removing it again if it overlaps something, the spawner first checks if there is room, and only spawns it if there is. To check what's in the way it compares the layers of everything in that space against a layer mask, which is where I learned how Unity's layer masks and bit shifting work.
 
 ![Gameplay](/assets/img/projects/endlesstunner/gameplay.png)
+
+### Player
+
+The player movement, jumping, and dying when you leave the camera.
+
+### Scrum Master
+
+I volunteered as Scrum Master and team lead. I reminded everyone of the Scrum tasks, checked in on how everyone's work was going, and when I noticed someone was getting tired of what they were working on, I gave them something else to do or told them to take a break. I also added comments to all the scripts, including the ones Luca wrote.
+
+![Title screen](/assets/img/projects/endlesstunner/titlescreen.png)

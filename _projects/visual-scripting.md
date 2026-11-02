@@ -3,41 +3,58 @@ title: "Visual Scripting Language"
 start_date: 2024-11-11
 end_date: 2025-01-17
 description: "A node-based visual scripting system inspired by Unreal Engine Blueprints, built as a self-study project with typed pins, topological execution, and an ImGui node editor."
-thumbnail: /assets/img/projects/visual-scripting/nodes_banner.png
-tags: [cpp, visual-scripting, tool, solo, breda-university]
+thumbnail: /assets/img/projects/visual-scripting/thumbnail.png
+tags: [cpp, tool, solo, buas]
 featured: false
 team:
   programmer: [Boas-Bas van der Veen]
 team-size: 1
 role: "Solo Developer"
-links:
-  - { name: GitHub, url: "https://github.com/BredaUniversityGames/2425-Y2B-PR-230896", icon: fab fa-github, color: "#3a3a3f" }
 ---
 
 ## Overview
 
-A self-study project to build a visual scripting system inspired by Unreal Engine's Blueprint system. The goal was to create something where non-programmers could wire together logic visually, with execution handled under the hood through a sorted graph. Built on top of the Bee engine's ECS.
+A visual scripting language for the Bee engine, mainly inspired by Unreal Engine's Blueprints. It was my self-study project for the second block of my second year at Breda University of Applied Sciences, so it was solo and I picked the topic myself. The goal was a system where you build logic by connecting nodes, with an easy to use API for adding new nodes in C++.
 
-![Node Editor](/assets/img/projects/visual-scripting/nodes_banner.png)
+![Node editor](/assets/img/projects/visual-scripting/nodes_banner.png)
+
+---
 
 ## What I Did
 
-### Pin & Node System
+### Nodes and Pins
 
-Designed a typed pin system using a `BasePin` base class and a templated `Pin<T>` that holds the actual data. Pins support custom operators so you can write node logic like `m_result = m_left * m_right` directly. Creating a new node type is straightforward: inherit from `BaseNode`, register your pins, and override `Execute`.
+Every node has typed input and output pins, and a new node type is just a small C++ class. Add the pins as members, register them, and write what the node does in `Execute`. Pins can be used like the data they hold, so a multiply node is just `m_result = m_left * m_right`.
+For an in-depth explanation you can check out the article I wrote about it.
 
 <a href="/blogs/storing-dynamic-data-types/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
 
-### Node Registry
+### The Graph Editor
 
-Built a registration system using macros inspired by the cereal library. Any node type can register itself with a single macro call, making it available in the editor's right-click menu at runtime. Nodes are grouped by category (math, conversions, logic, etc).
+The graph is drawn with the imnodes library. You add nodes from a right-click menu grouped by category, and drag between pins to connect and disconnect them. New node types show up in that menu automatically once they're registered with a macro.
 
-### Execution Graph
+![Creating nodes](/assets/img/projects/visual-scripting/dynamic_node_creation.gif)
 
-The graph sorts its nodes using topological sort based on pin connections, then executes them in order every frame while the engine is in play mode. Connecting and disconnecting pins automatically updates the execution order.
+### Running the Graph
 
-![Node Connections](/assets/img/projects/visual-scripting/node_connections.gif)
+A graph is a component on an entity. I added play, pause and step buttons to the engine, and when you press play, every graph sorts its nodes with a topological sort based on the connections, and then runs them in that order every frame while the game is playing.
 
-### Reflection
+Nodes can also get the components of the entity their graph is on, like its `Transform`.
 
-Looking back, I'm not fully satisfied with the type safety of the pin system. It relies on runtime `dynamic_cast` checks instead of compile-time guarantees. If I were to redo this, I'd look into stronger type erasure patterns or a variant-based approach. That said, this project directly led to the blog post on storing dynamic data types, which explored the underlying problem in depth.
+![A graph getting the components of its entity](/assets/img/projects/visual-scripting/component_getters_working.gif)
+
+---
+
+## How It Went
+
+Honestly, this project didn't go the way I planned, and it isn't finished.
+
+I lost a lot of time early on. My first node editor library, imgui-node-editor, had a weird offset on the graph depending on how far you zoomed in and where you moved to. After a while I found out it hadn't been updated in two years and depended on a version of ImGui from a branch that never got merged, so I switched to imnodes. On top of that, I kept reworking the nodes and pins because I wasn't happy with them, instead of working on what had priority. Because of both, I had to change my milestones twice.
+
+![The graph drifting with imgui-node-editor](/assets/img/projects/visual-scripting/graph_editor_displaced.gif)
+_A gif of the old library I used to visualize the underlying types and classes._
+
+
+Saving and loading graphs never made it in. With all the pointers, templates and connected parts it had become a big mess, and after talking about priorities with my lecturer I dropped it in the last week to focus on the nodes actually working. I also had to scale down the stress test, because I didn't have the setup to properly compare a graph against the same code written in C++.
+
+I'm still not fully happy with how it turned out. A lot of it is template types and fixed pins, and I would have liked to do more with it. But it did teach me how much planning matters, and that wanting the code to be perfect can get in the way of actually finishing it.

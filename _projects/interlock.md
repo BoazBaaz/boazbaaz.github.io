@@ -5,7 +5,7 @@ start_date: 2026-09-01
 end_date: 2027-01-29
 description: "Roguelite deckbuilder and grid puzzle game in Unreal Engine 5, made in the first semester of my 4th year at Breda University of Applied Sciences."
 thumbnail: /assets/gif/projects/interlock/combat_preview.gif
-tags: [unreal-engine, cpp, tool, team, breda-university, game]
+tags: [unreal-engine, cpp, tool, team, buas, game]
 featured: true
 team:
   programmer: [Boas-Bas van der Veen, Justin Comans]
@@ -17,6 +17,8 @@ role: "Engine, Tools and Gameplay Programmer"
 ## Overview
 
 Interlock is a roguelite deckbuilder where you play shape cards onto a 4x4 grid. Lining up elements like Fire, Water and Wood sets off combos in combat. The same cards are used to build paths through the overworld, and your hand, deck and discard pile are shared between both, so every card you spend on traveling is one you don't have in the next fight.
+
+It's my graduation-year project at Breda University of Applied Sciences, running over the first semester of my fourth year, with a small team of two programmers and a designer.
 
 ![Combat preview](/assets/gif/projects/interlock/combat_preview.gif)
 

@@ -70,6 +70,27 @@ layout: default
             {% endif %}
           </div>
         {% endif %}
+
+        <nav class="info-section info-toc" aria-label="Contents" hidden>
+          <span class="info-label">Contents</span>
+          <ul></ul>
+        </nav>
+
+        {% if page.links %}
+          <div class="info-section info-links">
+            <span class="info-label">Links</span>
+            <ul>
+              {% for link in page.links %}
+                <li>
+                  <a href="{{ link.url }}" target="_blank" rel="noopener">
+                    {% if link.icon %}<i class="{{ link.icon }}"></i>{% endif %}
+                    <span>{{ link.name }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
       </div>
     </aside>
 
@@ -77,16 +98,6 @@ layout: default
       <div class="project-body">
         {{ content }}
       </div>
-
-      {% if page.links %}
-        <div class="project-actions">
-          {% for link in page.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener" class="btn-primary"{% if link.color %} style="background: {{ link.color }};"{% endif %}>
-              {% if link.icon %}<i class="{{ link.icon }}"></i> {% endif %}{{ link.name }}
-            </a>
-          {% endfor %}
-        </div>
-      {% endif %}
     </div>
 
     {% include site-sidebar.html %}

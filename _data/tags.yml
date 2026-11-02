@@ -123,9 +123,13 @@ solo:
   color: "#1A9E8F"
 
 # ===== Organization =====
-breda-university:
+buas:
   label: "Breda University"
   color: "#EE7623"
+
+glu:
+  label: "Graphic Lyceum"
+  color: "#FFD800"
 
 blog:
   label: "Blog"

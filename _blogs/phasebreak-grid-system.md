@@ -2,43 +2,32 @@
 title: "Building a Two-Dimension Grid System for PhaseBreak"
 date: 2026-06-19 12:00:00 +0100
 project: phasebreak
-tags: [unreal-engine, cpp, tool, architecture, breda-university]
+status: draft
+tags: [unreal-engine, cpp, tool, architecture, buas]
 thumbnail: /assets/img/blogs/phasebreak-grid/after_trace_channel_rework.png
 ---
 
-For [PhaseBreak](/projects/phasebreak/), a turn-based tactical heist game in Unreal Engine 5, I owned the grid system. Movement, AI pathfinding, cover and dimension swapping all read from it. This article covers how it's structured, how tiles get evaluated from level geometry, and what I'd change if I built it again.
+For [PhaseBreak](/projects/phasebreak/), a turn-based tactical heist game in Unreal Engine 5, I built the backend of the grid system. The grid generates its tiles straight from the level geometry, for both of the game's dimensions at once, only re-evaluates the tiles that changed, and saves per level so designers can fix tiles by hand without losing their changes. It got rewritten a few times over three blocks, so this post is about where it ended up.
 
-The system went through several rewrites over three blocks. What's below is where it ended up.
+![Grid refactor showcase](/assets/img/blogs/phasebreak-grid/showcase_grid_refactor_v3_2.png)
 
-## The Requirements
+## What the grid had to do
 
-Two things made this grid harder than a normal tactics grid.
+PhaseBreak has two dimensions that exist in the same physical space. A wall can be there in one dimension and not in the other, so every tile needs its own state per dimension.
 
-First, the game has two dimensions that occupy the same physical space. A wall can exist in one dimension and not the other, so every tile needs its own state per dimension.
+On top of that the level designers had to be able to work without me. They build a level, drop a volume over it, and the grid should follow the geometry. Sometimes they need to fix a tile by hand, and those changes have to stay when the grid regenerates.
 
-Second, the level designers had to be able to work without a programmer. They build a level, drop a volume over it, and the grid should follow the geometry. When they need to, they override individual tiles by hand, and those overrides have to survive when the grid regenerates.
+## The architecture
 
-## Architecture
+I based the structure on how Unreal's navigation system works, where the data lives on an actor (`ARecastNavMesh`) and a separate system manages it.
 
-The structure is inspired by Unreal's navigation system, which splits a data-owning actor (`ARecastNavMesh`) from the system that manages it.
+`AGridSystemV1` is an abstract `AActor` that owns all the tile data and keeps track of the grid volumes. `AGridGenerator` is the child class that has the evaluation settings and does the actual queries. The volumes are just shapes for designers to place. They tell the system when their bounds change, but they don't own any data.
 
-`AGridSystemV1` is an abstract `AActor` that owns all tile data and tracks the grid volumes. `AGridGenerator` is the concrete child that owns the evaluation settings and the sweep logic. Volumes are thin authoring shapes. They tell the system when their bounds change, but they don't own any data.
+The code is split over two modules. `GridSystem` is the runtime module and `GridEditor` has the editor mode and tooling. The game only includes `GridSystem`, so editor code can't end up in a cooked build.
 
-I considered putting the data on a `UWorldSubsystem` instead. That would work for storage, but a subsystem has no actor in the world, so there's no details panel for designers to configure tile size, coverage or the trace channel. Keeping the data on an actor gave them something to click on.
+The tile data is stored per dimension. `FTileData` has the tile state, its height, and a `Modified` flag for tiles a designer changed by hand. `FDimensionData` has a `TMap<FIntPoint, FTileData>` for the tiles and a `TMap<FIntPoint, TWeakObjectPtr<AActor>>` for what is standing on them. `AGridSystemV1` has `FDimensionData m_Dimensions[TOTAL_TILE_DIMENSIONS]`.
 
-The code is split over two modules. `GridSystem` is the runtime module, and `GridEditor` holds the editor mode and the tooling. The game's target only includes `GridSystem`, so editor code can't end up in a cooked build.
-
-### Data Layout
-
-Tile data is stored per dimension:
-
-- `FTileData` holds a tile's state, its height, and a `Modified` flag for manual overrides.
-- `FDimensionData` holds a `TMap<FIntPoint, FTileData>` of tiles and a `TMap<FIntPoint, TWeakObjectPtr<AActor>>` of occupants.
-- `AGridSystemV1` holds `FDimensionData m_Dimensions[TOTAL_TILE_DIMENSIONS]`.
-
-`TOTAL_TILE_DIMENSIONS` is a single define. The dimension array, the evaluation loop and the dirty processing all loop over it, so a third dimension would mostly be a one-number change.
-
-Every dimension access goes through a check that logs a warning instead of crashing, because the dimension index often comes straight from a Blueprint:
+`TOTAL_TILE_DIMENSIONS` is a single define. The dimension array, the evaluation and the dirty processing all loop over it, so a third dimension would mostly mean changing one number. Every dimension access goes through a check that logs a warning instead of crashing, because the index often comes straight from a Blueprint:
 
 ```cpp
 bool AGridSystemV1::IsValidDimension(const int32 Dimension)
@@ -50,27 +39,21 @@ bool AGridSystemV1::IsValidDimension(const int32 Dimension)
 }
 ```
 
-## Only Evaluating What Changed
+## Only evaluating what changed
 
-Early on, moving a volume re-evaluated every tile it covered. For a 20x20 volume that's 400 sweeps per drag, which made the editor unusable while building levels.
+In the first versions, moving a volume re-evaluated every tile inside it. For a 20x20 volume that is 400 queries every time you drag it, which made the editor unusable while building a level.
 
-The system now keeps a `TSet<FIntPoint>` of dirty coordinates. When a volume's bounds change, it compares the old and new rectangles and only dirties the difference: tiles that left the volume and tiles that entered it. That scales with the perimeter of the move instead of the area of the volume. Height changes dirty the overlapping region, and changing a generator setting like tile size dirties everything. Dirty tiles are processed on tick.
+Now the system keeps a `TSet<FIntPoint>` of dirty tiles. When a volume moves, it compares the old and new bounds and only marks the tiles that left or entered the volume, so the cost depends on how far you moved it, not on how big the volume is. Changing the height marks the overlapping tiles, and changing a setting like the tile size marks everything. The dirty tiles get processed on tick. Tiles with `Modified` set get skipped, so a designer's manual changes don't get overwritten.
 
-Tiles a designer edited by hand have `Modified` set, and evaluation skips them, so manual work isn't overwritten.
+## Which dimension geometry belongs to
 
-## Which Dimension Does Geometry Belong To
+Both dimensions are overlapping geometry in the same space, so when the evaluation hits something it needs to know which dimension it belongs to. Meshes already had a Custom Primitive Data value for which dimension they belong to, which their materials use. The evaluation reads that same value from each hit component: 0 means dimension one, 1 means dimension two, and geometry without the value counts for both.
 
-Both dimensions are overlapping geometry in the same space, so evaluation needs to know which dimension each hit belongs to. The options I looked at were a trace channel per dimension, actor tags, or a separate sweep per dimension. Channels and tags both need setup on every asset, and two sweeps doubles the cost.
+## Evaluating a tile
 
-I went with Custom Primitive Data. Meshes already carried a CPD value for which dimension they belong to, which their materials use, so evaluation reads that same value from each hit component. Value 0 means dimension one, 1 means dimension two, and geometry without the value counts for both. No extra setup for designers.
+Each tile does one `OverlapMultiByChannel` with a column-shaped box, on its own GridTrace channel. Geometry generates tiles by default, and objects that shouldn't can opt out by setting their GridTrace response to Ignore.
 
-![Grid refactor showcase](/assets/img/blogs/phasebreak-grid/showcase_grid_refactor_v3_2.png)
-
-## Evaluating a Tile
-
-In the final version, each tile gets one `OverlapMultiByChannel` with a column-shaped box, on a dedicated GridTrace channel. Geometry generates tiles by default. Objects that shouldn't, opt out by setting their GridTrace response to Ignore. This replaced an older component designers had to attach to blocking objects, which they never used because set dressing first had to be turned into an actor.
-
-Coverage is checked by splitting the tile into a grid of cells and testing each cell against the XY bounds of the overlapping components. That tells you whether geometry actually covers part of the tile, not just whether something is near its center:
+To check if geometry actually covers a tile, and not just something close to its center, the tile is split into a grid of cells. Each cell gets checked against the XY bounds of the overlapping components, and the tile is valid if enough of the cells are covered. The height comes from the top of the component bounds. When multiple components overlap a tile, designers can pick the lowest, the highest or the median height. Median is there for geometry with outliers, like thin trim that sticks out above the floor.
 
 ```cpp
 for (int32 cy = 0; cy < resolution; ++cy)
@@ -99,8 +82,6 @@ if (coverage >= MinCoveragePercent * 0.01f)
     OutResults[dim].TileState = ETileState::VALID;
 ```
 
-Tile height comes from the top of the component bounds. When several components overlap a tile, designers pick which height to use. Median is there for geometry with outliers, like thin trim that sits above the walkable floor:
-
 ```cpp
 allHeights.Sort();
 switch (HeightMode)
@@ -117,19 +98,17 @@ switch (HeightMode)
 }
 ```
 
+Before this rework there were tiles in places with no geometry. After it, there aren't.
+
 ![Before the evaluation rework](/assets/img/blogs/phasebreak-grid/before_trace_channel_rework.png)
 
 ![After the evaluation rework](/assets/img/blogs/phasebreak-grid/after_trace_channel_rework.png)
 
-Before the rework, tiles showed up where there was no geometry. After it, they don't.
+## Saving the grid
 
-## Saving the Grid
+Each level stores its grid in a `UGridDataAsset`. The generator points to it with a `TSoftObjectPtr`, so the cooker follows the reference into the build and the asset isn't loaded until it's needed.
 
-Each level's grid is stored in a `UGridDataAsset`. The generator references it with a `TSoftObjectPtr`, so the cooker follows the reference into the build and the asset isn't loaded until it's needed.
-
-This part caused more bugs than anything else. My first auto-save called `UPackage::SavePackage` on every change. While a designer dragged a volume, that meant rapid repeated writes, the Windows file operation failed, and the editor crashed. A forced save on startup crashed the engine on launch for the same reason.
-
-The fix was to stop writing to disk myself. Grid changes fire a delegate, and the handler compares the in-memory data with the asset and marks it dirty when something changed:
+When the grid changes it fires a delegate. The handler compares the data in memory with the asset and marks the asset dirty if something changed, so designers get the normal Unreal "unsaved changes" flow. That was also what they wanted, because they didn't want temporary changes while testing in PIE to overwrite the saved grid.
 
 ```cpp
 OnTilesChanged.AddUObject(this, &AGridSystemV1::SyncDataAsset);
@@ -149,29 +128,22 @@ void AGridSystemV1::SyncDataAsset()
 }
 ```
 
-Designers now get the normal Unreal "unsaved changes" flow. That was also what they asked for, since they didn't want temporary changes while testing in PIE to overwrite the asset on disk.
+## What I considered
 
-## Grid Entity Events
+- **A `UWorldSubsystem` instead of an actor.** That would work fine for storing the data, but a subsystem has no actor in the world, so there is no details panel where designers can change the tile size, coverage or trace channel. Keeping it on an actor gives them something to click on.
+- **Other ways to tell the dimensions apart.** I looked at a trace channel per dimension, actor tags, and a separate query per dimension. Channels and tags both need setup on every asset, and two queries doubles the cost. The CPD value was already on every mesh.
+- **A component on blocking objects.** The older version used a component that designers had to add to every object that should block tiles. They never used it, because set dressing first had to be turned into an actor. The trace channel replaced it.
 
-Late in the project I added events to the grid entity component, which every unit on the grid has. They fire when the entity is added, moved, removed, or swaps dimension, and they're bindable from both C++ and Blueprint:
+## What I learned
 
-```cpp
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGridEntityMoved, FIntPoint, OldCoordinate, FIntPoint, NewCoordinate);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGridEntityDimensionSwapped, int32, OldDimension, int32, NewDimension);
+Saving caused more bugs than anything else in this system. My first auto-save called `UPackage::SavePackage` on every change. When a designer dragged a volume that meant a lot of writes really fast, the Windows file operation failed, and the editor crashed. Forcing a save on startup crashed the engine on launch for the same reason. The fix was to stop writing to disk myself and let Unreal's own dirty and save flow handle it with `Modify()`.
 
-UPROPERTY(BlueprintAssignable, Category = "Grid|Events")
-FOnGridEntityMoved OnMoved;
+<div class="text-todo">Anything else you learned from the grid, for example about working with designers as the users of your tool, or from the earlier versions of the system.</div>
 
-UPROPERTY(BlueprintAssignable, Category = "Grid|Events")
-FOnGridEntityDimensionSwapped OnDimensionSwapped;
-```
+## Looking back
 
-The goal was to let systems react to a unit moving instead of recalculating everything all the time. Cover was the main offender. It recalculated every cover and unit relation in the level whenever anything moved, and it showed up clearly in Unreal Insights. I started reworking it to cache which covers each enemy can see, but didn't finish before release. The fix that shipped, which Justin and I worked out together, only recalculates while the move action is selected, because that's the only time the player sees that data.
+The evaluation is still not fast. Big maps mean a lot of physics queries. Doing one overlap for the whole volume and calculating the coverage from the component bounds myself would cut that down a lot, but bounds are less accurate than the actual mesh shape.
 
-## What I'd Do Differently
+Near the end I also started splitting the system up more cleanly. After 12 hours I stopped, together with the lead programmer. Finishing it meant checking out the whole grid system, blocking the other programmers, and replacing every grid Blueprint node right before release. Cleaner code wasn't worth that so close to the deadline.
 
-The evaluation still isn't fast. Big maps mean a lot of physics queries. Doing a single overlap for the whole volume and computing coverage from the component bounds myself would cut that down a lot, at the cost of bounds being less accurate than the real mesh shape.
-
-Near the end I also started splitting the system's responsibilities more cleanly. After 12 hours I stopped, together with the lead programmer. Finishing it meant checking out the whole grid system, blocking the other programmers, and replacing every grid Blueprint node right before release. Cleaner code wasn't worth that at that point.
-
-Looking back, I iterated on this system a lot and judged it mostly by whether it felt right in the editor. On my current project I'm validating architecture decisions with unit tests, stress tests and profiling instead.
+I iterated on this system a lot and mostly judged it by whether it felt right in the editor. On my current project I'm validating architecture decisions with unit tests, stress tests and profiling instead.

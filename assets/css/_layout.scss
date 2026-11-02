@@ -242,6 +242,67 @@ a.info-value {
 
 .info-team-member { display: block; color: var(--text-muted); line-height: 1.5; }
 
+// Links, as compact rows instead of buttons
+.info-links {
+  ul { list-style: none; margin: 0.35rem 0 0 0; padding: 0; }
+  li { margin: 0; }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.2rem 0;
+    color: var(--link-color);
+    font-weight: 500;
+    line-height: 1.35;
+
+    i { width: 1rem; text-align: center; color: var(--text-muted); transition: color 0.2s; }
+
+    &:hover { color: var(--link-hover); i { color: var(--link-hover); } }
+  }
+}
+
+// Table of contents, filled in by main.js from the headings in the content
+.info-toc {
+  ul {
+    list-style: none;
+    margin: 0.4rem 0 0 0;
+    padding: 0;
+    max-height: 45vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  li { margin: 0; }
+
+  a {
+    display: block;
+    padding: 0.2rem 0 0.2rem 0.6rem;
+    border-left: 2px solid var(--card-border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.35;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover { color: var(--heading-color); }
+
+    &.active {
+      color: var(--link-color);
+      border-left-color: var(--link-color);
+    }
+  }
+
+  .toc-level-1 a { padding-left: 1.3rem; }
+  .toc-level-2 a { padding-left: 2rem; font-size: 0.75rem; }
+}
+
+// Jumping to a heading lands below the fixed navbar instead of behind it
+html { scroll-behavior: smooth; }
+
+.detail-main {
+  h1, h2, h3 { scroll-margin-top: calc(var(--navbar-height) + 1rem); }
+}
+
 @media (max-width: 1000px) {
   .detail-layout { grid-template-columns: 1fr; }
   .detail-info { position: static; }

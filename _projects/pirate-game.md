@@ -4,8 +4,9 @@ start_date: 2021-11-02
 end_date: 2021-11-06
 description: "Complete solo game featuring NavMesh AI, object pooling, and procedural world generation"
 thumbnail: /assets/img/projects/placeholder.jpg
-tags: [unity, csharp, solo, gameplay, game]
+tags: [unity, csharp, solo, gameplay, glu, game]
 featured: false
+status: draft
 team:
   programmer: [Boas-Bas van der Veen]
 team-size: 1
@@ -16,18 +17,28 @@ links:
 
 ## Overview
 
-A solo project built in one week featuring NavMesh AI enemies, object pooling, a shop system with resource management, and procedurally generated world layouts.
+A pirate game I made on my own in one week, with enemies that chase you, loot to collect, a shop to spend it in, and a world that's laid out differently every time.
+
+<div class="text-todo">Was this a school assignment at Grafisch Lyceum Utrecht or something you made for fun? Add a sentence about what the game is about and what the goal was.</div>
+
+<div class="image-todo">A gameplay screenshot or GIF, also to use as the thumbnail instead of the placeholder.</div>
+
+---
 
 ## What I Did
 
-### Procedural World Generation
+### Random World Layout
 
-Built a spawn system that randomly distributes loot boxes and enemies across available tiles, removing used tiles to prevent overlaps. Uses object pooling for both enemies and loot boxes to avoid runtime instantiation.
+Loot boxes and enemies are spread randomly over the available tiles, and every used tile is removed from the list so nothing spawns on top of each other. Both use object pooling instead of creating new objects while playing.
 
-### NavMesh AI
+### Enemies
 
-Enemies use Unity's NavMeshAgent for pathfinding, chasing the player when in range and patrolling otherwise.
+Enemies use Unity's NavMeshAgent to chase the player when they're in range, and patrol otherwise.
 
-### Shop & Resource System
+<div class="image-todo">A GIF of an enemy noticing and chasing the player.</div>
 
-Players collect resources from loot boxes and spend them in a shop to upgrade stats. Uses ScriptableObjects for item definitions.
+### Shop
+
+You collect resources from loot boxes and spend them in a shop to upgrade your stats. The items are defined as ScriptableObjects.
+
+<div class="image-todo">A screenshot of the shop.</div>
