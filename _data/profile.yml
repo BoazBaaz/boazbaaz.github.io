@@ -2,14 +2,11 @@
 name: "Boas-Bas van der Veen"
 birthday: "2002-12-26"  # YYYY-MM-DD
 location: "Amersfoort, Netherlands"
-university: "Breda University of Applied Sciences"
-university_short: "BUAS"
-year: 3
 specialization: "Engine & Tools Programming"
 
 bio:
-  short: "Third-year Engine & Tools Programming student at BUAS specializing in C++ and Unreal Engine development"
-  long: "Third-year Creative Media and Game Technologies student at Breda University of Applied Sciences, specializing in engine and tools programming. Over three years of hands-on experience building custom engines, Unreal Engine plugins, and editor tooling in C++. Passionate about low-level systems, reflection, and making development workflows faster and more intuitive for teams. Outside of programming, I'm a big fan of the Zelda series, Final Fantasy XIV, and Elden Ring. Currently looking for an internship starting September 2026."
+  short: "Fourth-year Engine & Tools Programming student at Breda University of Applied Sciences, working in C++ and Unreal Engine."
+  long: "Fourth-year Creative Media and Game Technologies student at Breda University of Applied Sciences, specializing in engine and tools programming. I build custom engines, Unreal Engine plugins and editor tooling in C++. I'm passionate about low-level systems and making development workflows faster and more intuitive for teams. Outside of programming, I'm a big fan of the Zelda series, Final Fantasy XIV and Elden Ring."
 
 images:
   avatar: "/assets/img/profile_picture_sqr.jpg"

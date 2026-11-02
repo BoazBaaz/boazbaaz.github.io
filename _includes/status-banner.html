@@ -1,0 +1,12 @@
+{%- comment -%} Banner under the title for pages that aren't "done". See _plugins/status.rb. {%- endcomment -%}
+{% if page.status == "wip" %}
+  <div class="status-banner status-wip">
+    <i class="fas fa-person-digging"></i>
+    <span><strong>Work in progress.</strong> This page is still being worked on, so it will keep changing.</span>
+  </div>
+{% elsif page.status == "draft" %}
+  <div class="status-banner status-draft">
+    <i class="fas fa-eye-slash"></i>
+    <span><strong>Draft.</strong> This page is only visible in local builds, not on the live site.</span>
+  </div>
+{% endif %}

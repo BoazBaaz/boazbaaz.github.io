@@ -5,7 +5,7 @@ layout: default
 <article class="about-page detail-page">
   <header class="project-header">
     <h1>{{ site.data.profile.name }}</h1>
-    <p class="about-tagline">{{ site.data.profile.specialization }} &bull; {{ site.data.profile.university }}</p>
+    <p class="about-tagline">{{ site.data.profile.specialization }}</p>
   </header>
 
   <div class="detail-layout">
@@ -24,9 +24,6 @@ layout: default
         <ul class="info-list">
           {% if site.data.profile.location %}
             <li><span class="info-label">Location</span><span class="info-value">{{ site.data.profile.location }}</span></li>
-          {% endif %}
-          {% if site.data.profile.university %}
-            <li><span class="info-label">Studying at</span><span class="info-value">{{ site.data.profile.university }}</span></li>
           {% endif %}
           {% if site.data.profile.specialization %}
             <li><span class="info-label">Specialization</span><span class="info-value">{{ site.data.profile.specialization }}</span></li>

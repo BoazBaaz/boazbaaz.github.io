@@ -12,13 +12,19 @@ DISPLAY:
 
 OPTIONAL:
   featured: true             # can show in Highlights on the homepage (3 most recent)
-  status: wip                # shows the work in progress banner and card badge
+  status: done               # done (default), wip, draft or hidden, see below
   background: /assets/img/projects/name/background.png
   team:                      # shown in a collapsed dropdown, role keys from _data/roles.yml
     programmer: [Name One, Name Two]
     designer: [Name Three]
   links:
     - { name: GitHub, url: "https://...", icon: fab fa-github, color: "#3a3a3f" }
+
+STATUS (same for projects and blogs, handled by _plugins/status.rb):
+  done    visible everywhere, the default when status is left out
+  wip     visible, with a work in progress banner and an "In progress" card badge
+  draft   only in local builds (jekyll serve), with a draft banner, left out of the live site
+  hidden  never built, in any environment
 
 ARTICLES:
   Articles with "project: <this file name>" in their front matter are listed automatically.

@@ -18,7 +18,7 @@
             <img src="{{ p.thumbnail | relative_url }}" alt="{{ p.title }}">
           {% endif %}
         </a>
-        {% if p.status == "wip" %}<span class="wip-badge">In progress</span>{% endif %}
+        {% if p.status == "wip" %}<span class="status-badge status-wip">In progress</span>{% elsif p.status == "draft" %}<span class="status-badge status-draft">Draft</span>{% endif %}
       </div>
     {% endif %}
     <div class="project-content">

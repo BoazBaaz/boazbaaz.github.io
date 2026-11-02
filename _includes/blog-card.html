@@ -10,6 +10,7 @@
   {% if b.thumbnail %}
     <div class="blog-card-image">
       <img src="{{ b.thumbnail | relative_url }}" alt="{{ b.title }}">
+      {% if b.status == "wip" %}<span class="status-badge status-wip">In progress</span>{% elsif b.status == "draft" %}<span class="status-badge status-draft">Draft</span>{% endif %}
     </div>
   {% endif %}
   <div class="blog-card-content">

@@ -93,37 +93,51 @@
 
 .project-articles + .project-actions { border-top: none; padding-top: 0; margin-top: 1.5rem; }
 
-// Small badge on project cards that are still in progress
-.wip-badge {
+// Status badge on project and blog cards (see _plugins/status.rb)
+.status-badge {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
   z-index: 1;
   padding: 0.2rem 0.6rem;
   border-radius: 1rem;
-  background: #c9a227;
-  color: #1a1a1a;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  &.status-wip { background: #c9a227; color: #1a1a1a; }
+  &.status-draft { background: #6c757d; color: white; }
 }
 
-// Work in progress notice
-.wip-banner {
+.blog-card-image { position: relative; }
+
+// Status banner under the title
+.status-banner {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   padding: 0.9rem 1.25rem;
-  border: 1px solid #c9a227;
+  border: 1px solid;
   border-left-width: 4px;
   border-radius: 0.5rem;
-  background: rgba(201, 162, 39, 0.1);
   color: var(--text-color);
   font-size: 0.95rem;
 
-  i { color: #c9a227; font-size: 1.1rem; }
+  i { font-size: 1.1rem; }
+
+  &.status-wip {
+    border-color: #c9a227;
+    background: rgba(201, 162, 39, 0.1);
+    i { color: #c9a227; }
+  }
+
+  &.status-draft {
+    border-color: #6c757d;
+    background: rgba(108, 117, 125, 0.15);
+    i { color: #9aa1a8; }
+  }
 }
 
 // Link from a project section to its article

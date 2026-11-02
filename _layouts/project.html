@@ -19,12 +19,7 @@ layout: default
     {% endif %}
   </header>
 
-  {% if page.status == "wip" %}
-    <div class="wip-banner">
-      <i class="fas fa-person-digging"></i>
-      <span><strong>Work in progress.</strong> This project is still in development, so this page will keep changing.</span>
-    </div>
-  {% endif %}
+  {% include status-banner.html %}
 
   <div class="detail-layout">
     <aside class="detail-info">

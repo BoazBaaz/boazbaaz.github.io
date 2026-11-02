@@ -8,7 +8,7 @@ DISPLAY:
 
 OPTIONAL:
   project: zentera                    # project file name without .md, adds "Part of" here and lists the post on that project page
-  published: false
+  status: done                        # done (default), wip, draft or hidden, see _projects/fields.txt
 
 FILENAME FORMAT:
   title-slug.md (no date prefix needed)
