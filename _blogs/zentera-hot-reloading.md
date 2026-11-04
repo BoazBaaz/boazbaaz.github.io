@@ -10,7 +10,7 @@ thumbnail: /assets/img/projects/zentera/hot_reloading_after_optimization.png
 
 The hot reloading system in [Zentera](/projects/zentera/), made in our custom Kudzu engine, reloads any resource the moment its file changes on disk. Artists and designers can edit a voxel model in MagicaVoxel, save it, and see it update in the engine right away without restarting. Near the end of the project the first version had gotten slow enough to drag the whole editor down, so I redesigned it. It went from 7.28ms to 0.012ms per frame, about 910 times faster.
 
-<div class="image-todo">The hot_reload.mp4 video from the Y2D evidence folder: saving a model in MagicaVoxel and it updating in the editor.</div>
+<video src="/assets/video/projects/zentera/hot_reload.mp4" width="100%" height="100%" controls title="Hot Reloading"></video>
 
 ## Why hot reloading
 
@@ -23,6 +23,8 @@ The system works for any resource that inherits from the `Resource` class. Each 
 Scripts (`.as` files) are skipped. They can't be reloaded one at a time, because scripts depend on each other and the whole scripting engine has to be rebuilt.
 
 When a reload fails, the timestamp is intentionally not updated, so it tries again the next frame. That matters for programs that save with an atomic write, like Paint does for images. During an atomic write the file can briefly not exist. If the system notices the change in that moment, the reload fails, and retrying on the next frame gives the save time to finish.
+
+![An atomic write operation](/assets/img/projects/zentera/atomic_write_operation.png)
 
 After a reload, `clean_up()` removes resources that aren't used anymore, mainly the temporary `VoxParser` objects that `VoxelRenderer::reload()` creates.
 

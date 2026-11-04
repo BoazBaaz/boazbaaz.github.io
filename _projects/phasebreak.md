@@ -6,7 +6,7 @@ description: "Turn-based tactical heist game in Unreal Engine 5, played across t
 thumbnail: /assets/img/projects/placeholder.jpg
 tags: [unreal-engine, cpp, tool, buas, game]
 featured: true
-role: "Grid System & Tools Programmer"
+role: "Engine & Tools Programmer"
 ---
 
 ## Overview

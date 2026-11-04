@@ -2,7 +2,7 @@
 title: "Zentera"
 start_date: 2025-05-05
 end_date: 2025-06-27
-description: "Voxel puzzle platformer built in the custom Kudzu engine. Contributed engine console, hot reloading system, and PS5 platform support."
+description: "Voxel-based puzzle platformer built in the custom Kudzu engine. Created by a small team of students during a the latter half of the second year of my BUas enrollment."
 thumbnail: /assets/img/projects/zentera/thumbnail.png
 background: /assets/img/projects/zentera/background.png
 tags: [cpp, vulkan, engine, tool, buas, game]
@@ -23,9 +23,7 @@ links:
 
 Zentera is a voxel puzzle platformer where you play as Gori, a lizard who uses his tongue to push, pull and swing through small diorama-like worlds. It was the final project of my second year at Breda University of Applied Sciences, made in eight weeks by a team of 16 programmers, designers, artists and a producer. We built it in **Kudzu**, a custom C++/Vulkan voxel engine, and released it on itch.io together with the full engine source code.
 
-<div class="video-embed">
-  <iframe src="https://www.youtube.com/embed/Z_Zsby4ZBBI" title="Zentera Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
+<video src="/assets/video/projects/zentera/zentera_trailer.mp4" width="100%" height="100%" controls title="Game Trailer"></video>
 
 ---
 
@@ -39,15 +37,15 @@ A console that captures everything the engine and its libraries print, writes it
 
 ![Console](/assets/img/projects/zentera/console_final.png)
 
-<a href="/blogs/zentera-engine-console/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+<a href="/blogs/zentera-engine-console/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
 ### Hot Reloading
 
 Artists and designers can edit a voxel model in MagicaVoxel, save it, and see it update in the engine right away. This replaced a planned blockout tool, since designers could now block out levels in MagicaVoxel instead. Near the end of the project I redesigned it to make it about 910 times faster.
 
-<div class="image-todo">The hot_reload.mp4 video from the Y2D evidence folder.</div>
+<video src="/assets/video/projects/zentera/hot_reload.mp4" width="100%" height="100%" controls title="Hot Reloading"></video>
 
-<a href="/blogs/zentera-hot-reloading/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+<a href="/blogs/zentera-hot-reloading/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
 ### PlayStation 5 Support
 
@@ -55,10 +53,25 @@ Artists and designers can edit a voxel model in MagicaVoxel, save it, and see it
 
 I fixed the scripting engine so it worked on PS5, and made packaging a PS5 build run on a background thread, so the editor stays usable while it packages and shows the status in the toolbar.
 
-<div class="image-todo">The ps5_packaging.mp4 video from the Y2D evidence folder, if it doesn't show anything under NDA.</div>
+<video src="/assets/video/projects/zentera/ps5_packaging.mp4" width="100%" height="100%" controls title="PS5 Packaging"></video>
 
-### Other Work
+### Source Control and Code Review
 
-I added an FPS limiter to test how the game ran on lower end hardware, which helped us find issues in the physics. I also fixed a lot of engine bugs, like UI buttons that registered clicks in the wrong place. That one turned out to be caused by the world scale and rotation calculations of the transform, and fixing it unblocked the UI work.
+The engine programmers worked in GitHub, with our own agreements for branches, commits and pull requests, while the rest of the team worked in Perforce. Every change went through a pull request that someone else had to review and approve before it could be squashed and merged.
 
-<div class="image-todo">The fps_limit.mp4 video from the Y2D evidence folder, or a screenshot of the fixed UI button collision with the debug outline.</div>
+Over the block I opened 20 pull requests and reviewed 19 from other engine programmers, requesting changes on 7 of them. For Zhangir's particle system, for example, I found two bugs while testing it: you could click on particles in the viewport, because the click check didn't skip entities with the `ECS::Hidden` tag, and after playing and stopping the game, all the particles ended up in the hierarchy, because they were saved when you pressed play. We went through a few rounds of fixes and re-reviews, and I only approved it once I couldn't find anything wrong after testing it.
+
+<div class="image-pair">
+  <div class="scroll-box"><img src="/assets/img/projects/zentera/pr_hot_reloading_2.png" alt="My pull request for the hot reloading"></div>
+  <div class="scroll-box"><img src="/assets/img/projects/zentera/pr_particle_system_comment_2.png" alt="My review comments on the particle system pull request"></div>
+</div>
+
+### Bug Fixes
+
+I reported 10 bugs and fixed 9 of them. The biggest was UI buttons registering clicks in the wrong place. Sven found it and asked me to look at it, and it turned out to be a lot bigger than expected. Some of the `Transform` functions weren't returning the scale and rotation in the format the rest of the engine expected. Fixing that unblocked the UI work.
+
+I also fixed building and packaging the game for PS5. Jaeden made that system but was busy with the animation system, so he assigned the bug to me. The paths in the Python script were wrong, so the generated package file had invalid paths. When Lynn reviewed the fix it still didn't work for her, and it turned out she had an older version of the SDK.
+
+To help find bugs, I added an FPS limiter, so we could test how the game ran on lower end hardware. That helped us find issues in the physics.
+
+<video src="/assets/video/projects/zentera/fps_limit.mp4" width="100%" height="100%" controls title="FPS Limiter"></video>

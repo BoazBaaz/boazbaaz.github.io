@@ -100,6 +100,8 @@ Every line in the console is a `ConsoleLine` with a warning level and a type. In
 
 The colors of the icons and text can be changed and get saved in `editor_settings.json`. Sven had already set up most of the saving and loading for the editor settings, so I only had to add the variables and some helper functions.
 
+![The console color settings](/assets/img/projects/zentera/console_color_settings.png)
+
 ```cpp
 enum class WarningLevel : uint8_t { INFO, WARNING, ERROR, CRITICAL };
 enum class WarningType : uint8_t { ENGINE = 0, AS_SCRIPTING, AS_DEBUGGER, UNKNOWN };
@@ -125,6 +127,8 @@ apply_filters();
 ```
 
 The console ended up with a clear button, clear on play (a feature request from Sven, because while debugging scripts you'd lose track of which errors were old and which were new), auto scroll, filters for the warning level and the message type, a search bar, and customizable colors.
+
+![The console toolbar](/assets/img/projects/zentera/console_top_bar.png)
 
 ## What I considered
 

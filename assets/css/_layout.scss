@@ -304,8 +304,15 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 1000px) {
-  .detail-layout { grid-template-columns: 1fr; }
+  // minmax(0, ...) so wide code blocks scroll inside their box instead of stretching the column past the screen
+  .detail-layout { grid-template-columns: minmax(0, 1fr); }
   .detail-info { position: static; }
+}
+
+@media (max-width: 650px) {
+  .detail-layout { gap: 1rem; }
+  .detail-main.content-bubble { padding: 1.25rem 1rem; }
+  .project-header h1, .blog-header h1 { font-size: 1.6rem; }
 }
 
 @media (max-width: 850px) {

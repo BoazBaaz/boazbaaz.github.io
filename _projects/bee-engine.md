@@ -26,18 +26,18 @@ This was my first block in the Engine & Tools specialization in my second year a
 
 A fixed and dynamic time step, with play, pause and step controls in the editor. The particle system updates on the fixed time step, and rendering, the editor, audio and input run every frame.
 
-![Play, pause and step](/assets/img/projects/bee-engine/stop_play_pause.gif)
+![Play, pause and step](/assets/gif/projects/bee-engine/stop_play_pause.gif)
 
-![Gameplay code moving a car with the arrow keys](/assets/img/projects/bee-engine/demo_user.gif)
+![Gameplay code moving a car with the arrow keys](/assets/gif/projects/bee-engine/demo_user.gif)
 *Gameplay code written in the game's own `Update`, moving a car with the arrow keys.*
 
 ### Resources and Saving
 
 A templated resource manager that loads and caches meshes, textures and GLTF models, and serialization with the cereal library that saves entities and whole scenes to JSON.
 
-<a href="/blogs/entt-runtime-reflection/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+![Saving and loading a scene](/assets/gif/projects/bee-engine/save_and_load.gif)
 
-![Saving and loading a scene](/assets/img/projects/bee-engine/save_and_load.gif)
+<a href="/blogs/entt-runtime-reflection/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
 ### Editor and Inspector
 
@@ -47,4 +47,4 @@ An ImGui editor with a viewport, a file browser, a scene hierarchy and an inspec
 
 Emitters that spawn particles in bursts or continuously, with settings like the emission rate, lifetime, color and size that you can change live in the inspector.
 
-![Particle system](/assets/img/projects/bee-engine/particle_system.gif)
+![Particle system](/assets/gif/projects/bee-engine/particle_system.gif)

@@ -10,7 +10,7 @@ status: draft
 team:
   programmer: [Boas-Bas van der Veen]
 team-size: 1
-role: "Solo Developer"
+role: "Gameplay Programmer"
 links:
   - { name: GitHub, url: "https://github.com/BoazBaaz/PirateGame", icon: fab fa-github, color: "#3a3a3f" }
 ---

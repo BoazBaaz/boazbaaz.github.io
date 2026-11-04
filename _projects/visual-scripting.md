@@ -9,7 +9,7 @@ featured: false
 team:
   programmer: [Boas-Bas van der Veen]
 team-size: 1
-role: "Solo Developer"
+role: "Engine & Tools Programmer"
 ---
 
 ## Overview
@@ -27,13 +27,13 @@ A visual scripting language for the Bee engine, mainly inspired by Unreal Engine
 Every node has typed input and output pins, and a new node type is just a small C++ class. Add the pins as members, register them, and write what the node does in `Execute`. Pins can be used like the data they hold, so a multiply node is just `m_result = m_left * m_right`.
 For an in-depth explanation you can check out the article I wrote about it.
 
-<a href="/blogs/storing-dynamic-data-types/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+<a href="/blogs/storing-dynamic-data-types/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
 ### The Graph Editor
 
 The graph is drawn with the imnodes library. You add nodes from a right-click menu grouped by category, and drag between pins to connect and disconnect them. New node types show up in that menu automatically once they're registered with a macro.
 
-![Creating nodes](/assets/img/projects/visual-scripting/dynamic_node_creation.gif)
+![Creating nodes](/assets/gif/projects/visual-scripting/dynamic_node_creation.gif)
 
 ### Running the Graph
 
@@ -41,7 +41,7 @@ A graph is a component on an entity. I added play, pause and step buttons to the
 
 Nodes can also get the components of the entity their graph is on, like its `Transform`.
 
-![A graph getting the components of its entity](/assets/img/projects/visual-scripting/component_getters_working.gif)
+![A graph getting the components of its entity](/assets/gif/projects/visual-scripting/component_getters_working.gif)
 
 ---
 
@@ -51,7 +51,7 @@ Honestly, this project didn't go the way I planned, and it isn't finished.
 
 I lost a lot of time early on. My first node editor library, imgui-node-editor, had a weird offset on the graph depending on how far you zoomed in and where you moved to. After a while I found out it hadn't been updated in two years and depended on a version of ImGui from a branch that never got merged, so I switched to imnodes. On top of that, I kept reworking the nodes and pins because I wasn't happy with them, instead of working on what had priority. Because of both, I had to change my milestones twice.
 
-![The graph drifting with imgui-node-editor](/assets/img/projects/visual-scripting/graph_editor_displaced.gif)
+![The graph drifting with imgui-node-editor](/assets/gif/projects/visual-scripting/graph_editor_displaced.gif)
 _A gif of the old library I used to visualize the underlying types and classes._
 
 
