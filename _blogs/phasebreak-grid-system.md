@@ -19,7 +19,7 @@ On top of that the level designers had to be able to work without me. They build
 
 I based the structure on how Unreal's navigation system works, where the data lives on an actor (`ARecastNavMesh`) and a separate system manages it.
 
-![The navmesh tile debug view that inspired the setup](/assets/img/projects/phasebreak/navmesh_tile_debug_view_inspiration.png)
+![The navmesh tile debug view that inspired the setup](/assets/img/projects/phasebreak/navmesh_tile_debug_view_inspiration.jpg)
 
 `AGridSystemV1` is an abstract `AActor` that holds all the tile data and keeps track of the grid volumes. `AGridGenerator` is the child class that has the evaluation settings and does the actual queries. The volumes are just shapes for designers to place. They tell the system when their bounds change, but they don't own any data.
 
@@ -51,7 +51,7 @@ Now the system keeps a `TSet<FIntPoint>` of dirty tiles. When a volume moves, it
 
 Both dimensions are overlapping geometry in the same space, so when the evaluation hits something it needs to know which dimension it belongs to. Meshes already had a Custom Primitive Data value for which dimension they belong to, which their materials use. The evaluation reads that same value from each hit component. 0 means dimension one, 1 means dimension two, and geometry without the value counts for both.
 
-![The grid in the dimension view of the viewport](/assets/img/projects/phasebreak/dimension_viewport.png)
+![The grid in the dimension view of the viewport](/assets/img/projects/phasebreak/dimension_viewport.jpg)
 
 ## Evaluating a tile
 
@@ -107,7 +107,7 @@ switch (HeightMode)
 
 Before this rework there were tiles in places with no geometry. After it, there aren't.
 
-![Before the evaluation rework](/assets/img/projects/phasebreak/before_trace_channel_rework.png)
+![Before the evaluation rework](/assets/img/projects/phasebreak/before_trace_channel_rework.jpg)
 
 ![After the evaluation rework](/assets/img/projects/phasebreak/after_trace_channel_rework.png)
 

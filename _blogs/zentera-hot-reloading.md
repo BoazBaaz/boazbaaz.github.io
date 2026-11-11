@@ -83,7 +83,7 @@ for (auto it = file_resources.begin(); it != file_resources.end();)
 
 ## A reload queue
 
-The queue is an `std::unordered_map<size_t, int>`. The key is the id of the resource to reload and the value is how many times it has tried. Each frame it goes through the queue and calls `reload()`. If that fails, the counter goes up, and once it hits `RELOAD_TIMEOUT` the entry is removed with a warning that the resource couldn't be reloaded. This keeps the retry behaviour for atomic writes from the first version, but now it gives up after a while.
+The queue is an `std::unordered_map<size_t, int>`. The key is the id of the resource to reload and the value is how many times it has tried. Each frame it goes through the queue and calls `reload()`. If that fails, the counter goes up, and once it hits `RELOAD_TIMEOUT` the entry is removed with a warning that the resource couldn't be reloaded. This keeps the retry behavior for atomic writes from the first version, but now it gives up after a while.
 
 ```cpp
 bool reloaded = false;

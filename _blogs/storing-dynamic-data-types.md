@@ -249,4 +249,6 @@ if (pin->CheckDataType<int>())
 }
 ```
 
+Later, while profiling the graphs, the `dynamic_cast` in `GetRawData()` showed up in the profiler. So in the end I changed it to a `reinterpret_cast`. That's faster, but it doesn't check anything anymore, so checking the type with `CheckDataType` first is now up to the person writing the node.
+
 Funnily enough, saving graphs never made it in. In the last week I dropped serialization, after talking about priorities with my lecturer. With all the connected parts, pointers and templates it had become too big of a mess, and being able to save nodes doesn't help much if not enough of them work yet. So the pins ended up templated for a feature that didn't ship, but the clean way of writing nodes stayed.

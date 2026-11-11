@@ -2,7 +2,7 @@
 title: "Zentera"
 start_date: 2025-05-05
 end_date: 2025-06-27
-description: "Voxel-based puzzle platformer built in the custom Kudzu engine. Created by a small team of students during a the latter half of the second year of my BUas enrollment."
+description: "Voxel puzzle platformer made in the custom Kudzu engine by a team of 16 students, in the last block of my second year at BUAS."
 thumbnail: /assets/img/projects/zentera/thumbnail.png
 background: /assets/img/projects/zentera/background.png
 tags: [cpp, vulkan, engine, tool, buas, game]

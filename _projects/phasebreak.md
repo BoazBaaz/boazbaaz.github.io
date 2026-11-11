@@ -43,9 +43,9 @@ Level designers just build their level and place a volume over it, and the grid 
 
 ![The final grid on a level](/assets/img/projects/phasebreak/after_trace_channel_rework.png)
 
-![The grid in the dimension view of the viewport](/assets/img/projects/phasebreak/dimension_viewport.png)
+![The grid in the dimension view of the viewport](/assets/img/projects/phasebreak/dimension_viewport.jpg)
 
-<a href="/blogs/phasebreak-grid-system/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+<a href="/blogs/phasebreak-grid-system/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
 ### Designer Tooling
 

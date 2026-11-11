@@ -130,7 +130,7 @@ void save(Archive& archive) const
 }
 ```
 
-This way you can save an entire scene and all the components in that scene, and later load them again in a save way.
+This way you can save an entire scene and all the components in that scene, and later load them again in a safe way.
 
 ![Saving a scene and loading it back](/assets/gif/projects/bee-engine/save_and_load.gif)
 

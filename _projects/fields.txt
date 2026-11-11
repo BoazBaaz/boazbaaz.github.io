@@ -27,9 +27,9 @@ STATUS (same for projects and blogs, handled by _plugins/status.rb):
   hidden  never built, in any environment
 
 ARTICLES:
-  Articles with "project: <this file name>" in their front matter are listed automatically.
-  To link one under a specific section, add:
-  <a href="/blogs/article-slug/" class="article-button"><i class="fas fa-newspaper"></i> Read the article</a>
+  Articles with "project: <this file name>" in their front matter show "Part of <project>" in their sidebar.
+  To link to one from a project section, add:
+  <a href="/blogs/article-slug/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
 IMAGE PLACEHOLDER:
   <div class="image-todo">What the image should show</div>

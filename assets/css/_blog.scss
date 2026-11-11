@@ -17,23 +17,6 @@
   justify-content: center;
 }
 
-.blog-meta {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-
-  i { margin-right: 0.25rem; }
-}
-
-.blog-project-link {
-  color: var(--link-color);
-
-  &:hover { color: var(--link-hover); }
-}
-
 .blog-content {
   font-size: 1.05rem;
   line-height: 1.8;
