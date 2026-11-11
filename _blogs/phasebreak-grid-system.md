@@ -9,8 +9,6 @@ thumbnail: /assets/img/projects/phasebreak/after_trace_channel_rework.png
 
 For [PhaseBreak](/projects/phasebreak/), a turn-based tactical heist game in Unreal Engine 5, I built the backend of the grid system. The grid generates its tiles straight from the level geometry, for both of the game's dimensions at once, only re-evaluates the tiles that changed, and saves per level so designers can fix tiles by hand without losing their changes. It got rewritten a few times over three blocks, so this post is about where it ended up.
 
-![Grid refactor showcase](/assets/img/projects/phasebreak/showcase_grid_refactor_v3_2.png)
-
 ## What the grid had to do
 
 PhaseBreak has two dimensions that exist in the same physical space. A wall can be there in one dimension and not in the other, so every tile needs its own state per dimension.
