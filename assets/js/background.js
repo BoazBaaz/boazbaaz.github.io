@@ -3,7 +3,7 @@
 
   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
 
-  var particleColor = [25, 45, 110];
+  var particleColor = [100, 150, 200];
 
   var config = {
     count: isMobile ? 32 : 64,
