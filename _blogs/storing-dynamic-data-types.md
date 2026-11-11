@@ -120,7 +120,7 @@ In the visual scripting language a node has input and output pins, and a connect
 
 ### Data in the pin
 
-In the first version the data lived inside the pin itself, and a node got and set it through the pin by name:
+In the first version the data lived inside the pin itself, and a node got and set it through the pin by name.
 
 ```cpp
 void Execute() override
@@ -140,7 +140,7 @@ It worked, but I wanted creating new nodes to be cleaner.
 
 ### Data on the node
 
-So next I moved the data to the node as normal member variables, and a pin just pointed to it. A new node became a lot cleaner to write:
+So next I moved the data to the node as normal member variables, and a pin just pointed to it. A new node became a lot cleaner to write.
 
 ```cpp
 class MathNode : public BaseNode
@@ -166,7 +166,7 @@ private:
 };
 ```
 
-The question then was how an input pin gets the data from the output pin it's connected to. I had three options:
+The question then was how an input pin gets the data from the output pin it's connected to. I had three options.
 
 ```cpp
 // Option 1: point the pin to the data of the connected pin
@@ -196,7 +196,7 @@ I went with option 2. It's nicer to use than option 3, because inside `Execute` 
 
 The problem showed up when I started on saving graphs. With the data on the node, I couldn't just save the `BaseNode` anymore. I would also have to save every child class, like `MathNode`, together with the data of its base class, which is hard to do because the nodes are polymorphic.
 
-During a progress meeting with my lecturer and some of my peers, Sjoerd, a classmate of mine, suggested making the pins templated and putting the data back in the pin. That keeps the clean way of writing nodes, and because the pins are stored in the `BaseNode`, saving them becomes easy again. So the pins became a `BasePin` with the shared data, like the name and id, and a templated `Pin<T>` that holds the actual value:
+During a progress meeting with my lecturer and some of my peers, Sjoerd, a classmate of mine, suggested making the pins templated and putting the data back in the pin. That keeps the clean way of writing nodes, and because the pins are stored in the `BaseNode`, saving them becomes easy again. So the pins became a `BasePin` with the shared data, like the name and id, and a templated `Pin<T>` that holds the actual value.
 
 ```cpp
 class BasePin {
@@ -216,7 +216,7 @@ private:
 };
 ```
 
-A node now has its pins as members and registers them, and because `Pin<Type>` has custom operators, you can use a pin like the data it holds:
+A node now has its pins as members and registers them, and because `Pin<Type>` has custom operators, you can use a pin like the data it holds.
 
 ```cpp
 class MathNode : public BaseNode
@@ -240,7 +240,7 @@ private:
 
 ## What I learned
 
-Every pin now knows its own type at compile time, but getting the data through the `BasePin` is only checked at run-time with a `dynamic_cast`. I would have liked to check that at compile time, but `this` isn't known at compile time. I also planned to use a `static_assert` with the `std::type_index` that the `BasePin` stores, but that is only known at run-time too. So to be safe you check the type first:
+Every pin now knows its own type at compile time, but getting the data through the `BasePin` is only checked at run-time with a `dynamic_cast`. I would have liked to check that at compile time, but `this` isn't known at compile time. I also planned to use a `static_assert` with the `std::type_index` that the `BasePin` stores, but that is only known at run-time too. So to be safe you check the type first.
 
 ```cpp
 if (pin->CheckDataType<int>())

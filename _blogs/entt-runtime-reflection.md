@@ -9,7 +9,7 @@ thumbnail: /assets/img/projects/bee-engine/thumbnail.png
 
 In the [Bee Engine](/projects/bee-engine/) editor, any component can be shown in the inspector and saved to a file just by registering it once, using EnTT's `entt::meta` runtime reflection. The editor and the serializer have no code for any specific component. This was the extra feature I added on top of the deliverables for the Engine & Tools block this project was a part of, my friend Justin helped me a lot with getting the initial setup for `entt::meta` working.
 
-![Engine interface](/assets/img/projects/bee-engine/engine_interface.png)
+![The editor, with the scene hierarchy and the inspector](/assets/img/projects/bee-engine/engine_interface.png)
 
 ## The problem
 
@@ -43,7 +43,7 @@ void RegisterSerializationMeta(const std::string& name)
 }
 ```
 
-Registering a component is then one line per system:
+Registering a component is then one line per system.
 
 ```cpp
 RegisterInspectorMeta<Transform>(ICON_FA_BORDER_STYLE " Transform");
@@ -132,7 +132,7 @@ void save(Archive& archive) const
 
 This way you can save an entire scene and all the components in that scene, and later load them again in a save way.
 
-![Saving and loading a scene](/assets/gif/projects/bee-engine/save_and_load.gif)
+![Saving a scene and loading it back](/assets/gif/projects/bee-engine/save_and_load.gif)
 
 ## What I learned
 

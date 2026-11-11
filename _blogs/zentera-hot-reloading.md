@@ -1,5 +1,5 @@
 ---
-title: "Making Hot Reloading 910x Faster"
+title: "Making Hot Reloading Assets in Zentera x910 Faster"
 date: 2025-06-27 12:00:00 +0100
 project: zentera
 status: done
@@ -10,11 +10,11 @@ thumbnail: /assets/img/projects/zentera/hot_reloading_after_optimization.png
 
 The hot reloading system in [Zentera](/projects/zentera/), made in our custom Kudzu engine, reloads any resource the moment its file changes on disk. Artists and designers can edit a voxel model in MagicaVoxel, save it, and see it update in the engine right away without restarting. Near the end of the project the first version had gotten slow enough to drag the whole editor down, so I redesigned it. It went from 7.28ms to 0.012ms per frame, about 910 times faster.
 
-<video src="/assets/video/projects/zentera/hot_reload.mp4" width="100%" height="100%" controls title="Hot Reloading"></video>
+<video src="/assets/video/projects/zentera/hot_reload.mp4" width="100%" height="100%" controls title="Saving a model in MagicaVoxel and seeing it update in the editor right away"></video>
 
 ## Why hot reloading
 
-In the second sprint I was supposed to build a blockout tool, so designers could quickly build levels inside the engine. In the FPOC meeting I brought up that I thought it wasn't necessary: if the engine could hot reload resources, designers could build blockouts in MagicaVoxel and the `VoxelModel` would reload in the engine every time they saved. After talking it through with Axel, our designer, we cancelled the blockout tool and I worked on hot reloading instead.
+In the second sprint I was supposed to build a blockout tool, so designers could quickly build levels inside the engine. In the FPOC meeting I brought up that I thought it wasn't necessary. If the engine could hot reload resources, designers could build blockouts in MagicaVoxel and the `VoxelModel` would reload in the engine every time they saved. After talking it through with Axel, our designer, we cancelled the blockout tool and I worked on hot reloading instead.
 
 ## The first version
 
@@ -24,7 +24,7 @@ Scripts (`.as` files) are skipped. They can't be reloaded one at a time, because
 
 When a reload fails, the timestamp is intentionally not updated, so it tries again the next frame. That matters for programs that save with an atomic write, like Paint does for images. During an atomic write the file can briefly not exist. If the system notices the change in that moment, the reload fails, and retrying on the next frame gives the save time to finish.
 
-![An atomic write operation](/assets/img/projects/zentera/atomic_write_operation.png)
+![An atomic write, where the file briefly doesn't exist while it's being saved](/assets/img/projects/zentera/atomic_write_operation.png)
 
 After a reload, `clean_up()` removes resources that aren't used anymore, mainly the temporary `VoxParser` objects that `VoxelRenderer::reload()` creates.
 
@@ -51,7 +51,7 @@ if (hot_reloaded) clean_up();
 
 At the end of sprint 4, Max noticed the editor had become slow after all the new art was added. He and Sven profiled it and found the hot reloading. By then the game had so many resources that looping through all of them every frame took **7.28ms per frame** on average, with spikes up to about 14ms, and the editor dropped from 167fps to 86fps. That was way higher than when I profiled it in the first few weeks, when there were far fewer assets.
 
-![Before optimization](/assets/img/projects/zentera/hot_reloading_before_optimization.png)
+![The profiler before the redesign, at 7.28ms per frame on average](/assets/img/projects/zentera/hot_reloading_before_optimization.png)
 
 I already had some ideas for improving it when I first made it, but it was fine at the time. Now I made three changes.
 
@@ -150,4 +150,4 @@ And not every task has to be built the way it was planned. I was supposed to mak
 
 After the redesign the hot reloading averages **0.012ms per frame**, down from 7.28ms, and the editor stays at 167fps. Checking the files costs up to about 2ms once per second when it runs, and about 0.0008ms on the frames in between. That once-per-second check is still a small hit, but it doesn't affect the frame rate.
 
-![After optimization](/assets/img/projects/zentera/hot_reloading_after_optimization.png)
+![The profiler after the redesign, at 0.012ms per frame on average](/assets/img/projects/zentera/hot_reloading_after_optimization.png)

@@ -176,7 +176,9 @@
 }
 
 .scroll-box {
-  height: 420px;
+  // A maximum, not a fixed height, so short images don't leave an empty box below them.
+  // Only images taller than this get a scrollbar.
+  max-height: 420px;
   margin: 1.5rem 0;
   overflow-y: auto;
   border: 1px solid var(--card-border);
@@ -188,6 +190,23 @@
 
 @media (max-width: 650px) {
   .image-pair { grid-template-columns: minmax(0, 1fr); }
+}
+
+// Caption under images and videos, added by main.js from the alt text or video title
+.media-caption {
+  display: block;
+  margin: 0.4rem 0 1.25rem 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.image-pair-cell {
+  min-width: 0;
+
+  .media-caption { margin-bottom: 0; }
 }
 
 // Placeholder for an image that still needs to be made

@@ -16,7 +16,7 @@ role: "Engine & Tools Programmer"
 
 A visual scripting language for the Bee engine, mainly inspired by Unreal Engine's Blueprints. It was my self-study project for the second block of my second year at Breda University of Applied Sciences, so it was solo and I picked the topic myself. The goal was a system where you build logic by connecting nodes, with an easy to use API for adding new nodes in C++.
 
-![Node editor](/assets/img/projects/visual-scripting/nodes_banner.png)
+![Nodes with their typed input and output pins](/assets/img/projects/visual-scripting/nodes_banner.png)
 
 ---
 
@@ -33,7 +33,7 @@ For an in-depth explanation you can check out the article I wrote about it.
 
 The graph is drawn with the imnodes library. You add nodes from a right-click menu grouped by category, and drag between pins to connect and disconnect them. New node types show up in that menu automatically once they're registered with a macro.
 
-![Creating nodes](/assets/gif/projects/visual-scripting/dynamic_node_creation.gif)
+![Adding new nodes from the right-click menu](/assets/gif/projects/visual-scripting/dynamic_node_creation.gif)
 
 ### Running the Graph
 
@@ -51,8 +51,7 @@ Honestly, this project didn't go the way I planned, and it isn't finished.
 
 I lost a lot of time early on. My first node editor library, imgui-node-editor, had a weird offset on the graph depending on how far you zoomed in and where you moved to. After a while I found out it hadn't been updated in two years and depended on a version of ImGui from a branch that never got merged, so I switched to imnodes. On top of that, I kept reworking the nodes and pins because I wasn't happy with them, instead of working on what had priority. Because of both, I had to change my milestones twice.
 
-![The graph drifting with imgui-node-editor](/assets/gif/projects/visual-scripting/graph_editor_displaced.gif)
-_A gif of the old library I used to visualize the underlying types and classes._
+![The old library I used to visualize the underlying types and classes, with the offset on the graph](/assets/gif/projects/visual-scripting/graph_editor_displaced.gif)
 
 
 Saving and loading graphs never made it in. With all the pointers, templates and connected parts it had become a big mess, and after talking about priorities with my lecturer I dropped it in the last week to focus on the nodes actually working. I also had to scale down the stress test, because I didn't have the setup to properly compare a graph against the same code written in C++.

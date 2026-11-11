@@ -20,7 +20,7 @@ Interlock is a roguelite deckbuilder where you play shape cards onto a 4x4 grid.
 
 It's my graduation-year project at Breda University of Applied Sciences, running over the first semester of my fourth year, with a small team of two programmers and a designer. This page covers what I made in the first quarter.
 
-![Combat preview](/assets/gif/projects/interlock/gif_of_preview_v2.gif)
+![Previewing a move, with ghost values on the stats and the enemy's intent above its head](/assets/gif/projects/interlock/gif_of_preview_v2.gif)
 
 ---
 
@@ -32,7 +32,7 @@ My goal for this project is a card system where the data, like a card's type, sh
 
 Every card is a data asset with its type, rarity, shape and effects. The types and rarities come from data tables, so our designer Nick can add new ones without a programmer. Instead of typing a shape in as numbers, you draw it on a small clickable grid in the card's details panel, which I built as a custom editor widget.
 
-![A card data asset in the editor](/assets/img/projects/interlock/da_card_fire_fist_editor.png)
+![The card data asset for Fire Fist, with the clickable shape grid](/assets/img/projects/interlock/da_card_fire_fist_editor.png)
 
 ### Previewing a Move
 

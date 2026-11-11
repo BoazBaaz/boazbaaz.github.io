@@ -21,7 +21,7 @@ I based the structure on how Unreal's navigation system works, where the data li
 
 ![The navmesh tile debug view that inspired the setup](/assets/img/projects/phasebreak/navmesh_tile_debug_view_inspiration.png)
 
-`AGridSystemV1` is an abstract `AActor` that owns all the tile data and keeps track of the grid volumes. `AGridGenerator` is the child class that has the evaluation settings and does the actual queries. The volumes are just shapes for designers to place. They tell the system when their bounds change, but they don't own any data.
+`AGridSystemV1` is an abstract `AActor` that holds all the tile data and keeps track of the grid volumes. `AGridGenerator` is the child class that has the evaluation settings and does the actual queries. The volumes are just shapes for designers to place. They tell the system when their bounds change, but they don't own any data.
 
 The code is split over two modules. `GridSystem` is the runtime module and `GridEditor` has the editor mode and tooling. The game only includes `GridSystem`, so editor code can't end up in a cooked build.
 
@@ -29,7 +29,7 @@ The code is split over two modules. `GridSystem` is the runtime module and `Grid
 
 The tile data is stored per dimension. `FTileData` has the tile state, its height, and a `Modified` flag for tiles a designer changed by hand. `FDimensionData` has a `TMap<FIntPoint, FTileData>` for the tiles and a `TMap<FIntPoint, TWeakObjectPtr<AActor>>` for what is standing on them. `AGridSystemV1` has `FDimensionData m_Dimensions[TOTAL_TILE_DIMENSIONS]`.
 
-`TOTAL_TILE_DIMENSIONS` is a single define. The dimension array, the evaluation and the dirty processing all loop over it, so a third dimension would mostly mean changing one number. Every dimension access goes through a check that logs a warning instead of crashing, because the index often comes straight from a Blueprint:
+`TOTAL_TILE_DIMENSIONS` is a single define. The dimension array, the evaluation and the dirty processing all loop over it, so a third dimension would mostly mean changing one number. Every dimension access goes through a check that logs a warning instead of crashing, because the index often comes straight from a Blueprint.
 
 ```cpp
 bool AGridSystemV1::IsValidDimension(const int32 Dimension)
@@ -49,7 +49,7 @@ Now the system keeps a `TSet<FIntPoint>` of dirty tiles. When a volume moves, it
 
 ## Which dimension geometry belongs to
 
-Both dimensions are overlapping geometry in the same space, so when the evaluation hits something it needs to know which dimension it belongs to. Meshes already had a Custom Primitive Data value for which dimension they belong to, which their materials use. The evaluation reads that same value from each hit component: 0 means dimension one, 1 means dimension two, and geometry without the value counts for both.
+Both dimensions are overlapping geometry in the same space, so when the evaluation hits something it needs to know which dimension it belongs to. Meshes already had a Custom Primitive Data value for which dimension they belong to, which their materials use. The evaluation reads that same value from each hit component. 0 means dimension one, 1 means dimension two, and geometry without the value counts for both.
 
 ![The grid in the dimension view of the viewport](/assets/img/projects/phasebreak/dimension_viewport.png)
 
@@ -87,6 +87,7 @@ const float coverage = static_cast<float>(validCells) / static_cast<float>(total
 if (coverage >= MinCoveragePercent * 0.01f)
     OutResults[dim].TileState = ETileState::VALID;
 ```
+<br>
 
 ```cpp
 allHeights.Sort();
@@ -123,6 +124,7 @@ OnTilesChanged.AddUObject(this, &AGridSystemV1::SyncDataAsset);
 OnTileSizeChanged.AddUObject(this, &AGridSystemV1::SyncDataAsset);
 OnTileOffsetChanged.AddUObject(this, &AGridSystemV1::SyncDataAsset);
 ```
+<br>
 
 ```cpp
 void AGridSystemV1::SyncDataAsset()
@@ -151,7 +153,7 @@ void AGridSystemV1::SyncDataAsset()
 
 Saving caused more bugs than anything else in this system. My first auto-save called `UPackage::SavePackage` on every change. When a designer dragged a volume that meant a lot of writes really fast, the Windows file operation failed, and the editor crashed. Forcing a save on startup crashed the engine on launch for the same reason. The fix was to stop writing to disk myself and let Unreal's own dirty and save flow handle it with `Modify()`.
 
-The other lessons were less about code and more about working on a system everyone else depends on. In my peer reviews, Lasse and Jim both pointed out that I didn't document my changes to the grid, so after a refactor the only way for someone else to understand it was reading the code. Timmy, who was doing the profiling and optimization that sprint, pointed out that I didn't include him in my plans, even though I was working on the cover tile recalculation in the same area. I tend to work through a problem on my own before bringing anyone in. That's fine when the work is self-contained, but not when it touches a shared system or someone else's task. So now I check in with whoever is responsible first, or bring it up at standup, and I document changes for both the designers and the programmers.
+The other lessons were less about code and more about working on a system everyone else depends on. In my peer reviews, Lasse and Jim both pointed out that I didn't document my changes to the grid, so after a refactor the only way for someone else to understand it was reading the code. Timmy, who was doing the profiling and optimization that sprint, pointed out that I didn't include him in my plans, even though I was working on the cover tile recalculation in the same area. I tend to work through a problem on my own before bringing anyone in. That's fine when the work is self-contained, but not when it touches a shared system or someone else's task. So for next time I want to check in with whoever is responsible first, or bring it up at standup, and document my changes for both the designers and the programmers.
 
 I also had to learn when to stop. Near the end of the project I started splitting the grid system up more cleanly, without making a task for it first. It grew into 12 hours of work before I told Iddo, our lead programmer, and once we talked about it, it was clear it wasn't worth it. Finishing it meant checking out the whole grid system, blocking the other programmers, and replacing every grid Blueprint node right before release. The idea itself wasn't the problem, it was that I kept going without checking in, even though I could see the scope growing. Jim and Lasse also both told me in my peer reviews to stop trying to make systems perfect. Next time I'll bring a task like that up at standup or sprint planning first, with a clear point where I stop.
 
@@ -159,4 +161,4 @@ I also had to learn when to stop. Near the end of the project I started splittin
 
 The evaluation is still not fast. Big maps mean a lot of physics queries. Doing one overlap for the whole volume and calculating the coverage from the component bounds myself would cut that down a lot, but bounds are less accurate than the actual mesh shape.
 
-I iterated on this system a lot and mostly judged it by whether it felt right in the editor. On my current project I'm validating architecture decisions with unit tests, stress tests and profiling instead.
+I iterated on this system a lot and mostly judged it by whether it felt right in the editor.

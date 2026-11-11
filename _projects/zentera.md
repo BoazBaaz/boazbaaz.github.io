@@ -37,7 +37,7 @@ I was on the engine side of the team, building tools for the rest of the team an
 
 A console that captures everything the engine and its libraries print, writes it to a log file, and shows it in the editor with filters and search. Gameplay programmers used it all the time to check their scripts, and for artists and designers without a debugger, the log file was the way to find out why something crashed.
 
-![Console](/assets/img/projects/zentera/console_final.png)
+![The engine console with its filters, search and color-coded messages](/assets/img/projects/zentera/console_final.png)
 
 <a href="/blogs/zentera-engine-console/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
@@ -45,7 +45,7 @@ A console that captures everything the engine and its libraries print, writes it
 
 Artists and designers can edit a voxel model in MagicaVoxel, save it, and see it update in the engine right away. This replaced a planned blockout tool, since designers could now block out levels in MagicaVoxel instead. Near the end of the project I redesigned it to make it about 910 times faster.
 
-<video src="/assets/video/projects/zentera/hot_reload.mp4" width="100%" height="100%" controls title="Hot Reloading"></video>
+<video src="/assets/video/projects/zentera/hot_reload.mp4" width="100%" height="100%" controls title="Saving a model in MagicaVoxel and seeing it update in the editor right away"></video>
 
 <a href="/blogs/zentera-hot-reloading/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
@@ -55,13 +55,13 @@ Artists and designers can edit a voxel model in MagicaVoxel, save it, and see it
 
 I fixed the scripting engine so it worked on PS5, and made packaging a PS5 build run on a background thread, so the editor stays usable while it packages and shows the status in the toolbar.
 
-<video src="/assets/video/projects/zentera/ps5_packaging.mp4" width="100%" height="100%" controls title="PS5 Packaging"></video>
+<video src="/assets/video/projects/zentera/ps5_packaging.mp4" width="100%" height="100%" controls title="Packaging a PS5 build in the background, with the progress shown in the toolbar"></video>
 
 ### Source Control and Code Review
 
 The engine programmers worked in GitHub, with our own agreements for branches, commits and pull requests, while the rest of the team worked in Perforce. Every change went through a pull request that someone else had to review and approve before it could be squashed and merged.
 
-Over the block I opened 20 pull requests and reviewed 19 from other engine programmers, requesting changes on 7 of them. For Zhangir's particle system, for example, I found two bugs while testing it: you could click on particles in the viewport, because the click check didn't skip entities with the `ECS::Hidden` tag, and after playing and stopping the game, all the particles ended up in the hierarchy, because they were saved when you pressed play. We went through a few rounds of fixes and re-reviews, and I only approved it once I couldn't find anything wrong after testing it.
+Over the block I opened 20 pull requests and reviewed 19 from other engine programmers, requesting changes on 7 of them. For Zhangir's particle system, for example, I found two bugs while testing it. You could click on particles in the viewport, because the click check didn't skip entities with the `ECS::Hidden` tag, and after playing and stopping the game, all the particles ended up in the hierarchy, because they were saved when you pressed play. We went through a few rounds of fixes and re-reviews, and I only approved it once I couldn't find anything wrong after testing it.
 
 <div class="image-pair">
   <div class="scroll-box"><img src="/assets/img/projects/zentera/pr_hot_reloading_2.png" alt="My pull request for the hot reloading"></div>
@@ -76,4 +76,4 @@ I also fixed building and packaging the game for PS5. Jaeden made that system bu
 
 To help find bugs, I added an FPS limiter, so we could test how the game ran on lower end hardware. That helped us find issues in the physics.
 
-<video src="/assets/video/projects/zentera/fps_limit.mp4" width="100%" height="100%" controls title="FPS Limiter"></video>
+<video src="/assets/video/projects/zentera/fps_limit.mp4" width="100%" height="100%" controls title="Limiting the frame rate to test how the game runs on lower end hardware"></video>

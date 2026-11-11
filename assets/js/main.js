@@ -135,6 +135,34 @@ document.addEventListener('DOMContentLoaded', function() {
     if (initialTag) filterByTag(initialTag);
   }
 
+  // Captions: images and videos in project and post content get their alt text (or video title) shown below them
+  document.querySelectorAll('.detail-main .project-body, .detail-main .blog-content').forEach(function(body) {
+    body.querySelectorAll('img[alt], video[title]').forEach(function(media) {
+      var text = (media.tagName === 'IMG' ? media.getAttribute('alt') : media.getAttribute('title') || '').trim();
+      if (!text) return;
+
+      // Put the caption after the scroll box for images inside one, otherwise right after the media
+      var anchor = media.closest('.scroll-box') || media;
+      if (anchor.nextElementSibling && anchor.nextElementSibling.classList.contains('media-caption')) return;
+
+      // A span, because markdown images sit inside a <p> and a <p> can't contain another one
+      var caption = document.createElement('span');
+      caption.className = 'media-caption';
+      caption.textContent = text;
+
+      // In a side by side pair, keep the box and its caption together in one grid cell
+      if (anchor.parentElement && anchor.parentElement.classList.contains('image-pair')) {
+        var cell = document.createElement('div');
+        cell.className = 'image-pair-cell';
+        anchor.parentElement.insertBefore(cell, anchor);
+        cell.appendChild(anchor);
+        cell.appendChild(caption);
+      } else {
+        anchor.insertAdjacentElement('afterend', caption);
+      }
+    });
+  });
+
   // Table of contents in the info column, built from the headings in the content
   var toc = document.querySelector('.info-toc');
   var tocContent = document.querySelector('.detail-main .project-body, .detail-main .blog-content');

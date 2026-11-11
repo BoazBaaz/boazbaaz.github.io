@@ -16,7 +16,7 @@ role: "Engine & Tools Programmer"
 
 This was my first block in the Engine & Tools specialization in my second year at Breda University of Applied Sciences. It was a solo school project starting from the in-house Bee engine, every week had a deliverable, and together they make up a small engine with an editor. You can build a scene, tweak particle effects live, play and pause, and save and load the whole scene.
 
-![Editor](/assets/img/projects/bee-engine/engine_interface.png)
+![The editor, with the viewport, scene hierarchy and inspector](/assets/img/projects/bee-engine/engine_interface.png)
 
 ---
 
@@ -26,16 +26,15 @@ This was my first block in the Engine & Tools specialization in my second year a
 
 A fixed and dynamic time step, with play, pause and step controls in the editor. The particle system updates on the fixed time step, and rendering, the editor, audio and input run every frame.
 
-![Play, pause and step](/assets/gif/projects/bee-engine/stop_play_pause.gif)
+![Playing, pausing and stepping through the game in the editor](/assets/gif/projects/bee-engine/stop_play_pause.gif)
 
-![Gameplay code moving a car with the arrow keys](/assets/gif/projects/bee-engine/demo_user.gif)
-*Gameplay code written in the game's own `Update`, moving a car with the arrow keys.*
+![Gameplay code written in the game's own Update function, moving a car with the arrow keys](/assets/gif/projects/bee-engine/demo_user.gif)
 
 ### Resources and Saving
 
 A templated resource manager that loads and caches meshes, textures and GLTF models, and serialization with the cereal library that saves entities and whole scenes to JSON.
 
-![Saving and loading a scene](/assets/gif/projects/bee-engine/save_and_load.gif)
+![Saving a scene and loading it back](/assets/gif/projects/bee-engine/save_and_load.gif)
 
 <a href="/blogs/entt-runtime-reflection/" class="article-button"><i class="fas fa-newspaper"></i> Read the post</a>
 
@@ -47,4 +46,4 @@ An ImGui editor with a viewport, a file browser, a scene hierarchy and an inspec
 
 Emitters that spawn particles in bursts or continuously, with settings like the emission rate, lifetime, color and size that you can change live in the inspector.
 
-![Particle system](/assets/gif/projects/bee-engine/particle_system.gif)
+![The particle system running in the editor](/assets/gif/projects/bee-engine/particle_system.gif)

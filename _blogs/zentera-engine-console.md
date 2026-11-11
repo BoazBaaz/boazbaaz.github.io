@@ -1,5 +1,5 @@
 ---
-title: "Capturing Every Log Line"
+title: "Creating a Console in the Kudzu Engine"
 date: 2025-06-27 11:00:00 +0100
 project: zentera
 status: done
@@ -9,9 +9,9 @@ thumbnail: /assets/img/projects/zentera/console_final.png
 
 The engine console in [Zentera](/projects/zentera/), made in our custom Kudzu engine, captures everything the engine and its libraries print, writes it to a log file, and shows it in an ImGui window with filters and search. It became one of the most used debugging tools on the team. Gameplay programmers used it all the time to check their scripts, and because artists and designers don't have a debugger, the log file was often the only way to find out why the engine crashed on their machine.
 
-![Console](/assets/img/projects/zentera/console_final.png)
+![The engine console with its filters, search and color-coded messages](/assets/img/projects/zentera/console_final.png)
 
-It started as my task for the first sprint: a console so designers and gameplay programmers could debug while running the engine without a debugger. I didn't want to change our existing `Log` class too much, and I also wanted to catch messages from external libraries like AngelScript, which don't use our `Log` class at all.
+It started as my task for the first sprint, a console so designers and gameplay programmers could debug while running the engine without a debugger. I didn't want to change our existing `Log` class too much, and I also wanted to catch messages from external libraries like AngelScript, which don't use our `Log` class at all.
 
 The system has two parts. The logger captures all the output and writes it to a log file. The console is mostly UI that shows and filters those messages.
 
@@ -100,7 +100,7 @@ Every line in the console is a `ConsoleLine` with a warning level and a type. In
 
 The colors of the icons and text can be changed and get saved in `editor_settings.json`. Sven had already set up most of the saving and loading for the editor settings, so I only had to add the variables and some helper functions.
 
-![The console color settings](/assets/img/projects/zentera/console_color_settings.png)
+![The color settings for each warning level, saved per developer](/assets/img/projects/zentera/console_color_settings.png)
 
 ```cpp
 enum class WarningLevel : uint8_t { INFO, WARNING, ERROR, CRITICAL };
@@ -128,7 +128,7 @@ apply_filters();
 
 The console ended up with a clear button, clear on play (a feature request from Sven, because while debugging scripts you'd lose track of which errors were old and which were new), auto scroll, filters for the warning level and the message type, a search bar, and customizable colors.
 
-![The console toolbar](/assets/img/projects/zentera/console_top_bar.png)
+![The toolbar at the top of the console](/assets/img/projects/zentera/console_top_bar.png)
 
 ## What I considered
 
