@@ -1,5 +1,5 @@
 ---
-title: "Building an Engine Console for Zentera"
+title: "Capturing Every Log Line"
 date: 2025-06-27 11:00:00 +0100
 project: zentera
 status: done
@@ -139,7 +139,11 @@ The console ended up with a clear button, clear on play (a feature request from 
 
 ## What I learned
 
-<div class="text-todo">What did you learn from this one? For example about stream redirection and file descriptors, or about building a tool that non-programmers use every day.</div>
+The biggest thing I learned was how `stdout` and `stderr` work under the hood. Everything an application prints, including the libraries you don't control, goes through those two streams, so they're the one place where you can catch all of it. Saving the original file descriptors with `_dup` before redirecting made the difference, because it means you can always get the original streams back.
+
+It also showed me not to trust a shortcut just because it looks like it works. The one-line `freopen_s` version looked fine while testing, but it only caught `stdout`. And even my full version didn't capture `stderr` properly in the end, which I only found out later.
+
+And I learned how much a small tool can matter once other people rely on it. For the artists and designers, the log file was the only way to tell us why the engine crashed on their machine, so the console had to keep working in release builds too, not just in the editor.
 
 ## Looking back
 

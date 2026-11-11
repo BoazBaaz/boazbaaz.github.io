@@ -23,7 +23,9 @@ links:
 
 Zentera is a voxel puzzle platformer where you play as Gori, a lizard who uses his tongue to push, pull and swing through small diorama-like worlds. It was the final project of my second year at Breda University of Applied Sciences, made in eight weeks by a team of 16 programmers, designers, artists and a producer. We built it in **Kudzu**, a custom C++/Vulkan voxel engine, and released it on itch.io together with the full engine source code.
 
-<video src="/assets/video/projects/zentera/zentera_trailer.mp4" width="100%" height="100%" controls title="Game Trailer"></video>
+<div class="video-embed">
+  <iframe src="https://www.youtube.com/embed/Z_Zsby4ZBBI" title="Zentera trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ---
 

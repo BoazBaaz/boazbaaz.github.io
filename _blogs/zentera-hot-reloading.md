@@ -1,5 +1,5 @@
 ---
-title: "Hot Reloading in Zentera: From 7.28ms to 0.012ms per Frame"
+title: "Making Hot Reloading 910x Faster"
 date: 2025-06-27 12:00:00 +0100
 project: zentera
 status: done
@@ -140,7 +140,11 @@ I went with the map because it has the most benefits here. The downside is that 
 
 ## What I learned
 
-<div class="text-todo">What did you learn from this one? For example about atomic writes, about profiling only once the asset count is realistic, or about pitching the hot reloading instead of the blockout tool.</div>
+The main lesson was to profile again once the project is real. I did profile the first version in the first few weeks and it was fine, but back then there were only a few assets in the game. The cost grew with every resource that got added, and by the end of sprint 4 it was 7.28ms per frame. A number from early in a project says very little about what something costs at the end of it.
+
+I also learned that you can't just read a file the moment it changes. Programs like Paint save with an atomic write, so for a moment the file isn't there, and a reload at exactly that moment fails. That's why the first version doesn't update the timestamp when a reload fails, and why the queue in the second version retries.
+
+And not every task has to be built the way it was planned. I was supposed to make a blockout tool, but with hot reloading designers could just keep building their blockouts in MagicaVoxel. Bringing that up in the meeting saved us a whole tool.
 
 ## Result
 
