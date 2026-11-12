@@ -53,6 +53,24 @@ Both dimensions are overlapping geometry in the same space, so when the evaluati
 
 ![The grid in the dimension view of the viewport](/assets/img/projects/phasebreak/dimension_viewport.jpg)
 
+## How the evaluation got here
+
+The first version traced rays down each tile, and checked the slope and the height difference between them to decide if a tile was walkable. Collision channels marked surfaces as walkable or blocking, and I limited the number of rays per tile to keep it fast enough. It worked on flat geometry, but it couldn't detect small blocking objects yet, which became a requirement for the next version. Besides that, with a large amount of terrain to cover, it would also make the tool very slow because of all the physics calculations it needed for the raycasting.
+
+<div class="image-pair">
+  <div class="scroll-box"><img src="/assets/img/projects/phasebreak/gridvolume_v1.1_inslope_detection_valid.png" alt="The first version, with hidden invalid tiles"></div>
+  <div class="scroll-box"><img src="/assets/img/projects/phasebreak/gridvolume_v1.1_inslope_detection_invalid.png" alt="The first version rejecting tiles on a slope that's too steep"></div>
+</div>
+
+For a more accurate version I looked at three approaches. A heightfield, which is what Recast uses for the navmesh, voxelizes the collision triangles and is the most accurate, but I only understood it on a surface level. A footprint approach projects the bounds of each object onto a 2D grid from above. And a box sweep per tile, from the top of the volume to the bottom. This was right before a break and we needed something more accurate that worked, so I went with the box sweep, because I knew how to build it, even though it was slower. I didn't do enough research into the other approaches before starting, which is also why that task took 21 hours instead of the 15 I planned.
+
+<div class="image-pair">
+  <div class="scroll-box"><img src="/assets/img/projects/phasebreak/gridvolume_v2_box_sweep_test_blocking_object.png" alt="The box sweep detecting the edges of a shape in its tile"></div>
+  <div class="scroll-box"><img src="/assets/img/projects/phasebreak/gridvolume_v2_box_sweep_test_edge_test.png" alt="The box sweep at the edge of a mesh"></div>
+</div>
+
+The current version ended up close to the footprint idea after all. Each tile does one overlap instead of a sweep, and the coverage check projects the bounds of each overlapping object onto the cells of the tile in 2D.
+
 ## Evaluating a tile
 
 Each tile does one `OverlapMultiByChannel` with a column-shaped box, on its own GridTrace channel. Geometry generates tiles by default, and objects that shouldn't can opt out by setting their GridTrace response to Ignore.
